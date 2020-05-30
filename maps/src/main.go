@@ -9,12 +9,16 @@ import (
 	"github.com/gorilla/mux"
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
+
+	rUpload "./routes/upload"
 )
 
 // HandleAPIRoutes instantiates and populates the router
 func handleAPIRoutes() *mux.Router {
 	// instantiating the router
 	api := mux.NewRouter()
+
+	api.HandleFunc("/upload/file", rUpload.File)
 
 	api.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		libHTTP.RespondWithJSON(w, http.StatusOK, "OK")
