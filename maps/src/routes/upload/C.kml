@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+    <Document>
+        <Style id="placemark-red">
+            <IconStyle>
+                <Icon>
+                    <href>http://maps.me/placemarks/placemark-red.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <name>China</name>
+        <visibility>1</visibility>
+        <ExtendedData xmlns:mwm="https://maps.me">
+            <mwm:name>
+                <mwm:lang code="default">China</mwm:lang>
+            </mwm:name>
+            <mwm:annotation>
+            </mwm:annotation>
+            <mwm:description>
+            </mwm:description>
+            <mwm:lastModified>2020-05-27T13:18:57Z</mwm:lastModified>
+            <mwm:accessRules>Local</mwm:accessRules>
+        </ExtendedData>
+        <Placemark>
+            <name>Zhangjiajie - Stone forest</name>
+            <description>Stone forest</description>
+            <TimeStamp>
+                <when>2019-04-29T05:35:34Z</when>
+            </TimeStamp>
+            <styleUrl>#placemark-yellow</styleUrl>
+            <Point>
+                <coordinates>110.53013,29.37382</coordinates>
+            </Point>
+            <ExtendedData xmlns:mwm="https://maps.me">
+                <mwm:name>
+                    <mwm:lang code="default">张家界市</mwm:lang>
+                    <mwm:lang code="zh">张家界市</mwm:lang>
+                    <mwm:lang code="en">Zhangjiajie</mwm:lang>
+                </mwm:name>
+                <mwm:description>
+                    <mwm:lang code="default">Stone forest</mwm:lang>
+                </mwm:description>
+                <mwm:featureTypes>
+                    <mwm:value>place-region</mwm:value>
+                </mwm:featureTypes>
+                <mwm:customName>
+                    <mwm:lang code="default">Zhangjiajie - Stone forest</mwm:lang>
+                </mwm:customName>
+                <mwm:scale>8</mwm:scale>
+                <mwm:visibility>1</mwm:visibility>
+            </ExtendedData>
+        </Placemark>
+    </Document>
+</kml>

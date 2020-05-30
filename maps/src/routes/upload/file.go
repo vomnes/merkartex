@@ -2,11 +2,14 @@ package upload
 
 import (
 	"archive/zip"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	"github.com/kylelemons/godebug/pretty"
 	libHTTP "github.com/vomnes/go-library/http"
+	libPretty "github.com/vomnes/go-library/pretty"
 )
 
 func File(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +38,14 @@ func File(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// fmt.Println(string(newFileContent), newFileSize)
+	var jsonData KML
+	err = xml.Unmarshal(newFileContent, &jsonData)
+	if err != nil {
+		libHTTP.RespondWithError(w, 500, "Invalid XML content")
+		fmt.Println(libPretty.Error(err.Error()))
+		return
+	}
+	pretty.Print(jsonData.Document)
 	w.WriteHeader(200)
 	w.Write(newFileContent)
 }
