@@ -15,9 +15,9 @@ type Style struct {
 	}
 }
 
-// namespace
-type LanguageType struct {
-	Lang     string `xml:",chardata"`
+// ContentLanguage is the XML structure with the content and his language code
+type ContentLanguage struct {
+	Content  string `xml:",chardata"`
 	LangCode string `xml:"code,attr"`
 }
 
@@ -26,17 +26,17 @@ type ExtendedData struct {
 	XMLName xml.Name
 	// ExtendedDataType string `xml:"xmlns mwm, ExtendedData"`
 	Name struct {
-		Languages []LanguageType `xml:",any"`
+		Languages []ContentLanguage `xml:",any"`
 	} `xml:"name"`
 	Annotation  struct{} `xml:"annotation"`
 	Description struct {
-		Lang []string `xml:"lang"`
+		Languages []ContentLanguage `xml:",any"`
 	} `xml:"description"`
 	FeatureTypes struct {
-		Value string `xml:"value"`
+		Value []string `xml:"value"`
 	} `xml:"featureTypes"`
 	CustomName struct {
-		Lang []string `xml:"lang"`
+		Languages []ContentLanguage `xml:",any"`
 	} `xml:"customName"`
 	LastModified string `xml:"lastModified"`
 	AccessRules  string `xml:"accessRules"`

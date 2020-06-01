@@ -45,7 +45,8 @@ func File(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(libPretty.Error(err.Error()))
 		return
 	}
-	pretty.Print(jsonData.Document)
+	pretty.Print(jsonData.Document.ExtendedData)
+	pretty.Print(jsonData.Document.Placemarks[0])
 	w.WriteHeader(200)
 	w.Write(newFileContent)
 }
