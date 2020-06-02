@@ -24,8 +24,7 @@ type ContentLanguage struct {
 // ExtendedData describe the extended data
 type ExtendedData struct {
 	XMLName xml.Name
-	// ExtendedDataType string `xml:"xmlns mwm, ExtendedData"`
-	Name struct {
+	Name    struct {
 		Languages []ContentLanguage `xml:",any"`
 	} `xml:"name"`
 	Annotation  struct{} `xml:"annotation"`

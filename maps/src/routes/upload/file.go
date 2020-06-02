@@ -46,7 +46,10 @@ func File(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	pretty.Print(jsonData.Document.ExtendedData)
-	pretty.Print(jsonData.Document.Placemarks[0])
+	pretty.Print(jsonData.Document.Placemarks)
+	for _, placemark := range jsonData.Document.Placemarks {
+		fmt.Println(placemark.Name, placemark.Point.Coordinates)
+	}
 	w.WriteHeader(200)
 	w.Write(newFileContent)
 }
