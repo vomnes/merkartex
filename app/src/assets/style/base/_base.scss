@@ -1,0 +1,50 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; /* === Best Practice === */
+}
+
+html {
+  /* Allows us to use rem ((x)rem * root-font-size) */
+  /* Default browser font-size 16px */
+  /* Need to put in percentage to allows the scale browser user settings */
+  font-size: 62.5%; // 1 rem = 10px; 10px/16px = 62.5%;
+
+  @include respond(tab-land) {
+    font-size: 56.25%;
+  }
+  @include respond(tab-port) {
+    font-size: 50%; // 1rem = 8px, 9/16 = 50%
+  }
+  @include respond(big-desktop) {
+    font-size: 75%;
+  }
+}
+
+$body-padding: 1rem;
+
+body {
+  font-family: $font-basic;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $color-primary;
+  padding: 5rem 6rem 0 6rem;
+  box-sizing: border-box; /* === Best Practice === */
+
+  @include respond(tab-port) {
+    padding: 2rem 3rem 0 3rem;
+  }
+
+  @include respond(phone) {
+    padding: 1rem 1.5rem 0 1.5rem;
+  }
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+}
