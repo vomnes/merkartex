@@ -10,6 +10,21 @@
 
     &__list {
       margin-top: 1.5rem;
+      height: calc(100% - calc(2 * 2rem));
+
+      & > * {
+        margin-top: 1rem;
+
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+
+        &:last-child {
+          margin-bottom: .65rem;
+        }
+      }
+
+      overflow-y: scroll;
     }
   }
 }

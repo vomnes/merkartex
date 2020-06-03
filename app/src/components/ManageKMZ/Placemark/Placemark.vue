@@ -1,5 +1,8 @@
 <template>
-  <article class="placemark">
+  <article
+    class="placemark"
+    @click.stop="placemarkActive = !placemarkActive"
+    :class="[ placemarkActive ? 'inner-box-shadow' : 'outer-box-shadow']">
     <div class="placemark--side"></div>
     <div class="placemark--content">
       <div class="header">
@@ -32,6 +35,7 @@
         <span
           v-if="hasSeeMoreDescription"
           @click="toggleDescriptionOpen"
+          @keyup.enter="toggleDescriptionOpen"
           tabindex="0">
           {{ !descriptionOpen ? 'See more' : 'Close' }}
         </span>
@@ -54,6 +58,7 @@ export default {
       description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
       descriptionOpen: false,
       moreOptionsOpen: false,
+      placemarkActive: false,
     };
   },
   computed: {

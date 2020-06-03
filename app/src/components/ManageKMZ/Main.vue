@@ -7,6 +7,8 @@
         <Placemark/>
         <Placemark/>
         <Placemark/>
+        <Placemark/>
+        <Placemark/>
       </div>
     </div>
   </div>

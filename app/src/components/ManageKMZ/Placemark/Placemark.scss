@@ -6,12 +6,13 @@
 
   width: calc(100% - #{$side-color-weight});
 
-  box-shadow: $box-shadow-1;
   border-radius: .25rem;
 
   display: inline-flex;
 
-  margin: 1rem 0 1rem 0;
+  transition: box-shadow 1s;
+
+  cursor: pointer;
 
   &--side {
     width: $side-color-weight;
@@ -127,4 +128,14 @@
       }
     }
   }
+}
+
+.inner-box-shadow {
+  box-shadow: $box-shadow-inner-0;
+  transition: box-shadow 1s;
+}
+
+.outer-box-shadow {
+  box-shadow: $box-shadow-1;
+  transition: box-shadow 1s;
 }
