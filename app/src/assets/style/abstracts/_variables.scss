@@ -1,13 +1,7 @@
 // COLORS
-$color-primary: #2F2F2F;
-$color-primary-1: #4D4D4D;
-$color-primary-2: #6B6B6B;
-$color-primary-light: #FAFAFA;
-$color-primary-light-1: #D9D9D9;
-$color-primary-light-2: #FCFCFC;
+$color-primary: #3A3931;
 
-$color-white: #FFFFFF;
-$color-light-grey: #EAEAEA;
+$color-grey-1: #959595;
 
 $color-warning: #ed213a;
 
@@ -29,6 +23,7 @@ $box-shadow-4: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 $box-shadow-inner-0: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 
 // FONTS
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300|Oswald:200,300,400,700&display=swap');
-$font-title: 'Oswald', sans-serif;
-$font-basic: 'Montserrat', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Montserrat:wght@400;500&family=Raleway:wght@300;400;500&display=swap');
+$font-1: 'Lora', serif;
+$font-2: 'Raleway', sans-serif;
+$font-3: 'Montserrat', sans-serif;

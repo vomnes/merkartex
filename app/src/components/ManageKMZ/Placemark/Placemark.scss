@@ -1,0 +1,130 @@
+@import '../../../assets/style/_main.scss';
+
+.placemark {
+  $side-color-weight: 1rem;
+  $icon-more-options-size: 2.25rem;
+
+  width: calc(100% - #{$side-color-weight});
+
+  box-shadow: $box-shadow-1;
+  border-radius: .25rem;
+
+  display: inline-flex;
+
+  margin: 1rem 0 1rem 0;
+
+  &--side {
+    width: $side-color-weight;
+    background-color: #AED6F1;
+    border-radius: .25rem;
+  }
+
+  &--content {
+    margin: 2.5rem;
+
+    & h2 {
+      font-size: 2rem;
+    }
+
+    & > p {
+      font-family: $font-2;
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: .15rem;
+      line-height: 2.25rem;
+
+      margin: 1.5rem 0 2rem 0;
+
+      & span {
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: .1rem;
+        transition: .4s;
+
+        &:hover, &:focus {
+          color: $color-primary;
+          text-shadow: .05rem .05rem .1rem $color-primary;
+          cursor: pointer;
+          transition: .4s;
+        }
+      }
+    }
+
+    & .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 .1rem 0 .1rem;
+
+      &--icon {
+        width: $icon-more-options-size;
+        height: $icon-more-options-size;
+
+        & svg {
+          width: 100%;
+          margin: 0 .25rem 0 .25rem;
+          height: 1.5rem;
+
+          cursor: pointer;
+
+          &:focus {
+            color: $color-grey-1;
+          }
+        }
+
+        position: relative;
+      }
+    }
+
+    & .footer {
+      display: flex;
+      justify-content: space-between;
+
+      & p {
+        font-family: $font-3;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        letter-spacing: .15rem;
+      }
+    }
+  }
+
+  &--more-options {
+    box-shadow: $box-shadow-1;
+
+    position: absolute;
+    right: calc(calc(#{$icon-more-options-size} / 2) * -1);
+    top: calc(#{$icon-more-options-size});
+    background-color: white;
+    border-radius: .5rem;
+
+    & ul {
+      margin: .5rem;
+
+      & li {
+        display: flex;
+        align-items: center;
+
+        cursor: pointer;
+
+        &:hover, &:focus {
+          color: $color-grey-1;
+        }
+
+        & > * {
+          margin-right: 1rem;
+        }
+
+        & .icon {
+          width: 2rem;
+          height: 2rem;
+        }
+
+        & p {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}
