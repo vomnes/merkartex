@@ -4,46 +4,46 @@
     @click.stop="placemarkActive = !placemarkActive"
     :class="[ placemarkActive ? 'placemark--selected' : '']">
     <div class="placemark--side"></div>
-    <div class="placemark--content">
       <div class="header">
-        <h2 class="text__title">Jardin Yuyuan</h2>
-        <div class="header--icon" v-on:click.stop="toggleMoreOptionsOpen">
-          <svg v-svg symbol="ellipsis"
-          tabindex="0" v-on:keyup.enter="toggleMoreOptionsOpen"></svg>
-          <div
-            v-if="moreOptionsOpen"
-            class="placemark--more-options">
-            <ul>
-              <li tabindex="0">
-                <svg v-svg symbol="pencil"></svg>
-                <p>Edit</p>
-              </li>
-              <li tabindex="0">
-                <svg v-svg symbol="trash"></svg>
-                <p>Remove</p>
-              </li>
-              <li tabindex="0">
-                <svg v-svg symbol="duplicate"></svg>
-                <p>Duplicate</p>
-              </li>
-            </ul>
-          </div>
+      <h2 class="text__title">Jardin Yuyuan</h2>
+      <div class="header--icon">
+        <svg v-svg symbol="ellipsis"
+        tabindex="0"
+        v-on:click.stop.prevent="toggleMoreOptionsOpen"
+        v-on:keyup.enter="toggleMoreOptionsOpen"></svg>
+        <div
+          v-if="moreOptionsOpen"
+          class="placemark--more-options">
+          <ul>
+            <li tabindex="0">
+              <svg v-svg symbol="pencil"></svg>
+              <p>Edit</p>
+            </li>
+            <li tabindex="0">
+              <svg v-svg symbol="trash"></svg>
+              <p>Remove</p>
+            </li>
+            <li tabindex="0">
+              <svg v-svg symbol="duplicate"></svg>
+              <p>Duplicate</p>
+            </li>
+          </ul>
         </div>
       </div>
-      <p>
-        {{ descriptionContent }}
-        <span
-          v-if="hasSeeMoreDescription"
-          @click.stop="toggleDescriptionOpen"
-          @keyup.enter="toggleDescriptionOpen"
-          tabindex="0">
-          {{ !descriptionOpen ? 'See more' : 'Close' }}
-        </span>
-      </p>
-      <div class="footer">
-        <p>Quartier</p>
-        <p>05/31/2019</p>
-      </div>
+    </div>
+    <p>
+      {{ descriptionContent }}
+      <span
+        v-if="hasSeeMoreDescription"
+        @click.stop="toggleDescriptionOpen"
+        @keyup.enter="toggleDescriptionOpen"
+        tabindex="0">
+        {{ !descriptionOpen ? 'See more' : 'Close' }}
+      </span>
+    </p>
+    <div class="footer">
+      <p>Quartier</p>
+      <p>05/31/2019</p>
     </div>
   </article>
 </template>

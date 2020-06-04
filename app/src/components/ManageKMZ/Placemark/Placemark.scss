@@ -1,93 +1,86 @@
 @import '../../../assets/style/_main.scss';
 
 .placemark {
-  $side-color-weight: 1rem;
+  $side-color-weight: .75rem;
   $icon-more-options-size: 2.25rem;
+  $border-on-select-weight: .2rem;
+
+  $border-radius: calc(#{$side-color-weight} / 2);
 
   width: calc(100% - #{$side-color-weight});
-
-  border-radius: .25rem;
-
-  display: inline-flex;
-
+  border-radius: $border-radius;
   box-shadow: $box-shadow-1;
+  padding: 2.5rem;
 
   cursor: pointer;
+  user-select: none;
 
-  &--side {
-    width: $side-color-weight;
-    background-color: #AED6F1;
-    border-radius: .25rem;
+  position: relative;
+
+  & h2 {
+    font-size: 2rem;
   }
 
-  &--content {
-    margin: 2.5rem;
+  & > p {
+    font-family: $font-2;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: .15rem;
+    line-height: 2.25rem;
 
-    & h2 {
-      font-size: 2rem;
+    margin: 1.5rem 0 2rem 0;
+
+    & span {
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: .1rem;
+      transition: .4s;
+
+      &:hover, &:focus {
+        color: currentColor;
+        text-shadow: .05rem .05rem .1rem currentColor;
+        cursor: pointer;
+        transition: .2s;
+      }
     }
+  }
 
-    & > p {
-      font-family: $font-2;
-      font-size: 1.6rem;
-      font-weight: 500;
+  & .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 .1rem 0 .1rem;
+
+    &--icon {
+      width: $icon-more-options-size;
+      height: $icon-more-options-size;
+
+      & svg {
+        width: 100%;
+        margin: 0 .25rem 0 .25rem;
+        height: 1.5rem;
+
+        cursor: pointer;
+
+        &:focus {
+          color: rgba($color-primary, .4);
+        }
+      }
+
+      position: relative;
+    }
+  }
+
+  & .footer {
+    display: flex;
+    justify-content: space-between;
+
+    & p {
+      font-family: $font-3;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
       letter-spacing: .15rem;
-      line-height: 2.25rem;
-
-      margin: 1.5rem 0 2rem 0;
-
-      & span {
-        font-size: 1.2rem;
-        font-weight: 300;
-        letter-spacing: .1rem;
-        transition: .4s;
-
-        &:hover, &:focus {
-          color: currentColor;
-          text-shadow: .05rem .05rem .1rem currentColor;
-          cursor: pointer;
-          transition: .2s;
-        }
-      }
-    }
-
-    & .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 .1rem 0 .1rem;
-
-      &--icon {
-        width: $icon-more-options-size;
-        height: $icon-more-options-size;
-
-        & svg {
-          width: 100%;
-          margin: 0 .25rem 0 .25rem;
-          height: 1.5rem;
-
-          cursor: pointer;
-
-          &:focus {
-            color: rgba($color-primary, .4);
-          }
-        }
-
-        position: relative;
-      }
-    }
-
-    & .footer {
-      display: flex;
-      justify-content: space-between;
-
-      & p {
-        font-family: $font-3;
-        text-transform: uppercase;
-        font-size: 1.5rem;
-        line-height: 1.5rem;
-        letter-spacing: .15rem;
-      }
     }
   }
 
@@ -131,12 +124,24 @@
     }
   }
 
+  &--side {
+    width: $side-color-weight;
+    height: calc(100% + calc(#{$border-on-select-weight} * 2));
+    background-color: #AED6F1;
+    z-index: -1;
+    position: absolute;
+    border-radius: $border-radius 0 0 $border-radius;
+
+    top: calc(#{$border-on-select-weight} * -1);
+    left: calc(#{$border-on-select-weight} * -1);
+  }
+
+  border: $border-on-select-weight solid transparent;
   &--selected {
-    color: $color-primary-white;
-    background: $color-primary-blue;
+    border: $border-on-select-weight dashed $color-primary-green;
 
     & .placemark--side {
-      height: 10px;
+      background: transparent;
     }
 
     & .header svg:focus {

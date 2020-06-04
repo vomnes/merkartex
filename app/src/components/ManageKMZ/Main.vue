@@ -3,7 +3,7 @@
     <div class="map"></div>
     <div class="placemarks">
       <h1 class="text__title">Placemarks</h1>
-      <div class="placemarks__list">
+      <div class="placemarks__list custom-scrollbar">
         <Placemark/>
         <Placemark/>
         <Placemark/>
