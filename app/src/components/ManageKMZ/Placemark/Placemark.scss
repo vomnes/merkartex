@@ -10,7 +10,7 @@
 
   display: inline-flex;
 
-  transition: box-shadow 1s;
+  box-shadow: $box-shadow-1;
 
   cursor: pointer;
 
@@ -43,10 +43,10 @@
         transition: .4s;
 
         &:hover, &:focus {
-          color: $color-primary;
-          text-shadow: .05rem .05rem .1rem $color-primary;
+          color: currentColor;
+          text-shadow: .05rem .05rem .1rem currentColor;
           cursor: pointer;
-          transition: .4s;
+          transition: .2s;
         }
       }
     }
@@ -69,7 +69,7 @@
           cursor: pointer;
 
           &:focus {
-            color: $color-grey-1;
+            color: rgba($color-primary, .4);
           }
         }
 
@@ -100,6 +100,8 @@
     background-color: white;
     border-radius: .5rem;
 
+    color: $color-primary;
+
     & ul {
       margin: .5rem;
 
@@ -110,7 +112,7 @@
         cursor: pointer;
 
         &:hover, &:focus {
-          color: $color-grey-1;
+          color: rgba($color-primary, .4);
         }
 
         & > * {
@@ -128,14 +130,17 @@
       }
     }
   }
-}
 
-.inner-box-shadow {
-  box-shadow: $box-shadow-inner-0;
-  transition: box-shadow 1s;
-}
+  &--selected {
+    color: $color-primary-white;
+    background: $color-primary-blue;
 
-.outer-box-shadow {
-  box-shadow: $box-shadow-1;
-  transition: box-shadow 1s;
+    & .placemark--side {
+      height: 10px;
+    }
+
+    & .header svg:focus {
+      color: rgba(white, .4);
+    }
+  }
 }

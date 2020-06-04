@@ -2,12 +2,12 @@
   <article
     class="placemark"
     @click.stop="placemarkActive = !placemarkActive"
-    :class="[ placemarkActive ? 'inner-box-shadow' : 'outer-box-shadow']">
+    :class="[ placemarkActive ? 'placemark--selected' : '']">
     <div class="placemark--side"></div>
     <div class="placemark--content">
       <div class="header">
         <h2 class="text__title">Jardin Yuyuan</h2>
-        <div class="header--icon" v-on:click.prevent="toggleMoreOptionsOpen">
+        <div class="header--icon" v-on:click.stop="toggleMoreOptionsOpen">
           <svg v-svg symbol="ellipsis"
           tabindex="0" v-on:keyup.enter="toggleMoreOptionsOpen"></svg>
           <div
@@ -34,7 +34,7 @@
         {{ descriptionContent }}
         <span
           v-if="hasSeeMoreDescription"
-          @click="toggleDescriptionOpen"
+          @click.stop="toggleDescriptionOpen"
           @keyup.enter="toggleDescriptionOpen"
           tabindex="0">
           {{ !descriptionOpen ? 'See more' : 'Close' }}
