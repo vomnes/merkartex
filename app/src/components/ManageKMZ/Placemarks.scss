@@ -1,12 +1,11 @@
 .manage-kmz {
   & .placemarks {
-    flex-grow: 1.25;
-    height: calc(100vh - calc(2 * 2rem));
+    grid-column-start: 2;
+    grid-column-end: 2;
 
     margin-left: 1.5rem;
 
     width: 100%;
-    max-width: 60rem;
 
     &__list {
       margin-top: 1.5rem;

@@ -126,6 +126,7 @@
 
   &--side {
     width: $side-color-weight;
+    transition: width .4s;
     height: calc(100% + calc(#{$border-on-select-weight} * 2));
     background-color: #AED6F1;
     z-index: -1;
@@ -141,7 +142,8 @@
     border: $border-on-select-weight dashed $color-primary-green;
 
     & .placemark--side {
-      background: transparent;
+      width: 0;
+      transition: .4s;
     }
 
     & .header svg:focus {
