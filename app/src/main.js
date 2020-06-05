@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import SvgSprite from 'vue-svg-sprite';
 
+import 'leaflet/dist/leaflet.css';
+
 import App from './App.vue';
 import store from './store';
 

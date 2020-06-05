@@ -1,0 +1,14 @@
+.manage-kmz {
+  & .map-area {
+    grid-column-start: 2;
+    grid-column-end: 1;
+
+    box-shadow: $box-shadow-3;
+
+    flex-grow: 3;
+    height: 100%;
+
+    margin-right: 1.5rem;
+    padding: 1.5rem;
+  }
+}
