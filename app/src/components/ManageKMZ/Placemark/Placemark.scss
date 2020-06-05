@@ -22,12 +22,6 @@
   }
 
   & > p {
-    font-family: $font-2;
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: .15rem;
-    line-height: 2.25rem;
-
     margin: 1.5rem 0 2rem 0;
 
     & span {
@@ -78,14 +72,6 @@
   & .footer {
     display: flex;
     justify-content: space-between;
-
-    & p {
-      font-family: $font-3;
-      text-transform: uppercase;
-      font-size: 1.5rem;
-      line-height: 1.5rem;
-      letter-spacing: .15rem;
-    }
   }
 
   &--more-options {
@@ -143,7 +129,7 @@
 
   border: $border-on-select-weight solid transparent;
   &--selected {
-    border: $border-on-select-weight dashed $color-primary-green;
+    border: $border-on-select-weight solid $color-primary-blue;
 
     & .placemark--side {
       width: 0;

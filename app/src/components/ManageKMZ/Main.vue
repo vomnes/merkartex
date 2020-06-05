@@ -16,6 +16,7 @@
           </button>
         </div>
       </div>
+      <PlacemarkEdit/>
       <div class="placemarks__list custom-scrollbar">
         <Placemark/>
         <Placemark/>
@@ -30,12 +31,14 @@
 <script>
 import Placemark from './Placemark/Placemark.vue';
 import Map from './Map/Map.vue';
+import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 
 export default {
   name: 'ManageKMZ',
   components: {
     Placemark,
     Map,
+    PlacemarkEdit,
   },
   props: {
     msg: String,

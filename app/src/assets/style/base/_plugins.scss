@@ -1,0 +1,37 @@
+.custom--datetime {
+  & .vdatetime-popup__header,
+  .vdatetime-calendar__month__day--selected > span > span,
+  .vdatetime-calendar__month__day--selected:hover > span > span {
+    background: $color-primary-blue;
+    @extend .text__details;
+  }
+
+  & .vdatetime-year-picker__item--selected,
+  .vdatetime-time-picker__item--selected,
+  .vdatetime-popup__actions__button {
+    color: $color-primary-blue;
+    @extend .text__details;
+  }
+
+  & .vdatetime-calendar__month__weekday,
+  .vdatetime-calendar__current--month {
+    @extend .text__details;
+  }
+
+  & .vdatetime-calendar__month__weekday {
+    font-size: 1.25rem;
+  }
+
+  & .vdatetime-popup__date {
+    margin-top: .5rem;
+    font-size: 2rem;
+  }
+
+  & .vdatetime-time-picker__item {
+    font-family: $font-3;
+
+    &--selected {
+      font-size: 1.75rem;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 .text {
   &__body {
     font-family: $font-2;
-    font-size: 2rem;
-    line-height: 2.75rem;
-    letter-spacing: 0.182rem;
-    font-style: italic;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: .15rem;
+    line-height: 2.25rem;
   }
 
   &__title {
@@ -17,5 +17,13 @@
     @include respond(tab-port) {
       font-size: 2rem;
     }
+  }
+
+  &__details {
+    font-family: $font-3;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    letter-spacing: .15rem;
   }
 }

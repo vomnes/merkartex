@@ -4,7 +4,7 @@
     @click.stop="placemarkActive = !placemarkActive"
     :class="[ placemarkActive ? 'placemark--selected' : '']">
     <div class="placemark--side"></div>
-      <div class="header">
+    <div class="header">
       <h2 class="text__title">Jardin Yuyuan</h2>
       <div class="header--icon">
         <svg v-svg symbol="ellipsis"
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <p>
+    <p class="text__body">
       {{ descriptionContent }}
       <span
         v-if="hasSeeMoreDescription"
@@ -42,8 +42,8 @@
       </span>
     </p>
     <div class="footer">
-      <p>Quartier</p>
-      <p>05/31/2019</p>
+      <p class="text__details">Quartier</p>
+      <p class="text__details">05/31/2019</p>
     </div>
   </article>
 </template>
