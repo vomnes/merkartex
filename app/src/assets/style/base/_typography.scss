@@ -19,11 +19,22 @@
     }
   }
 
+  &__title-level-2 {
+    font-family: $font-3;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.5rem;
+    letter-spacing: .20rem;
+  }
+
   &__details {
     font-family: $font-3;
-    text-transform: uppercase;
     font-size: 1.5rem;
     line-height: 1.5rem;
     letter-spacing: .15rem;
+  }
+
+  &--uppercase {
+    text-transform: uppercase;
   }
 }

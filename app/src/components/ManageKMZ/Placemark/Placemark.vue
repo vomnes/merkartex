@@ -42,8 +42,8 @@
       </span>
     </p>
     <div class="footer">
-      <p class="text__details">Quartier</p>
-      <p class="text__details">05/31/2019</p>
+      <p class="text__details text--uppercase">Quartier</p>
+      <p class="text__details text--uppercase">05/31/2019</p>
     </div>
   </article>
 </template>

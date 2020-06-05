@@ -1,0 +1,47 @@
+button[class^=primary-button] {
+  $button-padding: .75rem;
+  $focus-weight: .25rem;
+
+  width: auto;
+  height: 4rem;
+  padding: calc(#{$button-padding} - #{$focus-weight});
+  border: $focus-weight solid transparent;
+  cursor: pointer;
+  transition: .2s;
+
+  &:active {
+    transform: scale(1.05);
+    box-shadow: $box-shadow-2;
+    transition: .1s;
+  }
+
+  @include respond-over(tab-land) {
+    &:focus {
+      border: $focus-weight dashed currentColor;
+      padding: calc(#{$button-padding} - #{$focus-weight});
+      transition: .25s;
+    }
+  }
+}
+
+.primary-button {
+  &--blue {
+    color: $color-primary-white;
+    background-color: $color-primary-blue;
+    box-shadow:  0 4px 6px -1px rgba($color-primary-blue,0.25);
+  }
+
+  &--green {
+    color: $color-primary-white;
+    background-color: $color-primary-green;
+    box-shadow:  0 4px 6px -1px rgba($color-primary-green,0.25);
+  }
+}
+
+.box-circle {
+  border-radius: 50%;
+}
+
+.box-round-corner {
+  border-radius: .25rem;
+}

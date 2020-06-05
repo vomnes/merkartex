@@ -10,9 +10,9 @@
       {{ descriptionContent }}
     </p>
     <div class="footer">
-      <p class="text__details">Quartier</p>
+      <p class="text__details text--uppercase">Quartier</p>
       <datetime
-        class="custom--datetime"
+        class="custom--datetime text--uppercase"
         type="datetime"
         v-model="datetime"
         use24-hour></datetime>
