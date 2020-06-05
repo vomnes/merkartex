@@ -56,14 +56,18 @@
       height: $icon-more-options-size;
 
       & svg {
-        width: 100%;
         margin: 0 .25rem 0 .25rem;
         height: 1.5rem;
 
         cursor: pointer;
 
-        &:focus {
-          color: rgba($color-primary, .4);
+        @include respond-over(tab-land) {
+          &:focus {
+            color: rgba($color-primary, .4);
+          }
+        }
+        &:active {
+          transform: scale(1.15);
         }
       }
 

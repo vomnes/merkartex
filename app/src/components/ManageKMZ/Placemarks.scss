@@ -7,9 +7,56 @@
 
     width: 100%;
 
+    $header-height: 4rem;
+    $space: 1rem;
+
+    &__header {
+      height: $header-height;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &--actions {
+        height: 100%;
+        margin-right: calc(#{$header-height} / 2);
+      }
+
+      margin-bottom: $space;
+    }
+
+    &__add {
+      $button-padding: .75rem;
+      $focus-weight: .25rem;
+
+      width: 4rem;
+      height: 100%;
+      color: $color-primary-white;
+      background-color: $color-primary-blue;
+      padding: calc(#{$button-padding} - #{$focus-weight});
+      border: $focus-weight solid transparent;
+      border-radius: 50%;
+      box-shadow:  0 4px 6px -1px rgba($color-primary-blue,0.25);
+      cursor: pointer;
+      transition: .2s;
+
+      &:active {
+        transform: scale(1.05);
+        box-shadow: $box-shadow-2;
+        transition: .1s;
+      }
+
+      @include respond-over(tab-land) {
+        &:focus {
+          border: $focus-weight dashed $color-primary-white;
+          padding: calc(#{$button-padding} - #{$focus-weight});
+          transition: .25s;
+        }
+      }
+    }
+
     &__list {
-      margin-top: 1.5rem;
-      height: calc(100% - calc(2 * 2rem));
+      height: calc(100% - calc(#{$header-height} + #{$space}));
 
       & > * {
         margin-top: 1rem;

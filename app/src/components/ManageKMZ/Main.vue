@@ -8,7 +8,14 @@
     </div>
     <Map/>
     <div class="placemarks">
-      <h1 class="text__title">Placemarks</h1>
+      <div class="placemarks__header">
+        <h1 class="text__title">Placemarks</h1>
+        <div class="placemarks__header--actions">
+          <button class="placemarks__add">
+            <svg v-svg symbol="plus"></svg>
+          </button>
+        </div>
+      </div>
       <div class="placemarks__list custom-scrollbar">
         <Placemark/>
         <Placemark/>
