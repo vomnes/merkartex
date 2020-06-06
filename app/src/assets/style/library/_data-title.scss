@@ -1,0 +1,58 @@
+[data-title]:hover:before {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+
+.data-title--center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+
+[data-title]:before {
+  content: attr(data-title);
+  color: $color-primary-white;
+  background: $color-primary;
+  z-index: 99999;
+  white-space: nowrap;
+  top: -0.7rem;
+
+  @extend .data-title--center;
+
+  @extend .text__details;
+  font-size: 1.1rem;
+  @extend .box-round-corner;
+  padding: .55rem;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: .75rem solid transparent;
+  border-right: .75rem solid transparent;
+
+  border-top: .75rem solid $color-primary;
+}
+
+[data-title]:after {
+  content: '';
+  top: 0;
+
+  @extend .data-title--center;
+
+  @extend .arrow-down;
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-title] {
+  position: relative;
+}

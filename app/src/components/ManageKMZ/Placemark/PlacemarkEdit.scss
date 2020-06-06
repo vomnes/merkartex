@@ -7,7 +7,39 @@
     width: auto;
   }
 
-  & p {
+  & > p {
     cursor: pointer;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+
+    margin-top: 1rem;
+
+    &--icon {
+      height: 100%;
+      cursor: pointer;
+
+      & svg {
+        width: 2.25rem;
+        margin-right: .5rem;
+      }
+
+      display: flex;
+      align-items: center;
+
+      margin-right: .5rem;
+    }
+  }
+
+  &__actions {
+    margin-top: 1rem;
+    & button {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }

@@ -3,8 +3,15 @@
     <div class="header">
       <input class="text__title" type="text" name="title" value="Jardin Yuyuan">
       <div class="header--icon">
-        <!-- <svg v-svg symbol="ellipsis"></svg> -->
+        <svg v-svg symbol="close"></svg>
       </div>
+    </div>
+    <div class="placemark-edit__row">
+      <div class="placemark-edit__row--icon" data-title="Select color & category">
+        <svg v-svg symbol="location"></svg>
+        <p class="text__details">Sport</p>
+      </div>
+      <p class="text__details" data-title="Latitude, Longitude">• 62.208, 6.67296</p>
     </div>
     <p class="text__body">
       {{ descriptionContent }}
@@ -16,6 +23,9 @@
         type="datetime"
         v-model="datetime"
         use24-hour></datetime>
+    </div>
+    <div class="placemark-edit__actions">
+      <button class="primary-button--blue text__details box-round-corner">Save changes</button>
     </div>
   </form>
 </template>
@@ -57,5 +67,6 @@ export default {
     @extend .text__details;
     text-align: right;
     width: 20rem;
+    cursor: pointer;
   }
 </style>
