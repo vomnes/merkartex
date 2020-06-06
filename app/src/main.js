@@ -1,9 +1,20 @@
 import Vue from 'vue';
 import SvgSprite from 'vue-svg-sprite';
 import { Datetime } from 'vue-datetime';
+import {
+  MdDialog,
+  MdAutocomplete,
+  MdHighlightText,
+  MdField,
+  MdMenu,
+  MdButton,
+  MdList,
+} from 'vue-material/dist/components';
 
 import 'leaflet/dist/leaflet.css';
 import 'vue-datetime/dist/vue-datetime.css';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
 
 import App from './App.vue';
 import store from './store';
@@ -18,6 +29,16 @@ Vue.use(SvgSprite, {
 });
 
 Vue.use(Datetime);
+
+[
+  MdDialog,
+  MdAutocomplete,
+  MdHighlightText,
+  MdField,
+  MdMenu,
+  MdButton,
+  MdList,
+].forEach((x) => Vue.use(x));
 
 new Vue({
   store,

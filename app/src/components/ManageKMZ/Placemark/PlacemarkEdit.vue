@@ -7,10 +7,27 @@
       </div>
     </div>
     <div class="placemark-edit__row">
-      <div class="placemark-edit__row--icon" data-title="Select color & category">
-        <svg v-svg symbol="location"></svg>
+      <div
+        class="placemark-edit__row--icon"
+        data-title="Select color & category"
+        @click="open.editIcon = !open.editIcon">
+        <svg v-svg color="green" symbol="location"></svg>
         <p class="text__details">Sport</p>
       </div>
+      <md-dialog :md-active.sync="open.editIcon">
+        <div class="modale">
+          <div class="modale__header">
+            <h1 class="text__title-level-2">Edit icon</h1>
+            <svg v-svg symbol="close" @click="open.editIcon = false"></svg>
+          </div>
+          <div class="modale__content text__details">
+            <AutocompleteColor/>
+          </div>
+          <div class="modale__footer modale__item--right">
+            <button class="primary-button--green text__details box-round-corner">Save</button>
+          </div>
+        </div>
+      </md-dialog>
       <p class="text__details" data-title="Latitude, Longitude">• 62.208, 6.67296</p>
     </div>
     <p class="text__body">
@@ -32,6 +49,7 @@
 
 <script>
 import { Datetime } from 'vue-datetime';
+import AutocompleteColor from '../../../assets/components/Autocomplete/Color/Color.vue';
 
 const LIMIT_SIZE = 256;
 
@@ -39,11 +57,15 @@ export default {
   name: 'PlacemarkEdit',
   components: {
     Datetime,
+    AutocompleteColor,
   },
   data() {
     return {
       description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
       datetime: '2019-06-21',
+      open: {
+        editIcon: false,
+      },
     };
   },
   computed: {
