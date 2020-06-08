@@ -10,30 +10,22 @@
       <div
         class="placemark-edit__row--icon"
         data-title="Select color & category"
-        @click="open.editIcon = !open.editIcon">
+        @click="manageOpenEditIcon(true)">
         <svg v-svg color="green" symbol="location"></svg>
         <p class="text__details">Sport</p>
       </div>
-      <md-dialog :md-active.sync="open.editIcon">
-        <div class="modale">
-          <div class="modale__header">
-            <h1 class="text__title-level-2">Edit icon</h1>
-            <svg v-svg symbol="close" @click="open.editIcon = false"></svg>
-          </div>
-          <div class="modale__content text__details">
-            <AutocompleteColor/>
-            <AutocompleteIconCategory/>
-          </div>
-          <div class="modale__footer modale__item--right">
-            <button class="primary-button--green text__details box-round-corner">Save</button>
-          </div>
-        </div>
-      </md-dialog>
-      <p class="text__details" data-title="Latitude, Longitude">• 62.208, 6.67296</p>
+      <ModaleEditIcon :open="open.editIcon" @manageOpen="manageOpenEditIcon"/>
+      <div data-title="Latitude, Longitude">
+        <input
+          type="text"
+          class="text__details text--center"
+          value="62.208, 6.67296">
+      </div>
     </div>
-    <p class="text__body">
+    <p class="text__body" @click="manageOpenEditDescription(true)">
       {{ descriptionContent }}
     </p>
+    <ModaleEditDescription :open="open.editDescription" @manageOpen="manageOpenEditDescription"/>
     <div class="footer">
       <p class="text__details text--uppercase">Quartier</p>
       <datetime
@@ -50,8 +42,8 @@
 
 <script>
 import { Datetime } from 'vue-datetime';
-import AutocompleteColor from '../../../assets/components/Autocomplete/Color.vue';
-import AutocompleteIconCategory from '../../../assets/components/Autocomplete/IconCategory.vue';
+import ModaleEditDescription from './Modale/ModaleEditDescription.vue';
+import ModaleEditIcon from './Modale/ModaleEditIcon.vue';
 
 const LIMIT_SIZE = 256;
 
@@ -59,8 +51,8 @@ export default {
   name: 'PlacemarkEdit',
   components: {
     Datetime,
-    AutocompleteColor,
-    AutocompleteIconCategory,
+    ModaleEditIcon,
+    ModaleEditDescription,
   },
   data() {
     return {
@@ -68,6 +60,7 @@ export default {
       datetime: '2019-06-21',
       open: {
         editIcon: false,
+        editDescription: false,
       },
     };
   },
@@ -76,6 +69,14 @@ export default {
       return this.description.length > LIMIT_SIZE
         ? `${this.description.slice(0, LIMIT_SIZE)}...`
         : this.description;
+    },
+  },
+  methods: {
+    manageOpenEditIcon(value) {
+      this.open.editIcon = value;
+    },
+    manageOpenEditDescription(value) {
+      this.open.editDescription = value;
     },
   },
 };

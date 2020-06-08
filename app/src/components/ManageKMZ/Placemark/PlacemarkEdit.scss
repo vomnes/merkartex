@@ -7,6 +7,10 @@
     width: auto;
   }
 
+  & input {
+    background: transparent;
+  }
+
   & > p {
     cursor: pointer;
   }
