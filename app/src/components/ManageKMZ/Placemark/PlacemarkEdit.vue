@@ -22,6 +22,7 @@
           </div>
           <div class="modale__content text__details">
             <AutocompleteColor/>
+            <AutocompleteIconCategory/>
           </div>
           <div class="modale__footer modale__item--right">
             <button class="primary-button--green text__details box-round-corner">Save</button>
@@ -49,7 +50,8 @@
 
 <script>
 import { Datetime } from 'vue-datetime';
-import AutocompleteColor from '../../../assets/components/Autocomplete/Color/Color.vue';
+import AutocompleteColor from '../../../assets/components/Autocomplete/Color.vue';
+import AutocompleteIconCategory from '../../../assets/components/Autocomplete/IconCategory.vue';
 
 const LIMIT_SIZE = 256;
 
@@ -58,6 +60,7 @@ export default {
   components: {
     Datetime,
     AutocompleteColor,
+    AutocompleteIconCategory,
   },
   data() {
     return {

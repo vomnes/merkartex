@@ -85,7 +85,7 @@ export default {
 </style>
 
 <style lang="scss">
-  @import '../../../style/main.scss';
+  @import '../../style/main.scss';
 
   .selected-color {
     width: 1.6rem;
