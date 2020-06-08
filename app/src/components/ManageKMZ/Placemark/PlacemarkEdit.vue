@@ -11,10 +11,13 @@
         class="placemark-edit__row--icon"
         data-title="Select color & category"
         @click="manageOpenEditIcon(true)">
-        <svg v-svg color="green" symbol="location"></svg>
-        <p class="text__details">Sport</p>
+        <svg v-svg :color="placemark.color.color" symbol="location"></svg>
+        <p class="text__details">{{ placemark.category.name }}</p>
       </div>
-      <ModaleEditIcon :open="open.editIcon" @manageOpen="manageOpenEditIcon"/>
+      <ModaleEditIcon
+        :open="open.editIcon" @manageOpen="manageOpenEditIcon"
+        :placemark="placemark"
+        @sendEditIconValue="getEditIconValue"/>
       <div data-title="Latitude, Longitude">
         <input
           type="text"
@@ -44,6 +47,7 @@
 import { Datetime } from 'vue-datetime';
 import ModaleEditDescription from './Modale/ModaleEditDescription.vue';
 import ModaleEditIcon from './Modale/ModaleEditIcon.vue';
+import placemarksDesign from '../../../assets/data/placemarks-design.json';
 
 const LIMIT_SIZE = 256;
 
@@ -58,6 +62,10 @@ export default {
     return {
       description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
       datetime: '2019-06-21',
+      placemark: {
+        color: placemarksDesign.colors[10],
+        category: placemarksDesign.categories[10],
+      },
       open: {
         editIcon: false,
         editDescription: false,
@@ -77,6 +85,9 @@ export default {
     },
     manageOpenEditDescription(value) {
       this.open.editDescription = value;
+    },
+    getEditIconValue(value) {
+      this.placemark = value;
     },
   },
 };

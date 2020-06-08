@@ -5,7 +5,8 @@
     </div>
     <md-autocomplete
       v-model="value"
-      :md-options="list.map(x => formatValue(x))">
+      :md-options="list.map(x => formatValue(x))"
+      :md-selected="selected(value)">
       <label>
         Category
       </label>
@@ -36,41 +37,17 @@ const formatValue = ({ name, icon }) => {
 
 export default {
   name: 'AutocompleteIconCategory',
-  data: () => ({
-    value: formatValue({ name: 'None', icon: '⨀' }),
-    list: [
-      { name: 'None', icon: '⨀' },
-      { name: 'Hotel', icon: '🏨' },
-      { name: 'Animals', icon: '🐾' },
-      { name: 'Buddhism', icon: '☸️' },
-      { name: 'Building', icon: '🏢' },
-      { name: 'Christianity', icon: '✝️' },
-      { name: 'Entertainment', icon: '🎬' },
-      { name: 'Exchange', icon: '💸' },
-      { name: 'Food', icon: '🍽' },
-      { name: 'Gas', icon: '⛽' },
-      { name: 'Judaism', icon: '✡️' },
-      { name: 'Medicine', icon: '🏥' },
-      { name: 'Mountain', icon: '🏔' },
-      { name: 'Museum', icon: '🖼' },
-      { name: 'Islam', icon: '☪️' },
-      { name: 'Park', icon: '🌳' },
-      { name: 'Parking', icon: '🚗' },
-      { name: 'Shop', icon: '🛍' },
-      { name: 'Sights', icon: '🌄' },
-      { name: 'Swim', icon: '🏊🏻' },
-      { name: 'Water', icon: '🌊' },
-      { name: 'Bar', icon: '🍻' },
-      { name: 'Transport', icon: '🚆' },
-      { name: 'Viewpoint', icon: '🌅' },
-      { name: 'Sport', icon: '🎾' },
-      { name: 'Finish', icon: '🏁' },
-    ],
-    formatValue,
-  }),
+  props: ['categories', 'current'],
+  data() {
+    return {
+      value: formatValue(this.current),
+      list: this.categories,
+      formatValue,
+    };
+  },
   methods: {
-    noop() {
-      window.alert('noop');
+    selected(value) {
+      this.$emit('sendValue', 'category', { name: value.name, color: value.color });
     },
   },
 };

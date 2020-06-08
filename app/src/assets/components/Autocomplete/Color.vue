@@ -5,7 +5,8 @@
     </div>
     <md-autocomplete
       v-model="value"
-      :md-options="colors.map(x => formatValue(x))">
+      :md-options="list.map(x => formatValue(x))"
+      :md-selected="selected(value)">
       <label>
         Color
       </label>
@@ -36,31 +37,17 @@ const formatValue = ({ name, color }) => {
 
 export default {
   name: 'AutocompleteColor',
-  data: () => ({
-    value: formatValue({ name: 'red', color: '#e31a23' }),
-    colors: [
-      { name: 'red', color: '#e31a23' },
-      { name: 'pink', color: '#fa4281' },
-      { name: 'purple', color: '#9e28af' },
-      { name: 'deep_purple', color: '#9e28af' },
-      { name: 'blue', color: '#0171c4' },
-      { name: 'light_blue', color: '#1aa0f6' },
-      { name: 'cyan', color: '#12c3c5' },
-      { name: 'teal', color: '#07a18d' },
-      { name: 'green', color: '#378c3c' },
-      { name: 'lime', color: '#93bb36' },
-      { name: 'yellow', color: '#fbc60a' },
-      { name: 'orange', color: '#fe9f00' },
-      { name: 'deep_orange', color: '#fb622a' },
-      { name: 'brown', color: '#7d5342' },
-      { name: 'gray', color: '#737373' },
-      { name: 'blue_gray', color: '#577480' },
-    ],
-    formatValue,
-  }),
+  props: ['colors', 'current'],
+  data() {
+    return {
+      value: formatValue(this.current),
+      list: this.colors,
+      formatValue,
+    };
+  },
   methods: {
-    noop() {
-      window.alert('noop');
+    selected(value) {
+      this.$emit('sendValue', 'color', { name: value.name, color: value.color });
     },
   },
 };
