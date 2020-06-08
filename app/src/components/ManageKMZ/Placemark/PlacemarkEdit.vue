@@ -28,7 +28,11 @@
     <p class="text__body" @click="manageOpenEditDescription(true)">
       {{ descriptionContent }}
     </p>
-    <ModaleEditDescription :open="open.editDescription" @manageOpen="manageOpenEditDescription"/>
+    <ModaleEditDescription
+    :open="open.editDescription"
+    :description="description"
+    @manageOpen="manageOpenEditDescription"
+    @sendDescriptionValue="getDescriptionValue"/>
     <div class="footer">
       <p class="text__details text--uppercase">Quartier</p>
       <datetime
@@ -63,8 +67,8 @@ export default {
       description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
       datetime: '2019-06-21',
       placemark: {
-        color: placemarksDesign.colors[10],
-        category: placemarksDesign.categories[10],
+        color: placemarksDesign.colors[0],
+        category: placemarksDesign.categories[0],
       },
       open: {
         editIcon: false,
@@ -88,6 +92,9 @@ export default {
     },
     getEditIconValue(value) {
       this.placemark = value;
+    },
+    getDescriptionValue(value) {
+      this.description = value;
     },
   },
 };

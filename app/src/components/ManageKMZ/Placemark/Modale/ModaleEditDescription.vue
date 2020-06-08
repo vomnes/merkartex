@@ -6,13 +6,16 @@
         <svg v-svg symbol="close" @click="$emit('manageOpen', false)"></svg>
       </div>
       <div class="modale__content">
-        <textarea class="text__body custom-scrollbar" v-model="description"></textarea>
+        <textarea class="text__body custom-scrollbar" v-model="localDescription"></textarea>
       </div>
       <div class="modale__footer">
         <p class="modale__footer--detail text__details">Description as texte or HTML</p>
         <div>
           <button class="primary-button--blue text__details box-round-corner">Preview</button>
-          <button class="primary-button--green text__details box-round-corner">Set</button>
+          <button
+            class="primary-button--green text__details box-round-corner"
+            @click="manageChangeClose"
+            >Set</button>
         </div>
       </div>
     </div>
@@ -24,13 +27,26 @@ export default {
   name: 'ModaleEditDescription',
   props: {
     open: Boolean,
+    description: String,
   },
   data() {
     return {
-      description: 'No content',
+      localDescription: this.description,
     };
   },
+  // watch: {
+  //   open(value) {
+  //     if (value) {
+  //       // Fix child take ownership on parent's values
+  //       this.localDescription = this.description;
+  //     }
+  //   },
+  // },
   methods: {
+    manageChangeClose() {
+      this.$emit('manageOpen', false);
+      this.$emit('sendDescriptionValue', this.localDescription);
+    },
   },
 };
 </script>
