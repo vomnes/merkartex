@@ -8,11 +8,11 @@
       <div class="modale__content text__details">
         <AutocompleteColor
         :colors="placemarksDesign.colors"
-        :current="currentPlacemark.color"
+        :current="placemark.color"
         @sendValue="receiveNewValue"/>
         <AutocompleteIconCategory
         :categories="placemarksDesign.categories"
-        :current="currentPlacemark.category"
+        :current="placemark.category"
         @sendValue="receiveNewValue"/>
       </div>
       <div class="modale__footer" :class="{ 'modale__item--right': !invalid }">
@@ -30,6 +30,8 @@ import AutocompleteColor from '../../../../assets/components/Autocomplete/Color.
 import AutocompleteIconCategory from '../../../../assets/components/Autocomplete/IconCategory.vue';
 import placemarksDesign from '../../../../assets/data/placemarks-design.json';
 
+const cloneDeep = require('clone-deep');
+
 export default {
   name: 'ModaleEditIcon',
   components: {
@@ -43,9 +45,17 @@ export default {
   data() {
     return {
       placemarksDesign,
-      currentPlacemark: this.placemark,
+      currentPlacemark: cloneDeep(this.placemark),
       invalid: false,
     };
+  },
+  watch: {
+    open(value) {
+      if (value) {
+        // Fix child take ownership on parent's values
+        this.currentPlacemark = cloneDeep(this.placemark);
+      }
+    },
   },
   methods: {
     receiveNewValue(type, value) {
