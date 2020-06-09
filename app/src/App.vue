@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" oncontextmenu="return false">
     <ManageKMZ msg="Hello"/>
   </div>
 </template>

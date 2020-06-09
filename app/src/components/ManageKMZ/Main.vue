@@ -16,32 +16,39 @@
           </button>
         </div>
       </div>
-      <PlacemarkEdit/>
+      <!-- <PlacemarkEdit/> -->
       <div class="placemarks__list custom-scrollbar">
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
+        <Placemark v-for="index in placemarks" :key="index"/>
       </div>
     </div>
+    <Keypress/>
   </div>
 </template>
 
 <script>
 import Placemark from './Placemark/Placemark.vue';
 import Map from './Map/Map.vue';
-import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
+import Keypress from './Keypress.vue';
 
 export default {
   name: 'ManageKMZ',
   components: {
     Placemark,
     Map,
-    PlacemarkEdit,
+    Keypress,
   },
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      placemarks: [0, 1, 2, 3, 4, 5],
+    };
+  },
+  methods: {
+    clicked(index) {
+      console.log('->', index);
+    },
   },
 };
 </script>

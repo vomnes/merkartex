@@ -1,0 +1,57 @@
+<template>
+  <div class="keypress">
+    <p class="text__details" v-if="shiftPressed">Shift</p>
+    <p class="text__details" v-if="windowPressed">Window/CMD</p>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  name: 'Keypress',
+  computed: {
+    ...mapState({
+      shiftPressed: (state) => state.placemarks.keypress.shift,
+      windowPressed: (state) => state.placemarks.keypress.window,
+    }),
+  },
+  methods: {
+    ...mapActions('placemarks', ['setKeypressStatus']),
+  },
+  mounted() {
+    window.addEventListener('keydown', (e) => {
+      if (e.keyCode === 16) {
+        this.setKeypressStatus({ type: 'shift', status: true });
+      } else if (e.keyCode === 91) {
+        this.setKeypressStatus({ type: 'window', status: true });
+      }
+    }, this);
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode === 16) {
+        this.setKeypressStatus({ type: 'shift', status: false });
+      } else if (e.keyCode === 91) {
+        this.setKeypressStatus({ type: 'window', status: false });
+      }
+    }, this);
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+  .keypress {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1rem;
+    z-index: 9999;
+    display: flex;
+
+    & > * {
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      cursor: default;
+    }
+  }
+</style>

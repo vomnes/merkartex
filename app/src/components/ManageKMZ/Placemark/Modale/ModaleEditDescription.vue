@@ -11,7 +11,9 @@
       <div class="modale__footer">
         <p class="modale__footer--detail text__details">Description as texte or HTML</p>
         <div>
-          <button class="primary-button--blue text__details box-round-corner">Preview</button>
+          <button
+          class="primary-button--blue text__details box-round-corner"
+          data-title="Render HTML">Preview</button>
           <button
             class="primary-button--green text__details box-round-corner"
             @click="manageChangeClose"
