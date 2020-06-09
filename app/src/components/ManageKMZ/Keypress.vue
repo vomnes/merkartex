@@ -12,25 +12,25 @@ export default {
   name: 'Keypress',
   computed: {
     ...mapState({
-      shiftPressed: (state) => state.placemarks.keypress.shift,
-      windowPressed: (state) => state.placemarks.keypress.window,
+      shiftPressed: (state) => state.keypress.shift,
+      windowPressed: (state) => state.keypress.window,
     }),
   },
   methods: {
-    ...mapActions('placemarks', ['setKeypressStatus']),
+    ...mapActions('keypress', ['setKeypressStatus']),
   },
   mounted() {
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === 16) {
         this.setKeypressStatus({ type: 'shift', status: true });
-      } else if (e.keyCode === 91) {
+      } else if (e.keyCode === 91 || e.keyCode === 224) {
         this.setKeypressStatus({ type: 'window', status: true });
       }
     }, this);
     window.addEventListener('keyup', (e) => {
       if (e.keyCode === 16) {
         this.setKeypressStatus({ type: 'shift', status: false });
-      } else if (e.keyCode === 91) {
+      } else if (e.keyCode === 91 || e.keyCode === 224) {
         this.setKeypressStatus({ type: 'window', status: false });
       }
     }, this);

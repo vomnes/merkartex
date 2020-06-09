@@ -1,8 +1,8 @@
 <template>
   <article
     class="placemark"
-    @click.stop="placemarkActive = !placemarkActive"
-    :class="[ placemarkActive ? 'placemark--selected' : '']">
+    @click.stop="clickOn"
+    :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : '']">
     <div class="placemark--side"></div>
     <div class="header">
       <h2 class="text__title">Jardin Yuyuan</h2>
@@ -49,19 +49,24 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 const LIMIT_SIZE = 256;
 
 export default {
   name: 'Placemark',
-  data() {
-    return {
-      description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
-      descriptionOpen: false,
-      moreOptionsOpen: false,
-      placemarkActive: false,
-    };
+  props: {
+    index: Number,
   },
   computed: {
+    ...mapGetters('placemarks', [
+      'placemarkIsSelected',
+    ]),
+    ...mapGetters('keypress', [
+      'modeSelectRangeOn',
+      'modeSelectMultiOn',
+      'modeSelectOn',
+    ]),
     hasSeeMoreDescription() {
       return this.description.length > LIMIT_SIZE;
     },
@@ -71,12 +76,38 @@ export default {
         : this.description;
     },
   },
+  data() {
+    return {
+      description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
+      descriptionOpen: false,
+      moreOptionsOpen: false,
+    };
+  },
   methods: {
+    ...mapActions('placemarks', [
+      'setPlacemarkSelectStatus',
+      'unselectAllPlacemarks',
+    ]),
     toggleDescriptionOpen() {
       this.descriptionOpen = !this.descriptionOpen;
     },
     toggleMoreOptionsOpen() {
       this.moreOptionsOpen = !this.moreOptionsOpen;
+    },
+    clickOn() {
+      if (this.modeSelectOn) {
+        if (this.modeSelectMultiOn) {
+          this.setPlacemarkSelectStatus({
+            index: this.index,
+            status: !this.placemarkIsSelected(this.index),
+          });
+        } else if (this.modeSelectRangeOn) {
+          
+        }
+      } else {
+        console.log('Unselect_all');
+        this.unselectAllPlacemarks();
+      }
     },
   },
 };

@@ -18,7 +18,7 @@
       </div>
       <!-- <PlacemarkEdit/> -->
       <div class="placemarks__list custom-scrollbar">
-        <Placemark v-for="index in placemarks" :key="index"/>
+        <Placemark v-for="index in placemarksList" :key="index" :index="index"/>
       </div>
     </div>
     <Keypress/>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import Placemark from './Placemark/Placemark.vue';
 import Map from './Map/Map.vue';
 import Keypress from './Keypress.vue';
@@ -40,15 +42,10 @@ export default {
   props: {
     msg: String,
   },
-  data() {
-    return {
-      placemarks: [0, 1, 2, 3, 4, 5],
-    };
-  },
-  methods: {
-    clicked(index) {
-      console.log('->', index);
-    },
+  computed: {
+    ...mapState({
+      placemarksList: (state) => state.placemarks.list,
+    }),
   },
 };
 </script>
