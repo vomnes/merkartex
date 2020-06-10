@@ -2,7 +2,7 @@
   <article
     class="placemark"
     @click.stop="select"
-    :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : '']">
+    :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : 'placemark--default']">
     <div class="placemark--side"></div>
     <div class="header">
       <h2 class="text__title">Jardin Yuyuan</h2>

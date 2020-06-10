@@ -140,4 +140,13 @@
       color: rgba(white, .4);
     }
   }
+
+  transition-duration: .2s;
+  &--default {
+    &:active {
+      transform: scale(.99);
+      box-shadow: $box-shadow-0;
+      transition-duration: .2s;
+    }
+  }
 }
