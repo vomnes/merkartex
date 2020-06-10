@@ -19,13 +19,17 @@
             :data-title="hasPlacemarksSelection ?
             'Edit multiple placemarks' :
             'Edit multiple placemarks using Window/⌘ (multi) or Shift (range) keys'"
-            data-title-position="left">
+            data-title-position="left"
+            @click="hasPlacemarksSelection ? manageOpenEditMultiple(true) : ''">
             <svg v-svg symbol="layers"></svg>
           </button>
           <button class="primary-button--blue box-circle">
             <svg v-svg symbol="plus"></svg>
           </button>
         </div>
+        <ModaleEditMultiple
+          :open="open.editMultiple"
+           @manageOpen="manageOpenEditMultiple"/>
       </div>
       <!-- <PlacemarkEdit/> -->
       <div class="placemarks__list custom-scrollbar">
@@ -40,8 +44,10 @@
 import { mapState, mapGetters } from 'vuex';
 
 import Placemark from './Placemark/Placemark.vue';
+// import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 import Map from './Map/Map.vue';
 import Keypress from './Keypress.vue';
+import ModaleEditMultiple from './ModaleEditMultiple.vue';
 
 export default {
   name: 'ManageKMZ',
@@ -49,9 +55,17 @@ export default {
     Placemark,
     Map,
     Keypress,
+    ModaleEditMultiple,
   },
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      open: {
+        editMultiple: true,
+      },
+    };
   },
   computed: {
     ...mapState({
@@ -60,6 +74,11 @@ export default {
     ...mapGetters('placemarks', [
       'hasPlacemarksSelection',
     ]),
+  },
+  methods: {
+    manageOpenEditMultiple(value) {
+      this.open.editMultiple = value;
+    },
   },
 };
 </script>

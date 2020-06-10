@@ -56,6 +56,7 @@ export default {
 <style lang="scss" scoped>
   .autocomplete-icon-category {
     display: flex;
+    margin-left: .5rem;
 
      &__current-icon {
       display: flex;
@@ -82,7 +83,7 @@ export default {
         width: 1.6rem;
         height: 1.6rem;
         display: inline-block;
-        margin-right: 1.6rem;
+        margin: 0 1rem .5rem 0;
         border-radius: 50%;
       }
     }

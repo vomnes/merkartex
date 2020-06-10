@@ -10,6 +10,7 @@
       <div
         class="placemark-edit__row--icon"
         data-title="Select color & category"
+        data-title-position="top"
         @click="manageOpenEditIcon(true)">
         <svg v-svg :color="placemark.color.color" symbol="location"></svg>
         <p class="text__details">{{ placemark.category.name }}</p>
@@ -18,7 +19,7 @@
         :open="open.editIcon" @manageOpen="manageOpenEditIcon"
         :placemark="placemark"
         @sendEditIconValue="getEditIconValue"/>
-      <div data-title="Latitude, Longitude">
+      <div data-title="Latitude, Longitude" data-title-position="top">
         <input
           type="text"
           class="text__details text--center"

@@ -56,6 +56,7 @@ export default {
 <style lang="scss" scoped>
   .autocomplete-color {
     display: flex;
+    margin-left: .5rem;
 
      &__current-color {
       display: flex;
@@ -78,7 +79,7 @@ export default {
     width: 1.6rem;
     height: 1.6rem;
     display: inline-block;
-    margin-right: 1.6rem;
+    margin: 0 1rem .5rem 0;
     border-radius: 50%;
     box-shadow: $box-shadow-1;
     color: currentColor;
