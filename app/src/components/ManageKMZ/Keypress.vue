@@ -1,7 +1,7 @@
 <template>
   <div class="keypress">
     <p class="text__details" v-if="shiftPressed">Shift</p>
-    <p class="text__details" v-if="windowPressed">Window/CMD</p>
+    <p class="text__details" v-if="windowPressed">Windows / ⌘</p>
   </div>
 </template>
 
@@ -39,12 +39,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import '../../assets/style/_main.scss';
+
   .keypress {
     position: fixed;
-    bottom: 1.25rem;
+    bottom: 1rem;
     left: 1rem;
+
     z-index: 9999;
+
     display: flex;
+
+    & p {
+      color: $color-primary-white;
+      background: $color-primary;
+      white-space: nowrap;
+
+      @extend .text__details;
+      font-size: 1.1rem;
+      @extend .box-round-corner;
+      padding: .55rem;
+    }
 
     & > * {
       &:not(:last-child) {

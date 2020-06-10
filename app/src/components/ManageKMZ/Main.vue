@@ -18,7 +18,7 @@
             ]"
             :data-title="hasPlacemarksSelection ?
             'Edit multiple placemarks' :
-            'Edit multiple placemarks using Window/⌘ (multi) or Shift (range) keys'"
+            'Edit multiple placemarks using Windows / ⌘ (multi) or Shift (range) keys'"
             data-title-position="left"
             @click="hasPlacemarksSelection ? manageOpenEditMultiple(true) : ''">
             <svg v-svg symbol="layers"></svg>
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       open: {
-        editMultiple: true,
+        editMultiple: false,
       },
     };
   },
