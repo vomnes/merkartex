@@ -11,7 +11,18 @@
       <div class="placemarks__header">
         <h1 class="text__title">Placemarks</h1>
         <div class="placemarks__header--actions">
-          <button class="primary-button--blue box-circle placemarks__add">
+          <button
+            :class="[
+              hasPlacemarksSelection ? 'primary-button--blue' : 'button-passive',
+              'box-circle',
+            ]"
+            :data-title="hasPlacemarksSelection ?
+            'Edit multiple placemarks' :
+            'Edit multiple placemarks using Window/⌘ (multi) or Shift (range) keys'"
+            data-title-position="left">
+            <svg v-svg symbol="layers"></svg>
+          </button>
+          <button class="primary-button--blue box-circle">
             <svg v-svg symbol="plus"></svg>
           </button>
         </div>
@@ -26,7 +37,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import Placemark from './Placemark/Placemark.vue';
 import Map from './Map/Map.vue';
@@ -46,6 +57,9 @@ export default {
     ...mapState({
       placemarksList: (state) => state.placemarks.list,
     }),
+    ...mapGetters('placemarks', [
+      'hasPlacemarksSelection',
+    ]),
   },
 };
 </script>

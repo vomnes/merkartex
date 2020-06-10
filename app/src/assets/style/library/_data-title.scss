@@ -1,58 +1,79 @@
-[data-title]:hover:before {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
+[data-title] {
+  position: relative;
+
+  &:before, &:after {
+    position: absolute;
+
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &:before {
+    content: attr(data-title);
+    color: $color-primary-white;
+    background: $color-primary;
+    z-index: 99999;
+    white-space: nowrap;
+
+    @extend .text__details;
+    font-size: 1.1rem;
+    @extend .box-round-corner;
+    padding: .55rem;
+  }
+
+  &:after {
+    content: '';
+  }
+
+  &:hover {
+    &:before, &:after {
+      opacity: 1;
+      transition: all 0.1s ease 0.5s;
+      visibility: visible;
+    }
+  }
 }
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
+
+[data-title=""] {
+  &:before, &:after {
+    display: none;
+  }
 }
 
 .data-title--center {
-  position: absolute;
   left: 50%;
-  transform: translate(-50%, -100%);
+  transform: translateX(-50%);
 }
 
-[data-title]:before {
-  content: attr(data-title);
-  color: $color-primary-white;
-  background: $color-primary;
-  z-index: 99999;
-  white-space: nowrap;
-  top: -0.7rem;
-
-  @extend .data-title--center;
-
-  @extend .text__details;
-  font-size: 1.1rem;
-  @extend .box-round-corner;
-  padding: .55rem;
-  opacity: 0;
-  visibility: hidden;
+.data-title--side-center {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.arrow-down {
-  width: 0;
-  height: 0;
-  border-left: .75rem solid transparent;
-  border-right: .75rem solid transparent;
-
-  border-top: .75rem solid $color-primary;
+[data-title-position="top"], [data-title-position="default"] {
+  &:before, &:after {
+    @extend .data-title--center;
+    bottom: 105%;
+  }
 }
 
-[data-title]:after {
-  content: '';
-  top: 0;
-
-  @extend .data-title--center;
-
-  @extend .arrow-down;
-  opacity: 0;
-  visibility: hidden;
+[data-title-position="bottom"] {
+  &:before, &:after {
+    @extend .data-title--center;
+    top: 105%;
+  }
 }
 
-[data-title] {
-  position: relative;
+[data-title-position="left"] {
+  &:before, &:after {
+    @extend .data-title--side-center;
+    right: 110%;
+  }
+}
+
+[data-title-position="right"] {
+  &:before, &:after {
+    @extend .data-title--side-center;
+    left: 110%;
+  }
 }

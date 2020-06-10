@@ -10,6 +10,7 @@ const state = {
 
 const getters = {
   placemarkIsSelected: (state) => (index) => state.selected[index] === true,
+  hasPlacemarksSelection: (state) => state.selected.find((isSelected) => isSelected === true),
 };
 
 const actions = {

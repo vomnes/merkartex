@@ -1,7 +1,7 @@
-button[class^=primary-button] {
-  $button-padding: .75rem;
-  $focus-weight: .25rem;
+$button-padding: .75rem;
+$focus-weight: .25rem;
 
+button[class^=primary-button] {
   width: auto;
   height: 4rem;
   padding: calc(#{$button-padding} - #{$focus-weight});
@@ -22,6 +22,8 @@ button[class^=primary-button] {
       transition: .25s;
     }
   }
+
+  transition: background-color 1s;
 }
 
 .primary-button {
@@ -36,6 +38,17 @@ button[class^=primary-button] {
     background-color: $color-primary-green;
     box-shadow:  0 4px 6px -1px rgba($color-primary-green,0.25);
   }
+}
+
+.button-passive {
+  width: auto;
+  height: 4rem;
+  padding: calc(#{$button-padding};
+  color: $color-primary;
+  background: none;
+  cursor: help;
+
+  transition: background-color 1s;
 }
 
 .box-circle {
