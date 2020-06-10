@@ -77,3 +77,12 @@
     left: 110%;
   }
 }
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: .75rem solid transparent;
+  border-right: .75rem solid transparent;
+
+  border-top: .75rem solid $color-primary;
+}

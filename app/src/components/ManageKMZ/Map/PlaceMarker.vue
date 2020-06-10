@@ -23,18 +23,36 @@ export default {
     },
   },
   data() {
+    const content = `
+      <div class="pin__content">
+        <h3>Jardin Yuyuan</h3>
+        <div class="pin__content--actions">
+          <svg>
+            <use xlink:href='${placemarkIcon}#pencil'></use>
+          </svg>
+          <svg>
+            <use xlink:href='${placemarkIcon}#trash'></use>
+          </svg>
+          <svg>
+            <use xlink:href='${placemarkIcon}#duplicate'></use>
+          </svg>
+        </div>
+      </div>
+    `;
+    const html = `
+    <div class="pin" style="background-color: ${this.color}"/>
+      <svg>
+        <use xlink:href='${placemarkIcon}#${this.icon}'></use>
+      </svg>
+      ${content}
+    </div>`;
     return {
       placemark: {
         position: L.latLng(this.position.lat, this.position.lng),
         icon: L.divIcon({
           labelAnchor: [-3, 0],
           popupAnchor: [0, -23],
-          html: `
-          <div class="pin" style="background-color: ${this.color}"/>
-            <svg>
-              <use xlink:href='${placemarkIcon}#${this.icon}'></use>
-            </svg>
-          </div>`,
+          html,
         }),
       },
     };

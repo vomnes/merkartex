@@ -6,7 +6,7 @@
       :center="center"
       :options="mapOptions"
     >
-      <PlaceMarker :position="placemark.position" color="#e31a23" icon="home"/>
+      <PlaceMarker :position="placemark.position" :color="placemark.color" :icon="placemark.icon"/>
       <l-control-zoom :position="'bottomleft'"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     </l-map>
@@ -39,6 +39,8 @@ export default {
           lat: 31.22222,
           lng: 121.45806,
         },
+        color: '#e31a23',
+        icon: 'home',
       },
     };
   },

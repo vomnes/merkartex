@@ -15,7 +15,7 @@
             <p class="edit-multiple__section--row--main">Placemark Title</p>
             <input
               class="text__details edit-multiple__section--row--after"
-              type="text" name="" value="" placeholder="After" v-model="title.before">
+              type="text" name="" value="" placeholder="After" v-model="title.after">
           </div>
         </div>
         <div class="edit-multiple__section">

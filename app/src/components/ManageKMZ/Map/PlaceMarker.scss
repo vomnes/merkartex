@@ -1,3 +1,5 @@
+@import '../../../assets/style/_main.scss';
+
 $pin-size: 2.25rem;
 $padding: .5rem;
 
@@ -14,12 +16,7 @@ $padding: .5rem;
   box-shadow: 0 4px 6px 1px rgba(0, 0, 0, .2), 0 2px 4px 1px rgba(0, 0, 0, .2);
   transition: .25s;
 
-  &:hover {
-    transform: scale(1.1);
-    transition: .25s;
-  }
-
-  & svg {
+  & > svg {
     width: calc(#{$pin-size} - calc(#{$padding} * 2));
     height: calc(#{$pin-size} - calc(#{$padding} * 2));
 
@@ -29,6 +26,82 @@ $padding: .5rem;
     position: absolute;
 
     fill: #F2F4F4; //#3A3931;
+  }
+
+  &__content {
+    color: $color-primary-white;
+    background: $color-primary;
+    white-space: nowrap;
+
+    @extend .text__details;
+    font-size: 1rem;
+    @extend .box-round-corner;
+    padding: .55rem;
+
+    position: absolute;
+    min-width: 10rem;
+    top: -1rem;
+    left: 50%;
+    transform: translate(-50%, -100%);
+
+    visibility: 0;
+    display: none;
+    transition: all 1s;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      bottom: 0;
+
+      @extend .arrow-down;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      background: none;
+      width: 100%;
+      height: 1.75rem;
+
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &:hover {
+      visibility: 1;
+      display: block;
+    }
+
+    &--actions {
+      height: 0;
+      transition: height .5s;
+
+      margin-top: .25rem;
+
+      display: flex;
+      justify-content: space-around;
+
+      & > svg {
+        width: 2.5rem;
+        height: 100%;
+        padding: .25rem;
+        fill: $color-primary-white;
+      }
+    }
+
+    &:hover .pin__content--actions {
+      height: 2.5rem;
+      transition: height .5s;
+    }
+  }
+
+  &:hover {
+    & .pin__content {
+      visibility: 1;
+      display: block;
+    }
   }
 }
 
