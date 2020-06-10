@@ -13,21 +13,29 @@ const getters = {
 };
 
 const actions = {
+  /* modeSelectMultiOn */
   setPlacemarkSelectStatus({ commit }, { index, status }) {
     commit('TOGGLE_SELECT', { index, status });
     commit('SET_LAST_INDEX_SELECTED', index);
   },
-  selectPlacemarksRange({ commit }, { start, end }) {
-    let index = 0;
-    for (index = start; index <= end || index < state.selected.length; index += 1) {
+  /* modeSelectRangeOn */
+  selectPlacemarksRange({ commit }, target) {
+    let tmpIndex = state.lastSelected;
+    let tmpTarget = target;
+    if (tmpTarget < tmpIndex) {
+      [tmpTarget, tmpIndex] = [tmpIndex, tmpTarget];
+    }
+    let index;
+    for (index = tmpIndex; index <= tmpTarget; index += 1) {
       commit('TOGGLE_SELECT', { index, status: true });
     }
-    commit('SET_LAST_INDEX_SELECTED', index);
+    commit('SET_LAST_INDEX_SELECTED', index - 1);
   },
-  unselectAllPlacemarks({ commit }) {
+  unselectAllPlacemarks({ commit }, selectedIndex) {
     for (let index = 0; index < state.selected.length; index += 1) {
       commit('TOGGLE_SELECT', { index, status: false });
     }
+    commit('SET_LAST_INDEX_SELECTED', selectedIndex);
   },
 };
 
@@ -36,7 +44,7 @@ const mutations = {
     Vue.set(state.selected, index, status);
   },
   SET_LAST_INDEX_SELECTED(state, index) {
-    Vue.set(state.lastSelected, index);
+    state.lastSelected = index;
   },
 };
 

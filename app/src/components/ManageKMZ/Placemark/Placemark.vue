@@ -1,7 +1,7 @@
 <template>
   <article
     class="placemark"
-    @click.stop="clickOn"
+    @click.stop="select"
     :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : '']">
     <div class="placemark--side"></div>
     <div class="header">
@@ -87,6 +87,7 @@ export default {
     ...mapActions('placemarks', [
       'setPlacemarkSelectStatus',
       'unselectAllPlacemarks',
+      'selectPlacemarksRange',
     ]),
     toggleDescriptionOpen() {
       this.descriptionOpen = !this.descriptionOpen;
@@ -94,7 +95,7 @@ export default {
     toggleMoreOptionsOpen() {
       this.moreOptionsOpen = !this.moreOptionsOpen;
     },
-    clickOn() {
+    select() {
       if (this.modeSelectOn) {
         if (this.modeSelectMultiOn) {
           this.setPlacemarkSelectStatus({
@@ -102,11 +103,10 @@ export default {
             status: !this.placemarkIsSelected(this.index),
           });
         } else if (this.modeSelectRangeOn) {
-          
+          this.selectPlacemarksRange(this.index);
         }
       } else {
-        console.log('Unselect_all');
-        this.unselectAllPlacemarks();
+        this.unselectAllPlacemarks(this.index);
       }
     },
   },
