@@ -1,5 +1,5 @@
 <template>
-  <l-marker :lat-lng="placemark.position" :icon="placemark.icon"/>
+  <l-marker :lat-lng="placemark.position" :icon="placemark.icon" @click="data"/>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
       </div>
     `;
     const html = `
-    <div class="pin" style="background-color: ${this.color}"/>
+    <div class="pin" id="pin-1" style="background-color: ${this.color}"/>
       <svg>
         <use xlink:href='${placemarkIcon}#${this.icon}'></use>
       </svg>
@@ -56,6 +56,10 @@ export default {
         }),
       },
     };
+  },
+  methods: {
+    data() {
+    },
   },
 };
 </script>

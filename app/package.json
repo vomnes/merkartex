@@ -11,6 +11,7 @@
     "clone-deep": "^4.0.1",
     "core-js": "^3.6.5",
     "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
     "luxon": "^1.24.1",
     "vue": "^2.6.11",
     "vue-datetime": "^1.0.0-beta.13",
