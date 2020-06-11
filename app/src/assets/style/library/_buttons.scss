@@ -3,7 +3,9 @@ $focus-weight: .25rem;
 
 button[class^=primary-button] {
   width: auto;
+  min-width: 4rem;
   height: 4rem;
+  
   padding: calc(#{$button-padding} - #{$focus-weight});
   border: $focus-weight solid transparent;
   cursor: pointer;

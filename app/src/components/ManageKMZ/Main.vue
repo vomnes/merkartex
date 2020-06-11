@@ -3,7 +3,22 @@
     <div class="header">
       <div class="header--title">
         <svg v-svg symbol="kmz"></svg>
-        <h1>Shanghai.kmz</h1>
+        <h1 @click="toggleEditTitle(true)" v-if="!editTitle.active">{{ title }}</h1>
+        <input
+          type="text"
+          v-model="editTitle.content"
+          :style="{width: `${editTitle.content.length * 1.75}rem`}"
+          v-else>
+        <button
+          v-if="editTitle.active"
+          class="header--title__input--close">
+          <svg v-svg symbol="close"></svg>
+        </button>
+        <button
+          v-if="editTitle.active"
+          class="header--title__input--confirm">
+          <svg v-svg symbol="confirm"></svg>
+        </button>
       </div>
     </div>
     <Map/>
@@ -65,6 +80,11 @@ export default {
       open: {
         editMultiple: false,
       },
+      title: 'Shanghai',
+      editTitle: {
+        active: false,
+        content: '',
+      },
     };
   },
   computed: {
@@ -78,6 +98,12 @@ export default {
   methods: {
     manageOpenEditMultiple(value) {
       this.open.editMultiple = value;
+    },
+    toggleEditTitle(value) {
+      this.editTitle.active = value;
+      if (value) {
+        this.editTitle.content = this.title;
+      }
     },
   },
 };
@@ -100,23 +126,60 @@ export default {
 
     & .header {
       grid-column-start: 1;
-      grid-column-end: 2;
+      grid-column-end: 3;
       align-self: center;
 
       &--title {
         display: flex;
         align-items: center;
 
-        & h1 {
+        & > h1, & > input {
           font-family: $font-3;
           font-weight: 400;
           font-size: 2.4rem;
+          background: none;
+          border-bottom: .1rem solid transparent;
         }
 
-        & svg {
+        & > input {
+          border-bottom: .1rem dashed $color-primary;
+          min-width: 15rem;
+          max-width: 50rem;
+          padding-bottom: .5rem;
+        }
+
+        & > svg {
           width: 3rem;
           height: 4.2rem;
           margin-right: 1.5rem;
+        }
+
+        & > button {
+          margin-left: .75rem;
+          color: grey;
+          cursor: pointer;
+          transition: .5s;
+
+          &:hover {
+            transition: .5s;
+          }
+        }
+
+        &__input {
+          &--confirm {
+            width: 2rem;
+            height: 2rem;
+            &:hover, &:focus {
+              color: rgba($color-primary-green, .4);
+            }
+          }
+          &--close {
+            width: 1.5rem;
+            height: 1.5rem;
+            &:hover, &:focus {
+              color: rgba($color-warning, .4);
+            }
+          }
         }
       }
     }
