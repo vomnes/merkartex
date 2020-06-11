@@ -27,31 +27,6 @@ import {
 import PlaceMarkerCluster from './PlaceMarkerCluster.vue';
 import PlaceMarker from './PlaceMarker.vue';
 
-const getRandomLatLng = () => ([
-  -90 + 180 * Math.random(),
-  -180 + 360 * Math.random(),
-]);
-
-// const getLocationRadiusKM = (x0, y0, radius) => {
-//   const random = Math.random();
-//   // Convert radius from meters to degrees
-//   const radiusInDegrees = (radius * 1000.0) / 111000.0;
-//
-//   const u = random;
-//   const v = random;
-//   const w = radiusInDegrees * Math.sqrt(u);
-//   const t = 2 * Math.PI * v;
-//   const x = w * Math.cos(t);
-//   const y = w * Math.sin(t);
-//
-//   // Adjust the x-coordinate for the shrinking of the east-west distances
-//   const newX = x / Math.cos((y0 * Math.PI) / 180);
-//
-//   const foundLongitude = y + y0;
-//   const foundLatitude = newX + x0;
-//   return [foundLatitude, foundLongitude];
-// };
-
 export default {
   name: 'Map',
   components: {
@@ -62,33 +37,38 @@ export default {
     PlaceMarkerCluster,
   },
   data() {
-    const placemarks = [];
-    for (let i = 0; i < 10; i += 1) {
-      const [lat, lng] = getRandomLatLng();
-      placemarks.push({
+    const placemarks = [
+      {
         position: {
-          lat,
-          lng,
+          lat: 31.22222,
+          lng: 121.45806,
         },
         color: '#e31a23',
         icon: 'home',
-        key: i,
-      });
-    }
+      },
+      {
+        position: {
+          lat: 31.21,
+          lng: 121.42,
+        },
+        color: '#fb622a',
+        icon: 'pencil',
+      },
+      {
+        position: {
+          lat: 31.229,
+          lng: 121.451,
+        },
+        color: '#0171c4',
+        icon: 'navigation',
+      },
+    ];
     return {
       zoom: 10,
       center: L.latLng(31.22222, 121.45806),
       url: 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=1Yg83v5zhwYytD6ZRJrP',
       attribution: '<a href="https://carto.com/" target="_blank">&copy; CARTO</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OSM</a>',
       mapOptions: { zoomControl: false, attributionControl: true, zoomSnap: true },
-      // placemark: {
-      //   position: {
-      //     lat: 31.22222,
-      //     lng: 121.45806,
-      //   },
-      //   color: '#e31a23',
-      //   icon: 'home',
-      // },
       placemarks,
       bounds: {
         northEast: {
