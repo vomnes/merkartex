@@ -55,6 +55,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/style/_main.scss';
+  @import '@/assets/style/_main.scss';
   @import "PlaceMarkerCluster";
 </style>

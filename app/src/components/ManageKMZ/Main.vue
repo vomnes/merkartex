@@ -22,64 +22,25 @@
       </div>
     </div>
     <Map/>
-    <div class="placemarks">
-      <div class="placemarks__header">
-        <h1 class="text__title">Placemarks</h1>
-        <div class="placemarks__header--actions">
-          <button
-            :class="[
-              hasPlacemarksSelection ? 'primary-button--blue' : 'button-passive',
-              'box-circle',
-            ]"
-            :data-title="hasPlacemarksSelection ?
-            'Edit multiple placemarks' :
-            'Edit multiple placemarks using Windows / ⌘ (multi) or Shift (range) keys'"
-            data-title-position="left"
-            @click="hasPlacemarksSelection ? manageOpenEditMultiple(true) : ''">
-            <svg v-svg symbol="layers"></svg>
-          </button>
-          <button class="primary-button--blue box-circle">
-            <svg v-svg symbol="plus"></svg>
-          </button>
-        </div>
-        <ModaleEditMultiple
-          :open="open.editMultiple"
-           @manageOpen="manageOpenEditMultiple"/>
-      </div>
-      <!-- <PlacemarkEdit/> -->
-      <div class="placemarks__list custom-scrollbar">
-        <Placemark v-for="index in placemarksList" :key="index" :index="index"/>
-      </div>
-    </div>
+    <Placemarks/>
     <Keypress/>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-
-import Placemark from './Placemark/Placemark.vue';
-// import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 import Map from './Map/Map.vue';
+import Placemarks from './Placemarks/Placemarks.vue';
 import Keypress from './Keypress.vue';
-import ModaleEditMultiple from './ModaleEditMultiple.vue';
 
 export default {
   name: 'ManageKMZ',
   components: {
-    Placemark,
     Map,
+    Placemarks,
     Keypress,
-    ModaleEditMultiple,
-  },
-  props: {
-    msg: String,
   },
   data() {
     return {
-      open: {
-        editMultiple: false,
-      },
       title: 'Shanghai',
       editTitle: {
         active: false,
@@ -87,18 +48,7 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapState({
-      placemarksList: (state) => state.placemarks.list,
-    }),
-    ...mapGetters('placemarks', [
-      'hasPlacemarksSelection',
-    ]),
-  },
   methods: {
-    manageOpenEditMultiple(value) {
-      this.open.editMultiple = value;
-    },
     toggleEditTitle(value) {
       this.editTitle.active = value;
       if (value) {
@@ -110,8 +60,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/style/_main.scss';
-  @import './Placemarks.scss';
+  @import '@/assets/style/_main.scss';
 
   .manage-kmz {
     $header-height: 5rem;

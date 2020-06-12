@@ -1,7 +1,7 @@
 <template>
   <div id="app">
      <!-- oncontextmenu="return false" -> Disable right click -->
-    <ManageKMZ msg="Hello"/>
+    <ManageKMZ/>
   </div>
 </template>
 

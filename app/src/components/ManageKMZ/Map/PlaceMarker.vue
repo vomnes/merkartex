@@ -5,7 +5,7 @@
 <script>
 import L from 'leaflet';
 import { LMarker } from 'vue2-leaflet';
-import placemarkIcon from '../../../assets/icons/_sprite.svg';
+import placemarkIcon from '@icons/_sprite.svg';
 
 export default {
   name: 'PlaceMarker',

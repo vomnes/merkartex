@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/_main.scss';
+  @import '@/assets/style/_main.scss';
   @import "Map";
 </style>
 

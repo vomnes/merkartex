@@ -52,7 +52,7 @@
 import { Datetime } from 'vue-datetime';
 import ModaleEditDescription from './Modale/ModaleEditDescription.vue';
 import ModaleEditIcon from './Modale/ModaleEditIcon.vue';
-import placemarksDesign from '../../../assets/data/placemarks-design.json';
+import placemarksDesign from '@data/placemarks-design.json';
 
 const LIMIT_SIZE = 256;
 
@@ -107,7 +107,7 @@ export default {
 </style>
 
 <style lang="scss">
-  @import '../../../assets/style/_main.scss';
+  @import '@/assets/style/_main.scss';
   .custom--datetime .vdatetime-input {
     @extend .text__details;
     text-align: right;

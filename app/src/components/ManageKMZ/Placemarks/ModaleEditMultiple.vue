@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import AutocompleteColor from '../../assets/components/Autocomplete/Color.vue';
-import AutocompleteIconCategory from '../../assets/components/Autocomplete/IconCategory.vue';
-import placemarksDesign from '../../assets/data/placemarks-design.json';
+import AutocompleteColor from 'assets/components/Autocomplete/Color.vue';
+import AutocompleteIconCategory from 'assets/components/Autocomplete/IconCategory.vue';
+import placemarksDesign from 'assets/data/placemarks-design.json';
 
 export default {
   name: 'ModaleEditMultiple',
@@ -135,5 +135,4 @@ export default {
     }
   }
 }
-
 </style>
