@@ -25,7 +25,27 @@
     </div>
     <!-- <PlacemarkEdit/> -->
     <div class="placemarks__list custom-scrollbar">
-      <Placemark v-for="index in placemarksList" :key="index" :index="index"/>
+      <!-- <Placemark v-for="index in placemarksList" :key="index" :index="index"/> -->
+      <div class="placemarks__folder">
+        <div class="placemarks__folder--header">
+          <div class="placemarks__folder--header--icon">
+            <svg class="placemarks__folder--header--folder" v-svg symbol="folder"></svg>
+          </div>
+          <h1 class="text__title">Shanghai - Old Town</h1>
+          <div class="placemarks__folder--header--icon">
+            <svg class="placemarks__folder--header--arrow" v-svg symbol="arrow-down"></svg>
+          </div>
+        </div>
+        <Placemark/>
+        <Placemark/>
+        <Placemark/>
+      </div>
+      <Placemark/>
+      <Placemark/>
+      <Placemark/>
+      <Placemark/>
+      <Placemark/>
+      <Placemark/>
     </div>
   </div>
 </template>

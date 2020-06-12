@@ -52,4 +52,54 @@
       overflow-y: scroll;
     }
   }
+
+  & .placemarks__folder {
+
+    & > .placemark {
+      margin-top: 1rem;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      &:last-child {
+        margin-bottom: .65rem;
+      }
+    }
+
+    &--header {
+      $header-height: 2.5rem;
+
+      background: #FAFAFA;
+
+      height: $header-height;
+      display: flex;
+      align-items: center;
+
+      $space-top-bottom: 2rem;
+      padding: $space-top-bottom 1.75rem;
+      position: sticky;
+      top: -.1rem;
+      z-index: 1;
+
+      &--icon {
+        height: $header-height;
+      }
+
+      &--folder {
+        width: 2.2rem;
+      }
+
+      & > h1 {
+        font-weight: 400;
+        font-size: 2rem;
+
+        margin: 0 1.5rem 0 1rem;
+      }
+
+      &--arrow {
+        width: 1.3rem;
+      }
+    }
+  }
 }
