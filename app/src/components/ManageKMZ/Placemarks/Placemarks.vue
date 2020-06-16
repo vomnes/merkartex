@@ -37,6 +37,7 @@
         <Placemark/>
         <Placemark/>
       </PlacemarksFolder>
+      <Placemark/>
     </div>
   </div>
 </template>

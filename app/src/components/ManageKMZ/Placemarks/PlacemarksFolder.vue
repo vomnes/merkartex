@@ -15,6 +15,11 @@
     <transition name="list-fade">
       <div v-if="open">
         <slot></slot>
+        <div
+          class="placemarks-folder__limit"
+          title="Close"
+          @click="open = false">
+        </div>
       </div>
     </transition>
   </div>
@@ -35,21 +40,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/style/_main.scss';
+
 .placemarks-folder {
-  overflow: hidden;
-
-  & > .placemark {
-    margin-top: 1rem;
-
-    &:not(:last-child) {
-      margin-bottom: 1rem;
-    }
-
-    &:last-child {
-      margin-bottom: .65rem;
-    }
-  }
-
   &--header {
     $header-height: 2.5rem;
 
@@ -85,6 +78,21 @@ export default {
       cursor: pointer;
       transition: .5s;
     }
+  }
+
+  &__limit {
+    width: 5rem;
+    height: .3rem;
+    border-radius: .15rem;
+    background: $color-grey-2;
+
+    margin: 0 2rem;
+
+    left: 50%;
+    transform: translateX(-100%);
+    position: relative;
+
+    cursor: pointer;
   }
 }
 
