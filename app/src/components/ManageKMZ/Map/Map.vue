@@ -8,8 +8,9 @@
     >
       <PlaceMarkerCluster>
         <PlaceMarker
-        v-for="placemark in placemarks" :key="placemark.key"
-        :position="placemark.position" :color="placemark.color" :icon="placemark.icon"/>
+        v-for="placemark in getPlacemarks" :key="placemark.key"
+        :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
+        :title="placemark.name" :color="getColor(placemark.iconStyle)" icon="home"/>
       </PlaceMarkerCluster>
       <l-control-zoom :position="'bottomleft'"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -24,8 +25,13 @@ import {
   LTileLayer,
   LControlZoom,
 } from 'vue2-leaflet';
+import { mapGetters } from 'vuex';
+
+import placemarksDesign from 'assets/data/placemarks-design.json';
+
 import PlaceMarkerCluster from './PlaceMarkerCluster.vue';
 import PlaceMarker from './PlaceMarker.vue';
+
 
 export default {
   name: 'Map',
@@ -35,6 +41,9 @@ export default {
     LControlZoom,
     PlaceMarker,
     PlaceMarkerCluster,
+  },
+  props: {
+    geoCenter: Object,
   },
   data() {
     const placemarks = [
@@ -64,8 +73,8 @@ export default {
       },
     ];
     return {
-      zoom: 10,
-      center: L.latLng(31.22222, 121.45806),
+      zoom: 4,
+      center: L.latLng(this.geoCenter.latitude, this.geoCenter.longitude),
       url: 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=1Yg83v5zhwYytD6ZRJrP',
       attribution: '<a href="https://carto.com/" target="_blank">&copy; CARTO</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OSM</a>',
       mapOptions: { zoomControl: false, attributionControl: true, zoomSnap: true },
@@ -83,6 +92,20 @@ export default {
     };
   },
   methods: {
+    getColor(iconColor) {
+      const color = iconColor.replace('#placemark-', '');
+      for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
+        if (placemarksDesign.colors[i].name === color) {
+          return placemarksDesign.colors[i].color;
+        }
+      }
+      return '';
+    },
+  },
+  computed: {
+    ...mapGetters('placemarks', [
+      'getPlacemarks',
+    ]),
   },
 };
 </script>

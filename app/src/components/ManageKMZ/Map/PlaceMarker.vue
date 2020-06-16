@@ -5,7 +5,7 @@
 <script>
 import L from 'leaflet';
 import { LMarker } from 'vue2-leaflet';
-import placemarkIcon from '@icons/_sprite.svg';
+import placemarkIcon from 'assets/icons/_sprite.svg';
 
 export default {
   name: 'PlaceMarker',
@@ -14,6 +14,7 @@ export default {
   },
   props: {
     position: Object,
+    title: String,
     color: {
       type: String,
       default: '#3A7BD5',
@@ -25,7 +26,7 @@ export default {
   data() {
     const content = `
       <div class="pin__content">
-        <h3>Jardin Yuyuan</h3>
+        <h3>${this.title}</h3>
         <div class="pin__content--actions">
           <svg>
             <use xlink:href='${placemarkIcon}#pencil'></use>
@@ -40,7 +41,7 @@ export default {
       </div>
     `;
     const html = `
-    <div class="pin" id="pin-1" style="background-color: ${this.color}"/>
+    <div class="pin" id="pin-1" style="color: ${this.color}"/>
       <svg>
         <use xlink:href='${placemarkIcon}#${this.icon}'></use>
       </svg>

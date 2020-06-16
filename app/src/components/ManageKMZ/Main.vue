@@ -20,17 +20,24 @@
           <svg v-svg symbol="confirm"></svg>
         </button>
       </div>
+      <div>
+        <button class="primary-button--blue text__details box-round-corner">Export</button>
+      </div>
     </div>
-    <Map/>
+    <Map :geoCenter="geoCenter"/>
     <Placemarks/>
     <Keypress/>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
+import Api from 'assets/library/api';
 import Map from './Map/Map.vue';
 import Placemarks from './Placemarks/Placemarks.vue';
 import Keypress from './Keypress.vue';
+
 
 export default {
   name: 'ManageKMZ',
@@ -46,7 +53,14 @@ export default {
         active: false,
         content: '',
       },
+      geoCenter: {},
     };
+  },
+  beforeMount() {
+    const kmzContent = Api.importData();
+    this.title = kmzContent.name;
+    this.geoCenter = kmzContent.geoCenter;
+    this.setPlacemarks(kmzContent.placemarks);
   },
   methods: {
     toggleEditTitle(value) {
@@ -55,6 +69,9 @@ export default {
         this.editTitle.content = this.title;
       }
     },
+    ...mapActions('placemarks', [
+      'setPlacemarks',
+    ]),
   },
 };
 </script>
@@ -77,6 +94,10 @@ export default {
       grid-column-start: 1;
       grid-column-end: 3;
       align-self: center;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       &--title {
         display: flex;
@@ -131,6 +152,10 @@ export default {
           }
         }
       }
+    }
+
+    & .primary-button--blue {
+      height: 3rem;
     }
   }
 </style>

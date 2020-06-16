@@ -10,6 +10,7 @@
   "dependencies": {
     "clone-deep": "^4.0.1",
     "core-js": "^3.6.5",
+    "isomorphic-fetch": "^2.2.1",
     "leaflet": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
     "luxon": "^1.24.1",

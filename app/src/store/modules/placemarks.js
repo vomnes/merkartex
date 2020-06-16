@@ -3,14 +3,15 @@
 import Vue from 'vue';
 
 const state = {
-  list: [0, 1, 2, 3, 4, 5],
-  selected: [false, false, false, false, false, false],
+  list: [],
+  selected: [],
   lastSelected: 0,
 };
 
 const getters = {
   placemarkIsSelected: (state) => (index) => state.selected[index] === true,
   hasPlacemarksSelection: (state) => state.selected.find((isSelected) => isSelected === true),
+  getPlacemarks: (state) => state.list,
 };
 
 const actions = {
@@ -38,6 +39,9 @@ const actions = {
     }
     commit('SET_LAST_INDEX_SELECTED', selectedIndex);
   },
+  setPlacemarks({ commit }, placemarks) {
+    commit('SET_PLACEMARKS', placemarks);
+  },
 };
 
 const mutations = {
@@ -46,6 +50,13 @@ const mutations = {
   },
   SET_LAST_INDEX_SELECTED(state, index) {
     state.lastSelected = index;
+  },
+  SET_PLACEMARKS(state, data) {
+    state.list = data;
+    state.selected = [];
+    for (let i = 0; i < data.length; i += 1) {
+      state.selected.push(false);
+    }
   },
 };
 

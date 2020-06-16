@@ -121,7 +121,7 @@
     width: $side-color-weight;
     transition: width .4s;
     height: calc(100% + calc(#{$border-on-select-weight} * 2));
-    background-color: #AED6F1;
+    opacity: .6;
     z-index: -1;
     position: absolute;
     border-radius: $border-radius 0 0 $border-radius;

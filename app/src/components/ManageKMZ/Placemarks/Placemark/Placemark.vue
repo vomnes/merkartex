@@ -3,9 +3,9 @@
     class="placemark"
     @click.stop="select"
     :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : 'placemark--default']">
-    <div class="placemark--side"></div>
+    <div class="placemark--side" :style="{ backgroundColor: getColor }"></div>
     <div class="header">
-      <h2 class="text__title">Jardin Yuyuan</h2>
+      <h2 class="text__title">{{ data.name }}</h2>
       <div class="header--icon">
         <svg v-svg symbol="ellipsis"
         tabindex="0"
@@ -42,14 +42,15 @@
       </span>
     </p>
     <div class="footer">
-      <p class="text__details text--uppercase">Quartier</p>
-      <p class="text__details text--uppercase">05/31/2019</p>
+      <p class="text__details text--uppercase">{{ data.featureType }}</p>
+      <p class="text__details text--uppercase">{{ data.updatedAt }}</p>
     </div>
   </article>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import placemarksDesign from 'assets/data/placemarks-design.json';
 
 const LIMIT_SIZE = 256;
 
@@ -57,6 +58,7 @@ export default {
   name: 'Placemark',
   props: {
     index: Number,
+    data: Object,
   },
   computed: {
     ...mapGetters('placemarks', [
@@ -75,10 +77,19 @@ export default {
         ? `${this.description.slice(0, LIMIT_SIZE)}...`
         : this.description;
     },
+    getColor() {
+      const color = this.data.iconStyle.replace('#placemark-', '');
+      for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
+        if (placemarksDesign.colors[i].name === color) {
+          return placemarksDesign.colors[i].color;
+        }
+      }
+      return '';
+    },
   },
   data() {
     return {
-      description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
+      description: this.data.description ? this.data.description : '',
       descriptionOpen: false,
       moreOptionsOpen: false,
     };

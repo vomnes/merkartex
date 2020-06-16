@@ -4,7 +4,8 @@ $pin-size: 2.25rem;
 $padding: .5rem;
 
 .pin {
-  background-color: #3A7BD5;
+  background-color: currentColor;
+  opacity: .8;
   width: $pin-size;
   height: $pin-size;
   display: block;

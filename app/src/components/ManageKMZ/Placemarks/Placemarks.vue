@@ -25,37 +25,27 @@
     </div>
     <!-- <PlacemarkEdit/> -->
     <div class="placemarks__list custom-scrollbar">
-      <!-- <Placemark v-for="index in placemarksList" :key="index" :index="index"/> -->
-      <PlacemarksFolder title="Shanghai - Old town">
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
-      </PlacemarksFolder>
-      <PlacemarksFolder title="Shanghai">
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
-        <Placemark/>
-      </PlacemarksFolder>
-      <Placemark/>
+      <!-- <PlacemarksFolder title="Shanghai - Old town"></PlacemarksFolder> -->
+      <Placemark
+        v-for="(placemarkContent, index) in getPlacemarks"
+        :key="index" :index="index" :data="placemarkContent"/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import Placemark from './Placemark/Placemark.vue';
 // import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 import ModaleEditMultiple from './ModaleEditMultiple.vue';
-import PlacemarksFolder from './PlacemarksFolder.vue';
+// import PlacemarksFolder from './PlacemarksFolder.vue';
 
 export default {
   name: 'Placemarks',
   components: {
     Placemark,
     ModaleEditMultiple,
-    PlacemarksFolder,
   },
   data() {
     return {
@@ -65,11 +55,9 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      placemarksList: (state) => state.placemarks.list,
-    }),
     ...mapGetters('placemarks', [
       'hasPlacemarksSelection',
+      'getPlacemarks',
     ]),
   },
   methods: {
