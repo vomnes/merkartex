@@ -8,7 +8,7 @@
     >
       <PlaceMarkerCluster>
         <PlaceMarker
-        v-for="placemark in getPlacemarks" :key="placemark.key"
+        v-for="(placemark, index) in getPlacemarks" :key="index" :index="index"
         :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
         :title="placemark.name" :color="getColor(placemark.iconStyle)" icon="home"/>
       </PlaceMarkerCluster>
@@ -32,7 +32,6 @@ import placemarksDesign from 'assets/data/placemarks-design.json';
 import PlaceMarkerCluster from './PlaceMarkerCluster.vue';
 import PlaceMarker from './PlaceMarker.vue';
 
-
 export default {
   name: 'Map',
   components: {
@@ -46,39 +45,12 @@ export default {
     geoCenter: Object,
   },
   data() {
-    const placemarks = [
-      {
-        position: {
-          lat: 31.22222,
-          lng: 121.45806,
-        },
-        color: '#e31a23',
-        icon: 'home',
-      },
-      {
-        position: {
-          lat: 31.21,
-          lng: 121.42,
-        },
-        color: '#fb622a',
-        icon: 'pencil',
-      },
-      {
-        position: {
-          lat: 31.229,
-          lng: 121.451,
-        },
-        color: '#0171c4',
-        icon: 'navigation',
-      },
-    ];
     return {
       zoom: 4,
       center: L.latLng(this.geoCenter.latitude, this.geoCenter.longitude),
       url: 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=1Yg83v5zhwYytD6ZRJrP',
       attribution: '<a href="https://carto.com/" target="_blank">&copy; CARTO</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OSM</a>',
       mapOptions: { zoomControl: false, attributionControl: true, zoomSnap: true },
-      placemarks,
       bounds: {
         northEast: {
           lat: 0,
@@ -91,6 +63,12 @@ export default {
       },
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.map = this.$refs.map.mapObject;
+    });
+    this.$root.$on('flyToLocation', this.flyTo);
+  },
   methods: {
     getColor(iconColor) {
       const color = iconColor.replace('#placemark-', '');
@@ -100,6 +78,11 @@ export default {
         }
       }
       return '';
+    },
+    flyTo({ lat, lng }) {
+      const defaultZoom = 16;
+      const newCenter = [lat, lng];
+      this.map.flyTo(newCenter, defaultZoom);
     },
   },
   computed: {
@@ -118,3 +101,30 @@ export default {
 <style lang="scss">
   @import "PlaceMarker";
 </style>
+
+<!-- const placemarks = [
+  {
+    position: {
+      lat: 31.22222,
+      lng: 121.45806,
+    },
+    color: '#e31a23',
+    icon: 'home',
+  },
+  {
+    position: {
+      lat: 31.21,
+      lng: 121.42,
+    },
+    color: '#fb622a',
+    icon: 'pencil',
+  },
+  {
+    position: {
+      lat: 31.229,
+      lng: 121.451,
+    },
+    color: '#0171c4',
+    icon: 'navigation',
+  },
+]; -->

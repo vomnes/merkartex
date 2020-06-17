@@ -1,5 +1,5 @@
 <template>
-  <l-marker :lat-lng="placemark.position" :icon="placemark.icon" @click="data"/>
+  <l-marker :lat-lng="placemark.position" :icon="placemark.icon" @click="scrollToPlacemark"/>
 </template>
 
 <script>
@@ -22,6 +22,7 @@ export default {
     icon: {
       type: String,
     },
+    index: Number,
   },
   data() {
     const content = `
@@ -59,7 +60,13 @@ export default {
     };
   },
   methods: {
-    data() {
+    scrollToPlacemark() {
+      document
+        .getElementById(`placemark-${this.index}`)
+        .scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
     },
   },
 };

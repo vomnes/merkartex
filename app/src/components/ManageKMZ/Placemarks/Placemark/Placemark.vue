@@ -1,6 +1,7 @@
 <template>
   <article
     class="placemark"
+    :id="`placemark-${index}`"
     @click.stop="select"
     :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : 'placemark--default']">
     <div class="placemark--side" :style="{ backgroundColor: getColor }"></div>
@@ -118,6 +119,10 @@ export default {
         }
       } else {
         this.unselectAllPlacemarks(this.index);
+        this.$root.$emit('flyToLocation', {
+          lat: this.data.location.latitude,
+          lng: this.data.location.longitude,
+        });
       }
     },
   },

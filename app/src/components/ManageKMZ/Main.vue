@@ -24,7 +24,7 @@
         <button class="primary-button--blue text__details box-round-corner">Export</button>
       </div>
     </div>
-    <Map :geoCenter="geoCenter"/>
+    <Map :geoCenter="geoCenter" ref="mapComponent"/>
     <Placemarks/>
     <Keypress/>
   </div>
@@ -37,7 +37,6 @@ import Api from 'assets/library/api';
 import Map from './Map/Map.vue';
 import Placemarks from './Placemarks/Placemarks.vue';
 import Keypress from './Keypress.vue';
-
 
 export default {
   name: 'ManageKMZ',
@@ -57,7 +56,14 @@ export default {
     };
   },
   beforeMount() {
-    const kmzContent = Api.importData();
+    let kmzContent;
+    const localStorageMap = localStorage.getItem('map_data');
+    if (localStorageMap) {
+      kmzContent = JSON.parse(localStorageMap);
+    } else {
+      kmzContent = Api.importData();
+      localStorage.setItem('map_data', JSON.stringify(kmzContent));
+    }
     this.title = kmzContent.name;
     this.geoCenter = kmzContent.geoCenter;
     this.setPlacemarks(kmzContent.placemarks);
@@ -72,6 +78,10 @@ export default {
     ...mapActions('placemarks', [
       'setPlacemarks',
     ]),
+  },
+  created() {
+    window.addEventListener('beforeunload', () => {
+    }, false);
   },
 };
 </script>
