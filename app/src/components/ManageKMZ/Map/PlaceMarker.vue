@@ -1,5 +1,11 @@
 <template>
-  <l-marker :lat-lng="placemark.position" :icon="placemark.icon" @click="scrollToPlacemark"/>
+  <l-marker
+    :lat-lng="placemark.position"
+    :icon="placemark.icon"
+    @click="scrollToPlacemark"
+    @mouseenter="hoveredEnter"
+    @mouseleave="hoveredLeave"
+  />
 </template>
 
 <script>
@@ -67,6 +73,18 @@ export default {
           behavior: 'smooth',
           block: 'start',
         });
+    },
+    hoveredEnter() {
+      document
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
+        .classList
+        .add('placemark--hovered');
+    },
+    hoveredLeave() {
+      document
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
+        .classList
+        .remove('placemark--hovered');
     },
   },
 };
