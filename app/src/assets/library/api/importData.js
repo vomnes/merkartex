@@ -1,4 +1,4 @@
-import data from 'assets/data/china-test-data.json';
+import data from 'assets/data/france-test-data.json';
 
 const importData = () => data;
 

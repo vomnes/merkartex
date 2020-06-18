@@ -46,6 +46,9 @@ const actions = {
   removePlacemark({ commit }, index) {
     commit('REMOVE_PLACEMARK', index);
   },
+  updatePlacemark({ commit }, { id, data }) {
+    commit('UPDATE_PLACEMARK', { id, data });
+  },
 };
 
 const mutations = {
@@ -64,6 +67,14 @@ const mutations = {
   },
   REMOVE_PLACEMARK(state, index) {
     ArrayLib.removeItemByIndex(state.list, index);
+  },
+  UPDATE_PLACEMARK(state, { id, data }) {
+    for (let index = 0; index < state.list.length; index += 1) {
+      if (state.list[index].id === id) {
+        Vue.set(state.list, index, data);
+        return;
+      }
+    }
   },
 };
 

@@ -8,9 +8,10 @@
     >
       <PlaceMarkerCluster>
         <PlaceMarker
-        v-for="placemark in getPlacemarks" :key="placemark.id" :index="placemark.id"
+        v-for="placemark in getPlacemarks"
+        :key="placemark.id" :index="placemark.id"
         :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
-        :title="placemark.name" :color="getColor(placemark.iconStyle)" icon="home"/>
+        :title="placemark.name" :color="getColor(placemark.icon.style)" icon="home"/>
       </PlaceMarkerCluster>
       <l-control-zoom :position="'bottomleft'"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -71,9 +72,8 @@ export default {
   },
   methods: {
     getColor(iconColor) {
-      const color = iconColor.replace('#placemark-', '');
       for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
-        if (placemarksDesign.colors[i].name === color) {
+        if (placemarksDesign.colors[i].name === iconColor) {
           return placemarksDesign.colors[i].color;
         }
       }

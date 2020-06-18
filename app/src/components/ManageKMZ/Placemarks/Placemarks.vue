@@ -23,7 +23,6 @@
         :open="open.editMultiple"
          @manageOpen="manageOpenEditMultiple"/>
     </div>
-    <!-- <PlacemarkEdit/> -->
     <div class="placemarks__list custom-scrollbar">
       <!-- <PlacemarksFolder title="Shanghai - Old town"></PlacemarksFolder> -->
       <Placemark
@@ -37,7 +36,6 @@
 import { mapGetters } from 'vuex';
 
 import Placemark from './Placemark/Placemark.vue';
-// import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 import ModaleEditMultiple from './ModaleEditMultiple.vue';
 // import PlacemarksFolder from './PlacemarksFolder.vue';
 

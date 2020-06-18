@@ -3,7 +3,7 @@
     class="placemark"
     :id="`placemark-${data.location.latitude}-${data.location.longitude}`"
     @click.stop="select"
-    :class="[ placemarkIsSelected(this.originalIndex)
+    :class="[ placemarkIsSelected(index)
     ? 'placemark--selected'
     : 'placemark--default']">
     <div class="placemark--side" :style="{ backgroundColor: getColor }"></div>
@@ -18,11 +18,11 @@
           v-if="moreOptionsOpen"
           class="placemark--more-options">
           <ul>
-            <li tabindex="0">
+            <li tabindex="0" @click.stop="editMode">
               <svg v-svg symbol="pencil"></svg>
               <p>Edit</p>
             </li>
-            <li tabindex="0" @click.stop="removePlacemark(originalIndex); toggleMoreOptionsOpen()">
+            <li tabindex="0" @click.stop="removePlacemark(index); toggleMoreOptionsOpen()">
               <svg v-svg symbol="trash"></svg>
               <p>Remove</p>
             </li>
@@ -48,12 +48,16 @@
       <p class="text__details text--uppercase">{{ data.featureType }}</p>
       <p class="text__details text--uppercase">{{ data.updatedAt }}</p>
     </div>
+    <PlacemarkEdit :data="data" :openEdit="open.edit" @manageOpen="manageToggleEditMode"/>
   </article>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+
 import placemarksDesign from 'assets/data/placemarks-design.json';
+
+import PlacemarkEdit from './PlacemarkEdit.vue';
 
 const LIMIT_SIZE = 256;
 
@@ -63,8 +67,18 @@ export default {
     index: Number,
     data: Object,
   },
-  mounted() {
-    this.originalIndex = this.index;
+  components: {
+    PlacemarkEdit,
+  },
+  data() {
+    return {
+      description: this.data.description ? this.data.description : '',
+      descriptionOpen: false,
+      moreOptionsOpen: false,
+      open: {
+        edit: false,
+      },
+    };
   },
   computed: {
     ...mapGetters('placemarks', [
@@ -80,11 +94,11 @@ export default {
     },
     descriptionContent() {
       return this.hasSeeMoreDescription && !this.descriptionOpen
-        ? `${this.description.slice(0, LIMIT_SIZE)}...`
-        : this.description;
+        ? `${this.data.description.slice(0, LIMIT_SIZE)}...`
+        : this.data.description;
     },
     getColor() {
-      const color = this.data.iconStyle.replace('#placemark-', '');
+      const color = this.data.icon.style;
       for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
         if (placemarksDesign.colors[i].name === color) {
           return placemarksDesign.colors[i].color;
@@ -92,14 +106,6 @@ export default {
       }
       return '';
     },
-  },
-  data() {
-    return {
-      description: this.data.description ? this.data.description : '',
-      descriptionOpen: false,
-      moreOptionsOpen: false,
-      originalIndex: null,
-    };
   },
   methods: {
     ...mapActions('placemarks', [
@@ -131,6 +137,13 @@ export default {
           lng: this.data.location.longitude,
         });
       }
+    },
+    editMode() {
+      this.open.edit = true;
+      this.toggleMoreOptionsOpen();
+    },
+    manageToggleEditMode(value) {
+      this.open.edit = value;
     },
   },
 };

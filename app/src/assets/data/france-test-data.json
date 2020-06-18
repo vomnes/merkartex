@@ -1,0 +1,51 @@
+{
+    "name": "France4",
+    "geoCenter": {
+        "latitude": 48.219625756797775,
+        "longitude": -2.646838646198689
+    },
+    "placemarks": [
+        {
+            "name": "Appartement Rennes",
+            "updatedAt": "2020-06-04T13:34:26Z",
+            "icon": {
+                "style": "lightblue",
+                "category": "Hotel"
+            },
+            "location": {
+                "latitude": 48.108401,
+                "longitude": -1.6530667
+            },
+            "featureType": "waterway-river",
+            "id": 0
+        },
+        {
+            "name": "Relou Conduite Moto 🏍️",
+            "updatedAt": "2020-06-04T13:39:20Z",
+            "icon": {
+                "style": "deeporange",
+                "category": "Parking"
+            },
+            "location": {
+                "latitude": 48.055459,
+                "longitude": -1.7755233
+            },
+            "featureType": "building",
+            "id": 1
+        },
+        {
+            "name": "La Récré des Trois Curés",
+            "updatedAt": "2020-06-05T16:32:34Z",
+            "icon": {
+                "style": "red",
+                "category": "Buddhism"
+            },
+            "location": {
+                "latitude": 48.472184,
+                "longitude": -4.5264166
+            },
+            "featureType": "waterway-river",
+            "id": 2
+        }
+    ]
+}

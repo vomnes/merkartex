@@ -3,19 +3,19 @@
     { "name": "red", "color": "#e31a23" },
     { "name": "pink", "color": "#fa4281" },
     { "name": "purple", "color": "#9e28af" },
-    { "name": "deep_purple", "color": "#9e28af" },
+    { "name": "deeppurple", "color": "#9e28af" },
     { "name": "blue", "color": "#0171c4" },
-    { "name": "light_blue", "color": "#1aa0f6" },
+    { "name": "lightblue", "color": "#1aa0f6" },
     { "name": "cyan", "color": "#12c3c5" },
     { "name": "teal", "color": "#07a18d" },
     { "name": "green", "color": "#378c3c" },
     { "name": "lime", "color": "#93bb36" },
     { "name": "yellow", "color": "#fbc60a" },
     { "name": "orange", "color": "#fe9f00" },
-    { "name": "deep_orange", "color": "#fb622a" },
+    { "name": "deeporange", "color": "#fb622a" },
     { "name": "brown", "color": "#7d5342" },
     { "name": "gray", "color": "#737373" },
-    { "name": "blue_gray", "color": "#577480" }
+    { "name": "bluegray", "color": "#577480" }
   ],
   "categories": [
     { "name": "None", "icon": "⨀" },

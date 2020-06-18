@@ -23,8 +23,6 @@ html {
   }
 }
 
-$body-padding: 1rem;
-
 body {
   font-family: $font-2;
   font-weight: 400;
@@ -33,6 +31,9 @@ body {
   box-sizing: border-box; /* === Best Practice === */
 
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  position: absolute;
+  width: 100%;
 }
 
 a {

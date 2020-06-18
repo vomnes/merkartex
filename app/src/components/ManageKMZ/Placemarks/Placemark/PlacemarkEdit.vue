@@ -1,76 +1,84 @@
 <template>
-  <form class="placemark placemark-edit">
-    <div class="header">
-      <input class="text__title" type="text" name="title" value="Jardin Yuyuan">
-      <div class="header--icon">
-        <svg v-svg symbol="close"></svg>
+  <md-dialog :md-active="openEdit" @md-clicked-outside="$emit('manageOpen', false)">
+    <form class="placemark placemark-edit" @submit.prevent="saveChanges">
+      <div class="header">
+        <input class="text__title" type="text" name="title" v-model="editData.title">
+        <div class="header--icon" @click="$emit('manageOpen', false)">
+          <svg v-svg symbol="close"></svg>
+        </div>
       </div>
-    </div>
-    <div class="placemark-edit__row">
-      <div
-        class="placemark-edit__row--icon"
-        data-title="Select color & category"
-        data-title-position="top"
-        @click="manageOpenEditIcon(true)">
-        <svg v-svg :color="placemark.color.color" symbol="location"></svg>
-        <p class="text__details">{{ placemark.category.name }}</p>
+      <div class="placemark-edit__row">
+        <div
+          class="placemark-edit__row--icon"
+          data-title="Select color & category"
+          data-title-position="top"
+          @click="manageOpenEditIcon(true)">
+          <svg v-svg :color="editData.placemark.color.color" symbol="location"></svg>
+          <p class="text__details">{{ editData.placemark.category.name }}</p>
+        </div>
+        <ModaleEditIcon
+          :open="open.editIcon" @manageOpen="manageOpenEditIcon"
+          :placemark="editData.placemark"
+          @sendEditIconValue="getEditIconValue"/>
+        <div data-title="Latitude, Longitude" data-title-position="top">
+          <input
+            type="text"
+            class="text__details text--center"
+            :value="editData.location">
+        </div>
       </div>
-      <ModaleEditIcon
-        :open="open.editIcon" @manageOpen="manageOpenEditIcon"
-        :placemark="placemark"
-        @sendEditIconValue="getEditIconValue"/>
-      <div data-title="Latitude, Longitude" data-title-position="top">
-        <input
-          type="text"
-          class="text__details text--center"
-          value="62.208, 6.67296">
+      <p class="text__body" @click="manageOpenEditDescription(true)">
+        {{ descriptionContent }}
+      </p>
+      <ModaleEditDescription
+      :open="open.editDescription"
+      :description="editData.description"
+      @manageOpen="manageOpenEditDescription"
+      @sendDescriptionValue="getDescriptionValue"/>
+      <div class="footer">
+        <p class="text__details text--uppercase">{{ editData.featureType }}</p>
+        <datetime
+          class="custom--datetime text--uppercase"
+          type="datetime"
+          v-model="editData.datetime"
+          use24-hour></datetime>
       </div>
-    </div>
-    <p class="text__body" @click="manageOpenEditDescription(true)">
-      {{ descriptionContent }}
-    </p>
-    <ModaleEditDescription
-    :open="open.editDescription"
-    :description="description"
-    @manageOpen="manageOpenEditDescription"
-    @sendDescriptionValue="getDescriptionValue"/>
-    <div class="footer">
-      <p class="text__details text--uppercase">Quartier</p>
-      <datetime
-        class="custom--datetime text--uppercase"
-        type="datetime"
-        v-model="datetime"
-        use24-hour></datetime>
-    </div>
-    <div class="placemark-edit__actions">
-      <button class="primary-button--blue text__details box-round-corner">Save changes</button>
-    </div>
-  </form>
+      <div class="placemark-edit__actions">
+        <button class="primary-button--blue text__details box-round-corner"
+          type="submit">
+          Save changes
+        </button>
+      </div>
+    </form>
+  </md-dialog>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { Datetime } from 'vue-datetime';
+import placemarksDesign from 'assets/data/placemarks-design.json';
 import ModaleEditDescription from './Modale/ModaleEditDescription.vue';
 import ModaleEditIcon from './Modale/ModaleEditIcon.vue';
-import placemarksDesign from '@data/placemarks-design.json';
+
+const cloneDeep = require('clone-deep');
 
 const LIMIT_SIZE = 256;
 
 export default {
   name: 'PlacemarkEdit',
+  props: {
+    openEdit: Boolean,
+    data: Object,
+  },
   components: {
     Datetime,
     ModaleEditIcon,
     ModaleEditDescription,
   },
   data() {
+    const editData = this.initData();
     return {
-      description: 'Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine. Le jardin Yuyuan est un jardin de deux hectares datant du XVIe siècle situé au centre de la Vieille Ville près de Chenghuangmiao à Shanghai, en Chine.',
-      datetime: '2019-06-21',
-      placemark: {
-        color: placemarksDesign.colors[0],
-        category: placemarksDesign.categories[0],
-      },
+      editData,
       open: {
         editIcon: false,
         editDescription: false,
@@ -79,12 +87,38 @@ export default {
   },
   computed: {
     descriptionContent() {
-      return this.description.length > LIMIT_SIZE
-        ? `${this.description.slice(0, LIMIT_SIZE)}...`
-        : this.description;
+      if (!this.editData.description) {
+        return 'No description';
+      }
+      return this.editData.description.length > LIMIT_SIZE
+        ? `${this.editData.description.slice(0, LIMIT_SIZE)}...`
+        : this.editData.description;
+    },
+  },
+  watch: {
+    openEdit() {
+      this.editData = this.initData();
     },
   },
   methods: {
+    ...mapActions('placemarks', [
+      'updatePlacemark',
+    ]),
+    initData() {
+      return {
+        title: this.data.name,
+        description: this.data.description ? this.data.description : null,
+        datetime: this.data.updatedAt,
+        location: `${this.data.location.latitude},${this.data.location.longitude}`,
+        placemark: {
+          color: this.getFormatedColor(this.data.icon.style),
+          category: {
+            name: this.data.icon.category ? this.data.icon.category : 'None',
+          },
+        },
+        featureType: this.data.featureType,
+      };
+    },
     manageOpenEditIcon(value) {
       this.open.editIcon = value;
     },
@@ -92,10 +126,32 @@ export default {
       this.open.editDescription = value;
     },
     getEditIconValue(value) {
-      this.placemark = value;
+      this.editData.placemark = value;
     },
     getDescriptionValue(value) {
-      this.description = value;
+      this.editData.description = value;
+    },
+    getFormatedColor(rawColor) {
+      for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
+        if (placemarksDesign.colors[i].name === rawColor) {
+          return placemarksDesign.colors[i];
+        }
+      }
+      return placemarksDesign.colors[0];
+    },
+    saveChanges() {
+      this.$emit('manageOpen', false);
+      const newData = cloneDeep(this.data);
+      console.log(newData);
+      newData.name = this.editData.title;
+      newData.description = this.editData.description;
+      newData.updatedAt = this.editData.datetime;
+      newData.icon = {
+        style: this.editData.placemark.color.name,
+        category: this.editData.placemark.category.name,
+      };
+      this.updatePlacemark({ id: this.data.id, data: newData });
+      console.log('Change saved 🌊');
     },
   },
 };

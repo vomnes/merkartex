@@ -1,10 +1,13 @@
 .placemark-edit {
-  border: .25rem dashed $color-primary-blue;
   cursor: default;
+  margin: 0;
+  box-shadow: none;
+  width: 100%;
+  min-width: 65rem;
 
   & input[name=title] {
     font-size: 2rem;
-    width: auto;
+    width: 95%;
   }
 
   & input {
