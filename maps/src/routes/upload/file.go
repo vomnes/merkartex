@@ -21,13 +21,19 @@ type coord struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+type icon struct {
+	Style    string `json:"style,omitempty"`
+	Category string `json:"category,omitempty"`
+}
+
 type placemark struct {
 	Name        string    `json:"name,omitempty"`
 	UpdatedAt   time.Time `json:"updatedAt,omitempty"`
-	IconStyle   string    `json:"iconStyle,omitempty"`
+	Icon        icon      `json:"icon,omitempty"`
 	Location    coord     `json:"location,omitempty"`
 	Description string    `json:"description,omitempty"`
 	FeatureType string    `json:"featureType,omitempty"`
+	ID          int       `json:"id"`
 }
 
 type placemarkList struct {
@@ -108,11 +114,13 @@ func File(w http.ResponseWriter, r *http.Request) {
 	// }
 	var placemarkList placemarkList
 	placemarkList.Name = jsonData.Document.Name
-	for _, rawPlacemark := range jsonData.Document.Placemarks {
+	for index, rawPlacemark := range jsonData.Document.Placemarks {
 		var placemark placemark
 		placemark.Name = rawPlacemark.Name
 		placemark.UpdatedAt = rawPlacemark.TimeStamp.When
-		placemark.IconStyle = rawPlacemark.StyleURL
+		placemark.Icon.Style = strings.ReplaceAll(rawPlacemark.StyleURL, "#placemark-", "")
+		placemark.Icon.Category = rawPlacemark.ExtendedData.Icon
+		placemark.ID = index
 		tmpCoord := strings.Split(rawPlacemark.Point.Coordinates, ",")
 		placemark.Location.Longitude, err = strconv.ParseFloat(tmpCoord[0], 64)
 		if err != nil {

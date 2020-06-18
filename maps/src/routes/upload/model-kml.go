@@ -40,6 +40,7 @@ type ExtendedData struct {
 	LastModified string `xml:"lastModified"`
 	AccessRules  string `xml:"accessRules"`
 	Scale        int    `xml:"scale"`
+	Icon         string `xml:"icon"`
 	Visibility   int    `xml:"visibility"`
 }
 
