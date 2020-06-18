@@ -1,6 +1,7 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 
 import Vue from 'vue';
+import { ArrayLib } from 'assets/library';
 
 const state = {
   list: [],
@@ -42,6 +43,9 @@ const actions = {
   setPlacemarks({ commit }, placemarks) {
     commit('SET_PLACEMARKS', placemarks);
   },
+  removePlacemark({ commit }, index) {
+    commit('REMOVE_PLACEMARK', index);
+  },
 };
 
 const mutations = {
@@ -57,6 +61,9 @@ const mutations = {
     for (let i = 0; i < data.length; i += 1) {
       state.selected.push(false);
     }
+  },
+  REMOVE_PLACEMARK(state, index) {
+    ArrayLib.removeItemByIndex(state.list, index);
   },
 };
 

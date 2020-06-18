@@ -1,9 +1,11 @@
 <template>
   <article
     class="placemark"
-    :id="`placemark-${index}`"
+    :id="`placemark-${data.location.latitude}-${data.location.longitude}`"
     @click.stop="select"
-    :class="[ placemarkIsSelected(this.index) ? 'placemark--selected' : 'placemark--default']">
+    :class="[ placemarkIsSelected(this.originalIndex)
+    ? 'placemark--selected'
+    : 'placemark--default']">
     <div class="placemark--side" :style="{ backgroundColor: getColor }"></div>
     <div class="header">
       <h2 class="text__title">{{ data.name }}</h2>
@@ -20,7 +22,7 @@
               <svg v-svg symbol="pencil"></svg>
               <p>Edit</p>
             </li>
-            <li tabindex="0">
+            <li tabindex="0" @click.stop="removePlacemark(originalIndex); toggleMoreOptionsOpen()">
               <svg v-svg symbol="trash"></svg>
               <p>Remove</p>
             </li>
@@ -61,6 +63,9 @@ export default {
     index: Number,
     data: Object,
   },
+  mounted() {
+    this.originalIndex = this.index;
+  },
   computed: {
     ...mapGetters('placemarks', [
       'placemarkIsSelected',
@@ -93,6 +98,7 @@ export default {
       description: this.data.description ? this.data.description : '',
       descriptionOpen: false,
       moreOptionsOpen: false,
+      originalIndex: null,
     };
   },
   methods: {
@@ -100,6 +106,7 @@ export default {
       'setPlacemarkSelectStatus',
       'unselectAllPlacemarks',
       'selectPlacemarksRange',
+      'removePlacemark',
     ]),
     toggleDescriptionOpen() {
       this.descriptionOpen = !this.descriptionOpen;

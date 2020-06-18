@@ -62,7 +62,7 @@ export default {
   methods: {
     scrollToPlacemark() {
       document
-        .getElementById(`placemark-${this.index}`)
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
         .scrollIntoView({
           behavior: 'smooth',
           block: 'start',

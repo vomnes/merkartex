@@ -8,7 +8,7 @@
     >
       <PlaceMarkerCluster>
         <PlaceMarker
-        v-for="(placemark, index) in getPlacemarks" :key="index" :index="index"
+        v-for="placemark in getPlacemarks" :key="placemark.id" :index="placemark.id"
         :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
         :title="placemark.name" :color="getColor(placemark.iconStyle)" icon="home"/>
       </PlaceMarkerCluster>
