@@ -43,10 +43,7 @@
 
   &__actions {
     margin-top: 1rem;
-    & button {
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+    display: flex;
+    justify-content: center;
   }
 }

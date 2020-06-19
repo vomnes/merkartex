@@ -7,11 +7,13 @@
       :options="mapOptions"
     >
       <PlaceMarkerCluster>
-        <PlaceMarker
-        v-for="placemark in getPlacemarks"
-        :key="placemark.id" :index="placemark.id"
-        :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
-        :title="placemark.name" :color="getColor(placemark.icon.style)" icon="home"/>
+        <template v-if="render">
+          <PlaceMarker
+          v-for="placemark in getPlacemarks"
+          :key="placemark.id" :index="placemark.id"
+          :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
+          :title="placemark.name" :color="getColor(placemark.icon.style)" icon="home"/>
+        </template>
       </PlaceMarkerCluster>
       <l-control-zoom :position="'bottomleft'"></l-control-zoom>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -62,6 +64,7 @@ export default {
           lng: 0,
         },
       },
+      render: true,
     };
   },
   mounted() {
@@ -69,6 +72,15 @@ export default {
       this.map = this.$refs.map.mapObject;
     });
     this.$root.$on('flyToLocation', this.flyTo);
+  },
+  watch: {
+    getPlacemarks() {
+      // Force rerender on placemarker change
+      this.render = false;
+      this.$nextTick(() => {
+        this.render = true;
+      });
+    },
   },
   methods: {
     getColor(iconColor) {
