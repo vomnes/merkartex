@@ -53,8 +53,8 @@ export default {
     return {
       zoom: 4,
       center: L.latLng(this.geoCenter.latitude, this.geoCenter.longitude),
-      url: 'https://api.maptiler.com/maps/voyager/{z}/{x}/{y}.png?key=1Yg83v5zhwYytD6ZRJrP',
-      attribution: '<a href="https://carto.com/" target="_blank">&copy; CARTO</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OSM</a>',
+      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       mapOptions: { zoomControl: false, attributionControl: true, zoomSnap: true },
       bounds: {
         northEast: {

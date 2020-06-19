@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import AutocompleteColor from 'assets/components/Autocomplete/Color.vue';
 import AutocompleteIconCategory from 'assets/components/Autocomplete/IconCategory.vue';
 import placemarksDesign from 'assets/data/placemarks-design.json';
@@ -69,8 +70,8 @@ export default {
         after: null,
       },
       placemarkStyle: {
-        color: placemarksDesign.colors[0],
-        category: placemarksDesign.categories[0],
+        color: null,
+        category: null,
       },
     };
   },
@@ -78,16 +79,27 @@ export default {
     open(value) {
       if (value) {
         this.placemarkStyle = {
-          color: placemarksDesign.colors[0],
-          category: placemarksDesign.categories[0],
+          color: null,
+          category: null,
         };
       }
     },
   },
   methods: {
+    ...mapActions('placemarks', [
+      'editMultiplePlacemarks',
+      'unselectAllPlacemarks',
+    ]),
     manageChangeClose() {
       this.$emit('manageOpen', false);
-      console.log('Close update placemarks');
+      this.editMultiplePlacemarks({
+        title: this.title,
+        icon: {
+          style: this.placemarkStyle.color.name,
+          category: this.placemarkStyle.category.name,
+        },
+      });
+      this.unselectAllPlacemarks(0);
     },
     receiveNewValue(type, value) {
       this.placemarkStyle[type] = value;

@@ -49,6 +49,21 @@ const actions = {
   updatePlacemark({ commit }, { id, data }) {
     commit('UPDATE_PLACEMARK', { id, data });
   },
+  editMultiplePlacemarks({ commit }, { title, icon }) {
+    state.selected.forEach((item, i) => {
+      if (item === true) {
+        const newData = state.list[i];
+        newData.name = (title.before ? title.before : '') + newData.name + (title.after ? title.after : '');
+        if (icon.style !== '') {
+          newData.icon.style = icon.style;
+        }
+        if (icon.category !== '') {
+          newData.icon.category = icon.category;
+        }
+        commit('UPDATE_PLACEMARK_BY_INDEX', i, newData);
+      }
+    });
+  },
 };
 
 const mutations = {
@@ -75,6 +90,9 @@ const mutations = {
         return;
       }
     }
+  },
+  UPDATE_PLACEMARK_BY_INDEX(state, { index, data }) {
+    Vue.set(state.list, index, data);
   },
 };
 

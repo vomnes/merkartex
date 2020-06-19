@@ -25,10 +25,14 @@
 
 <script>
 const formatValue = ({ name, icon }) => {
-  const toLowerCase = () => name.toLowerCase();
-  const toString = () => name;
+  let managedName = '';
+  if (name) {
+    managedName = name;
+  }
+  const toLowerCase = () => managedName.toLowerCase();
+  const toString = () => managedName;
   return {
-    name,
+    name: managedName,
     icon,
     toLowerCase,
     toString,
@@ -40,7 +44,7 @@ export default {
   props: ['categories', 'current'],
   data() {
     return {
-      value: formatValue(this.current),
+      value: formatValue(this.current ? this.current : ''),
       list: this.categories,
       formatValue,
     };

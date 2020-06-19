@@ -13,7 +13,9 @@
 
       <template slot="md-autocomplete-item" slot-scope="{ item }">
         <span class="selected-color" :style="`background-color: ${item.color}`"></span>
-        <md-highlight-text :md-term="item.name">{{ item.name }}</md-highlight-text>
+        <md-highlight-text :md-term="item.name">
+          {{ item.name }}
+        </md-highlight-text>
       </template>
 
       <template slot="md-autocomplete-empty" slot-scope="{ term }">
@@ -25,10 +27,14 @@
 
 <script>
 const formatValue = ({ name, color }) => {
-  const toLowerCase = () => name.toLowerCase();
-  const toString = () => name;
+  let managedName = '';
+  if (name) {
+    managedName = name;
+  }
+  const toLowerCase = () => managedName.toLowerCase();
+  const toString = () => managedName;
   return {
-    name,
+    name: managedName,
     color,
     toLowerCase,
     toString,
@@ -40,7 +46,7 @@ export default {
   props: ['colors', 'current'],
   data() {
     return {
-      value: formatValue(this.current),
+      value: formatValue(this.current ? this.current : ''),
       list: this.colors,
       formatValue,
     };
