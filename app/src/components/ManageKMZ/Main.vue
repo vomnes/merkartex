@@ -11,16 +11,21 @@
           v-else>
         <button
           v-if="editTitle.active"
+          @click="toggleEditTitle(false)"
           class="header--title__input--close">
           <svg v-svg symbol="close"></svg>
         </button>
         <button
           v-if="editTitle.active"
+          @click="saveTitle"
           class="header--title__input--confirm">
           <svg v-svg symbol="confirm"></svg>
         </button>
       </div>
-      <div>
+      <div class="manage-kmz__header--actions">
+        <button
+          class="primary-button--blue text__details box-round-corner"
+          @click="persistData">Save</button>
         <button class="primary-button--blue text__details box-round-corner">Export</button>
       </div>
     </div>
@@ -31,7 +36,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import Api from 'assets/library/api';
 import Map from './Map/Map.vue';
@@ -47,7 +52,7 @@ export default {
   },
   data() {
     return {
-      title: 'Shanghai',
+      title: '',
       editTitle: {
         active: false,
         content: '',
@@ -67,6 +72,7 @@ export default {
     this.title = kmzContent.name;
     this.geoCenter = kmzContent.geoCenter;
     this.setPlacemarks(kmzContent.placemarks);
+    this.setTitle(kmzContent.name);
   },
   methods: {
     toggleEditTitle(value) {
@@ -77,6 +83,24 @@ export default {
     },
     ...mapActions('placemarks', [
       'setPlacemarks',
+      'setTitle',
+    ]),
+    saveTitle() {
+      this.title = this.editTitle.content;
+      this.setTitle(this.title);
+      this.toggleEditTitle(false);
+    },
+    persistData() {
+      const newLocalStorageMap = JSON.parse(localStorage.getItem('map_data'));
+      newLocalStorageMap.name = this.getTitle;
+      newLocalStorageMap.placemarks = this.getPlacemarks;
+      localStorage.setItem('map_data', JSON.stringify(newLocalStorageMap));
+    },
+  },
+  computed: {
+    ...mapGetters('placemarks', [
+      'getPlacemarks',
+      'getTitle',
     ]),
   },
   created() {
@@ -99,6 +123,14 @@ export default {
     );
 
     margin: $margin-top-bottom 2rem $margin-top-bottom 2rem;
+
+    &__header {
+      &--actions {
+        & > button:not(:last-child) {
+          margin-right: .5rem;
+        }
+      }
+    }
 
     & .header {
       grid-column-start: 1;

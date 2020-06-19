@@ -4,6 +4,7 @@ import Vue from 'vue';
 import { ArrayLib } from 'assets/library';
 
 const state = {
+  title: '',
   list: [],
   selected: [],
   lastSelected: 0,
@@ -13,6 +14,7 @@ const getters = {
   placemarkIsSelected: (state) => (index) => state.selected[index] === true,
   hasPlacemarksSelection: (state) => state.selected.find((isSelected) => isSelected === true),
   getPlacemarks: (state) => state.list,
+  getTitle: (state) => state.title,
 };
 
 const actions = {
@@ -42,6 +44,9 @@ const actions = {
   },
   setPlacemarks({ commit }, placemarks) {
     commit('SET_PLACEMARKS', placemarks);
+  },
+  setTitle({ commit }, title) {
+    commit('SET_TITLE', title);
   },
   removePlacemark({ commit }, index) {
     commit('REMOVE_PLACEMARK', index);
@@ -79,6 +84,9 @@ const mutations = {
     for (let i = 0; i < data.length; i += 1) {
       state.selected.push(false);
     }
+  },
+  SET_TITLE(state, title) {
+    state.title = title;
   },
   REMOVE_PLACEMARK(state, index) {
     ArrayLib.removeItemByIndex(state.list, index);
