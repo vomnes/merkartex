@@ -46,7 +46,7 @@
     </p>
     <div class="footer">
       <p class="text__details text--uppercase">{{ data.featureType }}</p>
-      <p class="text__details text--uppercase">{{ data.updatedAt }}</p>
+      <p class="text__details text--uppercase">{{ moment(data.updatedAt).format('LLL') }}</p>
     </div>
     <PlacemarkEdit :data="data" :openEdit="open.edit" @manageOpen="manageToggleEditMode"/>
   </article>
@@ -58,6 +58,8 @@ import { mapGetters, mapActions } from 'vuex';
 import placemarksDesign from 'assets/data/placemarks-design.json';
 
 import PlacemarkEdit from './PlacemarkEdit.vue';
+
+const moment = require('moment');
 
 const LIMIT_SIZE = 256;
 
@@ -78,6 +80,7 @@ export default {
       open: {
         edit: false,
       },
+      moment,
     };
   },
   computed: {

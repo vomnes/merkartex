@@ -13,7 +13,7 @@
         <div>
           <button
           class="primary-button--blue text__details box-round-corner"
-          data-title="Render HTML">Preview</button>
+          data-title="Render HTML" data-title-position="top">Preview</button>
           <button
             class="primary-button--green text__details box-round-corner"
             @click="manageChangeClose"

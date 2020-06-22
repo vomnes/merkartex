@@ -5,7 +5,7 @@ button[class^=primary-button] {
   width: auto;
   min-width: 4rem;
   height: 4rem;
-  
+
   padding: calc(#{$button-padding} - #{$focus-weight});
   border: $focus-weight solid transparent;
   cursor: pointer;
@@ -48,9 +48,13 @@ button[class^=primary-button] {
   padding: calc(#{$button-padding};
   color: $color-primary;
   background: none;
-  cursor: help;
+  border: .15rem solid rgba($color-grey-1, .2);
 
   transition: background-color 1s;
+}
+
+.button-disabled {
+  cursor: not-allowed;
 }
 
 .box-circle {

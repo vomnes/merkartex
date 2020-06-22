@@ -8,6 +8,7 @@ const state = {
   list: [],
   selected: [],
   lastSelected: 0,
+  hasChanges: false,
 };
 
 const getters = {
@@ -15,6 +16,7 @@ const getters = {
   hasPlacemarksSelection: (state) => state.selected.find((isSelected) => isSelected === true),
   getPlacemarks: (state) => state.list,
   getTitle: (state) => state.title,
+  getHasChanges: (state) => state.hasChanges,
 };
 
 const actions = {
@@ -50,9 +52,11 @@ const actions = {
   },
   removePlacemark({ commit }, index) {
     commit('REMOVE_PLACEMARK', index);
+    commit('SET_HAS_CHANGES', true);
   },
   updatePlacemark({ commit }, { id, data }) {
     commit('UPDATE_PLACEMARK', { id, data });
+    commit('SET_HAS_CHANGES', true);
   },
   editMultiplePlacemarks({ commit }, { title, icon }) {
     state.selected.forEach((item, i) => {
@@ -68,6 +72,10 @@ const actions = {
         commit('UPDATE_PLACEMARK_BY_INDEX', i, newData);
       }
     });
+    commit('SET_HAS_CHANGES', true);
+  },
+  toggleHasChanges({ commit }, value) {
+    commit('SET_HAS_CHANGES', value);
   },
 };
 
@@ -101,6 +109,9 @@ const mutations = {
   },
   UPDATE_PLACEMARK_BY_INDEX(state, { index, data }) {
     Vue.set(state.list, index, data);
+  },
+  SET_HAS_CHANGES(state, value) {
+    state.hasChanges = value;
   },
 };
 

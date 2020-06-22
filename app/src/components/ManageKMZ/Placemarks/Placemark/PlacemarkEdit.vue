@@ -23,8 +23,9 @@
         <div data-title="Latitude, Longitude" data-title-position="top">
           <input
             type="text"
+            :class="{ 'text--warning': isInvalidLocation }"
             class="text__details text--center"
-            :value="editData.location">
+            v-model="editData.location">
         </div>
       </div>
       <p class="text__body" @click="manageOpenEditDescription(true)">
@@ -44,8 +45,12 @@
           use24-hour></datetime>
       </div>
       <div class="placemark-edit__actions">
-        <button class="primary-button--blue text__details box-round-corner"
-          type="submit">
+        <button type="submit"
+          :class="[
+            isValidForm ? 'primary-button--blue' : 'button-passive button-disabled',
+            'text__details box-round-corner',
+            ]"
+            :disabled="!isValidForm">
           Save changes
         </button>
       </div>
@@ -94,6 +99,24 @@ export default {
         ? `${this.editData.description.slice(0, LIMIT_SIZE)}...`
         : this.editData.description;
     },
+    isInvalidLocation() {
+      const raw = this.editData.location;
+      const array = raw.split(',');
+      const validFloat = (str) => /^[ ]*?[+-]?\d+(\.\d+)?$/.test(str);
+      if (array.length !== 2) {
+        return true;
+      }
+      if (!validFloat(array[0]) || !validFloat(array[1])) {
+        return true;
+      }
+      if (Number.isNaN(parseFloat(array[0])) || Number.isNaN(parseFloat(array[1]))) {
+        return true;
+      }
+      return false;
+    },
+    isValidForm() {
+      return !this.isInvalidLocation;
+    },
   },
   watch: {
     openEdit() {
@@ -140,9 +163,11 @@ export default {
       return placemarksDesign.colors[0];
     },
     saveChanges() {
+      if (!this.isValidForm) {
+        return;
+      }
       this.$emit('manageOpen', false);
       const newData = cloneDeep(this.data);
-      console.log(newData);
       newData.name = this.editData.title;
       newData.description = this.editData.description;
       newData.updatedAt = this.editData.datetime;
@@ -150,8 +175,12 @@ export default {
         style: this.editData.placemark.color.name,
         category: this.editData.placemark.category.name,
       };
+      const location = this.editData.location.split(',');
+      newData.location = {
+        latitude: parseFloat(location[0]),
+        longitude: parseFloat(location[1]),
+      };
       this.updatePlacemark({ id: this.data.id, data: newData });
-      console.log('Change saved 🌊');
     },
   },
 };

@@ -2,6 +2,7 @@
   <div id="app">
      <!-- oncontextmenu="return false" -> Disable right click -->
     <ManageKMZ/>
+    <notifications position="bottom right"/>
   </div>
 </template>
 

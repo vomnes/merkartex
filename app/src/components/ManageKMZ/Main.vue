@@ -7,7 +7,7 @@
         <input
           type="text"
           v-model="editTitle.content"
-          :style="{width: `${editTitle.content.length * 1.75}rem`}"
+          :style="{width: `${editTitle.content.length * 1.5}rem`}"
           v-else>
         <button
           v-if="editTitle.active"
@@ -23,9 +23,12 @@
         </button>
       </div>
       <div class="manage-kmz__header--actions">
-        <button
-          class="primary-button--blue text__details box-round-corner"
-          @click="persistData">Save</button>
+        <transition name="fade-scale">
+          <button
+            v-if="getHasChanges"
+            class="primary-button--blue text__details box-round-corner"
+            @click="persistData">Save</button>
+        </transition>
         <button class="primary-button--blue text__details box-round-corner">Export</button>
       </div>
     </div>
@@ -84,23 +87,31 @@ export default {
     ...mapActions('placemarks', [
       'setPlacemarks',
       'setTitle',
+      'toggleHasChanges',
     ]),
     saveTitle() {
       this.title = this.editTitle.content;
       this.setTitle(this.title);
       this.toggleEditTitle(false);
+      this.toggleHasChanges(true);
     },
     persistData() {
       const newLocalStorageMap = JSON.parse(localStorage.getItem('map_data'));
       newLocalStorageMap.name = this.getTitle;
       newLocalStorageMap.placemarks = this.getPlacemarks;
       localStorage.setItem('map_data', JSON.stringify(newLocalStorageMap));
+      this.toggleHasChanges(false);
+      this.$notify({
+        title: 'Data saved locally',
+        type: 'success',
+      });
     },
   },
   computed: {
     ...mapGetters('placemarks', [
       'getPlacemarks',
       'getTitle',
+      'getHasChanges',
     ]),
   },
   created() {
@@ -154,7 +165,7 @@ export default {
         }
 
         & > input {
-          border-bottom: .1rem dashed $color-primary;
+          border-bottom: .1rem solid rgba($color-grey-1, .2);
           min-width: 15rem;
           max-width: 50rem;
           padding-bottom: .5rem;
@@ -198,6 +209,18 @@ export default {
 
     & .primary-button--blue {
       height: 3rem;
+    }
+  }
+
+  .fade-scale {
+    &-enter-active {
+      transition: transform .5s !important;
+    }
+    &-leave-active {
+      transition: transform .15s !important;
+    }
+    &-enter, &-leave-to {
+      transform: scale(0) !important;
     }
   }
 </style>

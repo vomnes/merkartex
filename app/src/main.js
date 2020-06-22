@@ -10,6 +10,7 @@ import {
   MdButton,
   MdList,
 } from 'vue-material/dist/components';
+import Notifications from 'vue-notification';
 
 import 'leaflet/dist/leaflet.css';
 import 'vue-datetime/dist/vue-datetime.css';
@@ -39,6 +40,8 @@ Vue.use(Datetime);
   MdButton,
   MdList,
 ].forEach((x) => Vue.use(x));
+
+Vue.use(Notifications);
 
 new Vue({
   store,

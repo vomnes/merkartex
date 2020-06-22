@@ -1,0 +1,35 @@
+.vue-notification {
+  padding: 1rem;
+  margin: 0 .5rem .5rem;
+
+  font-size: 1.5rem;
+
+  color: $color-primary-white;
+  background: #44A4FC;
+  border: none;
+  border-radius: .25rem;
+  box-shadow: $box-shadow-1;
+
+  cursor: default;
+
+  & .notification-title {
+    font-family: $font-3;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  &.warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+
+  &.error {
+    background: #E54D42;
+    border-left-color: #B82E24;
+  }
+
+  &.success {
+    background: #68CD86;
+    border-left-color: #42A85F;
+  }
+}
