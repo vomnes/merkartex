@@ -74,6 +74,7 @@ export default {
   props: {
     openEdit: Boolean,
     data: Object,
+    type: String,
   },
   components: {
     Datetime,
@@ -126,12 +127,17 @@ export default {
   methods: {
     ...mapActions('placemarks', [
       'updatePlacemark',
+      'pushPlacemark',
     ]),
     initData() {
+      let datetime = this.data.updatedAt;
+      if (this.type !== 'edit') {
+        datetime = new Date().toISOString();
+      }
       return {
         title: this.data.name,
         description: this.data.description ? this.data.description : null,
-        datetime: this.data.updatedAt,
+        datetime,
         location: `${this.data.location.latitude},${this.data.location.longitude}`,
         placemark: {
           color: this.getFormatedColor(this.data.icon.style),
@@ -180,7 +186,15 @@ export default {
         latitude: parseFloat(location[0]),
         longitude: parseFloat(location[1]),
       };
-      this.updatePlacemark({ id: this.data.id, data: newData });
+      switch (this.type) {
+        case 'edit':
+          this.updatePlacemark({ id: this.data.id, data: newData });
+          break;
+        case 'new':
+          this.pushPlacemark(newData);
+          break;
+        default:
+      }
     },
   },
 };

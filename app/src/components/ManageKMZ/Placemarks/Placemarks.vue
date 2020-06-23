@@ -15,7 +15,7 @@
           @click="hasPlacemarksSelection ? manageOpenEditMultiple(true) : ''">
           <svg v-svg symbol="layers"></svg>
         </button>
-        <button class="primary-button--blue box-circle">
+        <button class="primary-button--blue box-circle" @click="open.addNewPlacemark = true">
           <svg v-svg symbol="plus"></svg>
         </button>
       </div>
@@ -29,14 +29,22 @@
         v-for="(placemarkContent, index) in getPlacemarks"
         :key="index" :index="index" :data="placemarkContent"/>
     </div>
+    <PlacemarkEdit
+      :data="emptyPlacemark"
+      :openEdit="open.addNewPlacemark"
+      type="new"
+      @manageOpen="manageToggleNewPlacemark"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
+import emptyPlacemark from 'assets/data/empty-placemark.json';
+
 import Placemark from './Placemark/Placemark.vue';
 import ModaleEditMultiple from './ModaleEditMultiple.vue';
+import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
 // import PlacemarksFolder from './PlacemarksFolder.vue';
 
 export default {
@@ -44,12 +52,15 @@ export default {
   components: {
     Placemark,
     ModaleEditMultiple,
+    PlacemarkEdit,
   },
   data() {
     return {
       open: {
         editMultiple: false,
+        addNewPlacemark: false,
       },
+      emptyPlacemark,
     };
   },
   computed: {
@@ -61,6 +72,9 @@ export default {
   methods: {
     manageOpenEditMultiple(value) {
       this.open.editMultiple = value;
+    },
+    manageToggleNewPlacemark(value) {
+      this.open.addNewPlacemark = value;
     },
   },
 };

@@ -58,6 +58,15 @@ const actions = {
     commit('UPDATE_PLACEMARK', { id, data });
     commit('SET_HAS_CHANGES', true);
   },
+  pushPlacemark({ commit }, data) {
+    const newData = data;
+    if (state.list.length === 0) {
+      newData.id = 0;
+    } else {
+      newData.id = state.list[state.list.length - 1].id + 1;
+    }
+    commit('PUSH_NEW_PLACEMARK', newData);
+  },
   editMultiplePlacemarks({ commit }, { title, icon }) {
     state.selected.forEach((item, i) => {
       if (item === true) {
@@ -106,6 +115,9 @@ const mutations = {
         return;
       }
     }
+  },
+  PUSH_NEW_PLACEMARK(state, data) {
+    state.list.push(data);
   },
   UPDATE_PLACEMARK_BY_INDEX(state, { index, data }) {
     Vue.set(state.list, index, data);

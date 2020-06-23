@@ -14,7 +14,7 @@
           :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
           :title="placemark.name"
           :color="getColor(placemark.icon.style)"
-          :icon="placemark.icon.category.toLowerCase()"/>
+          :icon="placemark.icon.category ? placemark.icon.category.toLowerCase() : ''"/>
         </template>
       </PlaceMarkerCluster>
       <l-control-zoom :position="'bottomleft'"></l-control-zoom>

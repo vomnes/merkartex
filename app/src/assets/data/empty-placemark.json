@@ -1,0 +1,11 @@
+{
+    "name": "Your title",
+    "icon": {
+        "style": "red",
+        "category": "None"
+    },
+    "location": {
+        "latitude": 0,
+        "longitude": 0
+    }
+}

@@ -48,7 +48,11 @@
       <p class="text__details text--uppercase">{{ data.featureType }}</p>
       <p class="text__details text--uppercase">{{ moment(data.updatedAt).format('LLL') }}</p>
     </div>
-    <PlacemarkEdit :data="data" :openEdit="open.edit" @manageOpen="manageToggleEditMode"/>
+    <PlacemarkEdit
+      :data="data"
+      :openEdit="open.edit"
+      type="edit"
+      @manageOpen="manageToggleEditMode"/>
   </article>
 </template>
 
@@ -86,6 +90,7 @@ export default {
   computed: {
     ...mapGetters('placemarks', [
       'placemarkIsSelected',
+      'hasPlacemarksSelection',
     ]),
     ...mapGetters('keypress', [
       'modeSelectRangeOn',
@@ -133,8 +138,9 @@ export default {
         } else if (this.modeSelectRangeOn) {
           this.selectPlacemarksRange(this.index);
         }
-      } else {
+      } else if (this.hasPlacemarksSelection) {
         this.unselectAllPlacemarks(this.index);
+      } else {
         this.$root.$emit('flyToLocation', {
           lat: this.data.location.latitude,
           lng: this.data.location.longitude,

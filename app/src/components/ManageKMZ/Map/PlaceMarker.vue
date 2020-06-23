@@ -34,19 +34,19 @@ export default {
     const content = `
       <div class="pin__content">
         <h3>${this.title}</h3>
-        <div class="pin__content--actions">
-          <svg>
-            <use xlink:href='${placemarkIcon}#pencil'></use>
-          </svg>
-          <svg>
-            <use xlink:href='${placemarkIcon}#trash'></use>
-          </svg>
-          <svg>
-            <use xlink:href='${placemarkIcon}#duplicate'></use>
-          </svg>
-        </div>
       </div>
     `;
+    // <div class="pin__content--actions">
+    //   <svg>
+    //     <use xlink:href='${placemarkIcon}#pencil'></use>
+    //   </svg>
+    //   <svg>
+    //     <use xlink:href='${placemarkIcon}#trash'></use>
+    //   </svg>
+    //   <svg>
+    //     <use xlink:href='${placemarkIcon}#duplicate'></use>
+    //   </svg>
+    // </div>
     const html = `
     <div class="pin" id="pin-1" style="color: ${this.color}"/>
       <svg>
