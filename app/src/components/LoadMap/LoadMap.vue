@@ -5,6 +5,18 @@
         <h1>Welcome on Merkartex</h1>
         <h2 class="text__details text--uppercase">Load your map 🚀</h2>
       </div>
+      <div class="load-map__uploaded-file">
+        <svg v-svg symbol="kmz"></svg>
+        <div class="load-map__uploaded-file--content">
+          <h3 class="text__body">Shanghai.kmz</h3>
+          <div class="load-map__uploaded-file--content__bar">
+            <div
+              class="load-map__uploaded-file--content__bar--filled"
+              :style="{ width: `${95}%` }">
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="load-map__upload-section">
         <h3 class="text__body">1. MapsMe</h3>
         <button class="primary-button--blue-white box-round-corner">
