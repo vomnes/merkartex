@@ -1,0 +1,69 @@
+@import "@/assets/style/_main.scss";
+
+.load-map {
+  min-width: 45rem;
+  border-radius: .25rem;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 4rem 3rem;
+
+  background: white;
+  box-shadow: $box-shadow-1;
+
+  &__head {
+    & h1 {
+      font-family: $font-3;
+      font-weight: 400;
+      font-size: 2.5rem;
+      line-height: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    & h2 {
+      font-weight: 400;
+      font-size: 1.8rem;
+    }
+  }
+
+  &__upload-section {
+    & > button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+
+      & > svg {
+        height: 1.8rem;
+        width: 1.5rem;
+
+        margin-right: .5rem;
+      }
+
+      & > p {
+        word-wrap: none;
+        width: auto;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    & > h3 {
+      margin: 2.5rem 0 1.5rem 0;
+    }
+  }
+}
+
+.load-map--background {
+  width: 100vw;
+  height: 100vh;
+
+  background: linear-gradient(135deg, $color-primary-white 0%, #B8D1E6 100%);
+
+  position: relative;
+}

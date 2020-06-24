@@ -66,6 +66,7 @@ const actions = {
       newData.id = state.list[state.list.length - 1].id + 1;
     }
     commit('PUSH_NEW_PLACEMARK', newData);
+    commit('SET_HAS_CHANGES', true);
   },
   editMultiplePlacemarks({ commit }, { title, icon }) {
     state.selected.forEach((item, i) => {

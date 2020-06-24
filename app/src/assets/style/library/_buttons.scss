@@ -12,7 +12,7 @@ button[class^=primary-button] {
   transition: .2s;
 
   &:active {
-    transform: scale(1.05);
+    transform: scale(1.025);
     box-shadow: $box-shadow-2;
     transition: .1s;
   }
@@ -32,6 +32,13 @@ button[class^=primary-button] {
   &--blue {
     color: $color-primary-white;
     background-color: $color-primary-blue;
+    box-shadow:  0 4px 6px -1px rgba($color-primary-blue,0.25);
+  }
+
+  &--blue-white {
+    color: $color-primary-white;
+    background: linear-gradient(135deg, #0575E6 0%, #A1C3E6 100%);
+    border: none !important;
     box-shadow:  0 4px 6px -1px rgba($color-primary-blue,0.25);
   }
 
