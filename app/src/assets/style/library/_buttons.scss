@@ -37,7 +37,7 @@ button[class^=primary-button] {
 
   &--blue-white {
     color: $color-primary-white;
-    background: linear-gradient(135deg, #0575E6 0%, #A1C3E6 100%);
+    background: linear-gradient(135deg, $color-blue-1 0%, $color-blue-2 100%);
     border: none !important;
     box-shadow:  0 4px 6px -1px rgba($color-primary-blue,0.25);
   }

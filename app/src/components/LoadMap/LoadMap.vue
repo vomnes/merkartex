@@ -8,7 +8,10 @@
       <div class="load-map__uploaded-file">
         <svg v-svg symbol="kmz"></svg>
         <div class="load-map__uploaded-file--content">
-          <h3 class="text__body">Shanghai.kmz</h3>
+          <div class="load-map__uploaded-file--content__up">
+            <h3 class="text__body">Shanghai.kmz</h3>
+            <svg v-svg symbol="close"></svg>
+          </div>
           <div class="load-map__uploaded-file--content__bar">
             <div
               class="load-map__uploaded-file--content__bar--filled"
@@ -35,13 +38,19 @@
           <p class="text__details text--uppercase">Upload map from Google Maps Page</p>
         </button>
       </div>
+      <div class="load-map__submit">
+        <button
+          class="primary-button--green box-round-corner">
+          <p class="text__body">Load your map</p>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'LoadMap',
   data() {
     return {
 
