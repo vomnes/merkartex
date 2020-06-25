@@ -9,10 +9,12 @@
   top: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 3.5rem 3rem;
+  padding: 3rem 3rem;
 
   background: white;
   box-shadow: $box-shadow-1;
+
+  overflow: hidden;
 
   &__head {
     & h1 {
@@ -58,73 +60,27 @@
     }
   }
 
-  &__uploaded-file {
-    display: flex;
-    align-items: flex-end;
-    height: 6rem;
-
-    & > svg {
-      max-width: 4.4rem;
-      margin-right: 1.4rem;
-    }
-
-    &--content {
-      width: 100%;
-
-      display: flex;
-      flex-direction: column;
-
-      justify-content: flex-end;
-
-      &__up {
-        display: flex;
-        justify-content: space-between;
-        height: 2rem;
-
-        margin-bottom: 1.3rem;
-
-        & > h3 {
-          font-weight: 400;
-        }
-
-        & > svg {
-          padding: .25rem;
-          width: 2rem;
-          border-radius: .15rem;
-          transition: all .3s;
-
-          &:hover {
-            background: $color-blue-2;
-            color: $color-primary-white;
-            cursor: pointer;
-            padding: .35rem;
-            transition: all .3s;
-          }
-        }
-      }
-
-      &__bar {
-        height: .7rem;
-        width: 100%;
-
-        background: #A1C3E6;
-
-        &--filled {
-          height: 100%;
-          background: linear-gradient(90deg, $color-blue 0%, #A1C3E6 200%);
-        }
-      }
-    }
-
-    margin: 2rem 0;
-  }
-
   &__submit {
     margin-top: 2.5rem;
 
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  & input[type="file"] {
+    display: none;
+  }
+
+  &__error {
+    color: $color-warning;
+    text-align: center;
+    width: 100%;
+    font-weight: 500;
+    margin-top: 1rem;
+    position: absolute;
+    bottom: .25rem;
+    left: 0;
   }
 }
 
@@ -135,4 +91,17 @@
   background: linear-gradient(135deg, $color-primary-white 0%, #B8D1E6 100%);
 
   position: relative;
+}
+
+.fade-error-enter-active {
+  transition: all .2s;
+}
+.fade-error-leave-active {
+  transition: all .3s;
+}
+.fade-error-enter {
+  transform: translateY(100%);
+}
+.fade-error-leave-to {
+  opacity: 0;
 }
