@@ -31,12 +31,14 @@
   }
 
   &__upload-section {
-    & > button {
+    & > button, &--btn-block > button {
       display: flex;
       justify-content: center;
       align-items: center;
 
-      width: 100%;
+      width: 100% !important;
+
+      padding: 0 1rem;
 
       & > svg {
         height: 1.8rem;
@@ -48,15 +50,54 @@
       & > p {
         word-wrap: none;
         width: auto;
+        opacity: 1;
       }
 
       &:not(:last-child) {
         margin-bottom: 1rem;
       }
+
+      transition: .5s;
+      overflow: hidden;
+
+      & input[type="file"] {
+        display: none;
+      }
     }
 
     & > h3 {
       margin: 2.5rem 0 1.5rem 0;
+    }
+
+    &--small-button {
+      width: 2rem !important;
+
+      & > svg {
+        margin-right: 0 !important;
+      }
+
+      & > p {
+        display: none;
+        opacity: 0;
+      }
+    }
+
+    &--small-button + .load-map__upload-section--link {
+      display: block;
+    }
+
+    &--link {
+      box-shadow: $box-shadow-inner-0;
+      border-radius: .25rem;
+
+      display: none;
+      width: 100%;
+      margin: .25rem .25rem .25rem 1rem;
+      padding: .2rem .7rem;
+    }
+    &--btn-block {
+      display: flex;
+      height: 4rem;
     }
   }
 
@@ -66,10 +107,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-
-  & input[type="file"] {
-    display: none;
   }
 
   &__error {

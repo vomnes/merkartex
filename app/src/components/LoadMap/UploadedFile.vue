@@ -3,31 +3,43 @@
     <svg v-svg symbol="kmz"></svg>
     <div class="uploaded-file--content">
       <div class="uploaded-file--content__up">
-        <h3 class="text__body" :title="filename">{{ filenameDisplay }}</h3>
-        <svg v-svg symbol="close" @click="$emit('clear')"></svg>
+        <h3 class="text__body" :title="stateSelectedFile.name">{{ filenameDisplay }}</h3>
+        <svg v-svg symbol="close" @click="selectedFileReset"></svg>
       </div>
-      <progress :value="loaded" max="100" v-if="loaded < 100"></progress>
+      <progress
+      :value="selectedFileLoadedValue" max="100"
+      v-if="selectedFileLoadedValue < 100"
+      :key="selectedFileLoadedValue"></progress>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'UploadedFile',
-  props: {
-    filename: String,
-    loaded: Number,
-  },
   data() {
     return {
 
     };
   },
   computed: {
+    ...mapGetters('selectedFile', [
+      'stateSelectedFile',
+      'selectedFileLoadedValue',
+    ]),
     filenameDisplay() {
-      const lessExtension = this.filename.replace('.kmz', '');
-      return lessExtension.length < 17 ? this.filename : `${lessExtension.substring(0, 17)}... .kmz`;
+      const lessExtension = this.stateSelectedFile.name.replace('.kmz', '');
+      return lessExtension.length < 17
+        ? this.stateSelectedFile.name
+        : `${lessExtension.substring(0, 17)}... .kmz`;
     },
+  },
+  methods: {
+    ...mapActions('selectedFile', [
+      'selectedFileReset',
+    ]),
   },
 };
 </script>
@@ -98,7 +110,7 @@ export default {
         &-value {
           height: 100%;
           background: linear-gradient(90deg, $color-blue 0%, #A1C3E6 200%);
-          transition-delay: .25s;
+          transition-delay: .4s;
           transition-duration: .5s;
           transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
         }
