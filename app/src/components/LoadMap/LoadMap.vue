@@ -35,7 +35,8 @@
       </div>
       <div class="load-map__submit" v-if="stateSelectedFile.valid">
         <button
-          class="primary-button--green box-round-corner">
+          class="primary-button--green box-round-corner"
+          @click="loadMap">
           <p class="text__body">Load your map</p>
         </button>
       </div>
@@ -48,6 +49,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
+import Api from 'assets/library/api/index';
+
 import UploadedFile from './UploadedFile.vue';
 import UploadFile from './UploadFile.vue';
 
@@ -81,6 +85,9 @@ export default {
           break;
         default:
       }
+    },
+    loadMap() {
+      Api.uploadFile({ file: 'Empty' });
     },
   },
   computed: {
