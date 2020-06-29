@@ -4,7 +4,7 @@
     <div class="uploaded-file--content">
       <div class="uploaded-file--content__up">
         <h3 class="text__body" :title="stateSelectedFile.name">{{ filenameDisplay }}</h3>
-        <svg v-svg symbol="close" @click="selectedFileReset"></svg>
+        <svg v-svg symbol="close" @click="clear"></svg>
       </div>
       <progress
       :value="selectedFileLoadedValue" max="100"
@@ -40,6 +40,10 @@ export default {
     ...mapActions('selectedFile', [
       'selectedFileReset',
     ]),
+    clear() {
+      this.selectedFileReset();
+      this.$emit('event', 'clearError', null);
+    },
   },
 };
 </script>

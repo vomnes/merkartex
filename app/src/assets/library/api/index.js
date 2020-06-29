@@ -10,5 +10,5 @@ const apiConf = {
 
 export default {
   importData: () => importData(),
-  uploadFile: (params) => uploadFile(params, apiConf),
+  uploadFile: (data) => uploadFile(apiConf, data),
 };

@@ -1,22 +1,15 @@
 <template>
   <div id="app">
      <!-- oncontextmenu="return false" -> Disable right click -->
-    <!-- <ManageKMZ/> -->
-    <LoadMap/>
+    <router-view></router-view>
     <notifications position="bottom right"/>
   </div>
 </template>
 
 <script>
-// import ManageKMZ from './components/ManageKMZ/Main.vue';
-import LoadMap from './components/LoadMap/LoadMap.vue';
-
 export default {
   name: 'App',
-  components: {
-    // ManageKMZ,
-    LoadMap,
-  },
+  components: {},
 };
 </script>
 

@@ -47,11 +47,12 @@ export default {
       this.setSelectedFileValue({ type: 'size', value: file.size });
       this.setSelectedFileValue({ type: 'valid', value: true });
       const reader = new FileReader();
-      // let uploadedFile = null;
       reader.onloadstart = this.readerEvent;
       reader.onload = this.readerEvent;
       reader.onprogress = this.readerEvent;
-      // uploadedFile = reader.result;
+      reader.onloadend = () => {
+        this.setSelectedFileValue({ type: 'file', value: file });
+      };
       if (file) {
         reader.readAsText(file);
       }

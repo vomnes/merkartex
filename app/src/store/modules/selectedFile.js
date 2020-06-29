@@ -4,11 +4,13 @@ const state = {
   loaded: 0,
   size: 0,
   valid: false,
+  file: null,
 };
 
 const getters = {
   stateSelectedFile: (state) => state,
   selectedFileLoadedValue: (state) => state.loaded,
+  getSelectedFileContent: (state) => state.file,
 };
 
 const actions = {

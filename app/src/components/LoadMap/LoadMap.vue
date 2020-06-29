@@ -5,7 +5,7 @@
         <h1>Welcome on Merkartex</h1>
         <h2 class="text__details text--uppercase">Load your map 🚀</h2>
       </div>
-      <UploadedFile v-if="stateSelectedFile.valid"/>
+      <UploadedFile v-if="stateSelectedFile.valid" @event="receiveEvent"/>
       <div class="load-map__upload-section" v-if="!stateSelectedFile.valid">
         <h3 class="text__body">1. MapsMe</h3>
         <UploadFile
@@ -87,12 +87,36 @@ export default {
       }
     },
     loadMap() {
-      Api.uploadFile({ file: 'Empty' });
+      Api.uploadFile({
+        map: this.getSelectedFileContent,
+        filename: this.stateSelectedFile.name,
+      })
+        .then((res) => {
+          if (res.status >= 500) {
+            res.json()
+              .then((data) => {
+                this.error = data.error;
+              });
+          } else if (res.status >= 400) {
+            res.json()
+              .then((data) => {
+                this.error = data.error;
+              });
+          } else {
+            res.json()
+              .then((data) => {
+                this.error = null;
+                localStorage.setItem('map_data', JSON.stringify(data));
+                this.$router.push('/map');
+              });
+          }
+        });
     },
   },
   computed: {
     ...mapGetters('selectedFile', [
       'stateSelectedFile',
+      'getSelectedFileContent',
     ]),
   },
 };

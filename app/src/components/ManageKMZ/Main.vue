@@ -41,7 +41,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import Api from 'assets/library/api';
 import Map from './Map/Map.vue';
 import Placemarks from './Placemarks/Placemarks.vue';
 import Keypress from './Keypress.vue';
@@ -69,8 +68,7 @@ export default {
     if (localStorageMap) {
       kmzContent = JSON.parse(localStorageMap);
     } else {
-      kmzContent = Api.importData();
-      localStorage.setItem('map_data', JSON.stringify(kmzContent));
+      this.$router.push('/');
     }
     this.title = kmzContent.name;
     this.geoCenter = kmzContent.geoCenter;
