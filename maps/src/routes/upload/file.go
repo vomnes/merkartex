@@ -77,7 +77,7 @@ func getCentralGeoCordinate(placemarks []placemark) coord {
 func File(w http.ResponseWriter, r *http.Request) {
 	file, handler, err := r.FormFile("map")
 	if err != nil {
-		libHTTP.RespondWithError(w, 400, "Invalid file")
+		libHTTP.RespondWithError(w, 400, "Invalid file "+err.Error())
 		return
 	}
 	defer file.Close()
