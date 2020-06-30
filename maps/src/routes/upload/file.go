@@ -2,15 +2,19 @@ package upload
 
 import (
 	"archive/zip"
+	"bytes"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"math"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
 
+	lib "github.com/vomnes/go-library"
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
 )
@@ -77,6 +81,53 @@ func getCentralGeoCordinate(coordinates []coord) coord {
 		Latitude:  centralLatitude * 180 / math.Pi,
 		Longitude: centralLongitude * 180 / math.Pi,
 	}
+}
+
+func getKMZFromGoogle(link string) (string, io.ReaderAt, int64, int, string) {
+	u, err := url.Parse(link)
+	if err != nil {
+		return "", *new(io.ReaderAt), 0, 400, "Google My Maps URL not well formated"
+	}
+	q := u.Query()
+	if len(q["mid"]) < 0 {
+		return "", *new(io.ReaderAt), 0, 400, "Google My Maps URL doesn't contains the required informations"
+	}
+	mid := q["mid"][0]
+	client := http.DefaultClient
+	respHTTP, err := http.NewRequest(
+		"GET",
+		"https://www.google.com/maps/d/kml?mid="+mid,
+		nil,
+	)
+	if err != nil {
+		return "", *new(io.ReaderAt), 0, 500, err.Error()
+	}
+	resp, err := client.Do(respHTTP)
+	if err != nil {
+		return "", *new(io.ReaderAt), 0, 400, err.Error()
+	}
+	defer resp.Body.Close()
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", *new(io.ReaderAt), 0, 400, err.Error()
+	}
+	return "google-my-maps", bytes.NewReader(bodyBytes), int64(len(bodyBytes)), 0, ""
+}
+
+func getKMZ(r *http.Request) (string, io.ReaderAt, int64, int, string) {
+	var body map[string]string
+	file, handler, err := r.FormFile("map")
+	if err != nil {
+		errCode, _, err := lib.ReaderJSONToInterface(r.Body, &body)
+		if err != nil {
+			return "", *new(io.ReaderAt), 0, errCode, "Invalid data send"
+		}
+		if body["google-my-maps-link"] == "" {
+			return "", *new(io.ReaderAt), 0, 400, "No Google Maps Link"
+		}
+		return getKMZFromGoogle(body["google-my-maps-link"])
+	}
+	return "kmz-file", file, handler.Size, 0, ""
 }
 
 func getKMLFile(zipReader zip.Reader) (*zip.File, int, string) {
@@ -189,7 +240,8 @@ func formatOutputJSON(jsonKML KML) (placemarkList, int, string) {
 			}
 			placemark.Location, errCode, errStatus = extractLocation(placemarkFolderItem)
 			if errCode != 0 {
-				return placemarkList{}, errCode, placemark.Name + " " + errStatus
+				fmt.Println(libPretty.Error(placemark.Name + " " + errStatus))
+				continue
 			}
 			placemark.Icon = extractIcon(placemarkFolderItem, i)
 			newFolder.Placemarks = append(newFolder.Placemarks, placemark)
@@ -205,7 +257,8 @@ func formatOutputJSON(jsonKML KML) (placemarkList, int, string) {
 		}
 		placemark.Location, errCode, errStatus = extractLocation(rawPlacemark)
 		if errCode != 0 {
-			return placemarkList{}, errCode, placemark.Name + " " + errStatus
+			fmt.Println(libPretty.Error(placemark.Name + " >> " + errStatus))
+			continue
 		}
 		placemark.Icon = extractIcon(rawPlacemark, -1)
 		output.Placemarks = append(output.Placemarks, placemark)
@@ -217,15 +270,18 @@ func formatOutputJSON(jsonKML KML) (placemarkList, int, string) {
 }
 
 func File(w http.ResponseWriter, r *http.Request) {
-	file, handler, err := r.FormFile("map")
-	if err != nil {
-		libHTTP.RespondWithError(w, 400, "Invalid file "+err.Error())
+	kmzKind, file, fileSize, errCode, errStatus := getKMZ(r)
+	if errCode != 0 && errStatus != "" {
+		libHTTP.RespondWithError(w, errCode, errStatus)
 		return
 	}
-	defer file.Close()
-	zipReader, err := zip.NewReader(file, handler.Size)
+	zipReader, err := zip.NewReader(file, fileSize)
 	if err != nil {
-		libHTTP.RespondWithError(w, 400, "Not a zip file")
+		if kmzKind == "google-my-maps" {
+			libHTTP.RespondWithError(w, 400, "Google My Maps Link doesn't return a valid KMZ file")
+			return
+		}
+		libHTTP.RespondWithError(w, 400, "Not a good KMZ file")
 		return
 	}
 	kml, errCode, errStatus := getKMLFile(*zipReader)
