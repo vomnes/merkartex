@@ -58,6 +58,12 @@ type Placemark struct {
 	ExtendedData ExtendedData
 }
 
+// Folder describe a group of placemarks
+type Folder struct {
+	Name       string      `xml:"name"`
+	Placemarks []Placemark `xml:"Placemark"`
+}
+
 // Document is the structure with the content
 type Document struct {
 	Styles       []Style      `xml:"Style"`
@@ -65,6 +71,7 @@ type Document struct {
 	Visibility   int          `xml:"visibility"`
 	ExtendedData ExtendedData `xml:"ExtendedData"`
 	Placemarks   []Placemark  `xml:"Placemark"`
+	Folders      []Folder     `xml:"Folder"`
 }
 
 // KML is the Keyhole Markup Language structure
