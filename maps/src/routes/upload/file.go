@@ -17,6 +17,8 @@ import (
 	lib "github.com/vomnes/go-library"
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
+
+	models "../../models"
 )
 
 type coord struct {
@@ -47,6 +49,7 @@ type folder struct {
 type placemarkList struct {
 	Name       string      `json:"name,omitempty"`
 	GeoCenter  coord       `json:"geoCenter,omitempty"`
+	Length     int         `json:"length,omitempty"`
 	Placemarks []placemark `json:"placemarks,omitempty"`
 	Folders    []folder    `json:"folders,omitempty"`
 }
@@ -147,7 +150,7 @@ func getKMLFile(zipReader zip.Reader) (*zip.File, int, string) {
 	return zipReader.File[fileIndex], 0, ""
 }
 
-func formatPlacemark(rawPlacemark Placemark, index int) (placemark, int, string) {
+func formatPlacemark(rawPlacemark models.Placemark, index int) (placemark, int, string) {
 	var newPlacemark placemark
 	newPlacemark.Name = extractName(rawPlacemark)
 	newPlacemark.UpdatedAt = rawPlacemark.TimeStamp.When
@@ -178,7 +181,7 @@ var placemarkColors = []string{
 	"bluegray",
 }
 
-func extractName(rawPlacemark Placemark) string {
+func extractName(rawPlacemark models.Placemark) string {
 	name := rawPlacemark.Name
 	nameLanguages := rawPlacemark.ExtendedData.Name.Languages
 	if len(nameLanguages) >= 1 {
@@ -191,7 +194,7 @@ func extractName(rawPlacemark Placemark) string {
 	return name
 }
 
-func extractIcon(rawPlacemark Placemark, flag int) icon {
+func extractIcon(rawPlacemark models.Placemark, flag int) icon {
 	var newIcon icon
 	if strings.Contains(rawPlacemark.StyleURL, "#placemark-") {
 		newIcon.Style = strings.ReplaceAll(rawPlacemark.StyleURL, "#placemark-", "")
@@ -206,7 +209,7 @@ func extractIcon(rawPlacemark Placemark, flag int) icon {
 	return newIcon
 }
 
-func extractLocation(rawPlacemark Placemark) (coord, int, string) {
+func extractLocation(rawPlacemark models.Placemark) (coord, int, string) {
 	var extractedLoc coord
 	var err error
 	rawCoordinate := strings.TrimSpace(rawPlacemark.Point.Coordinates)
@@ -225,7 +228,7 @@ func extractLocation(rawPlacemark Placemark) (coord, int, string) {
 	return extractedLoc, 0, ""
 }
 
-func formatOutputJSON(jsonKML KML) (placemarkList, int, string) {
+func formatOutputJSON(jsonKML models.KML) (placemarkList, int, string) {
 	var listLocations []coord
 	var output placemarkList
 	output.Name = jsonKML.Document.Name
@@ -266,6 +269,7 @@ func formatOutputJSON(jsonKML KML) (placemarkList, int, string) {
 		index++
 	}
 	output.GeoCenter = getCentralGeoCordinate(listLocations)
+	output.Length = index
 	return output, 0, ""
 }
 
@@ -299,7 +303,7 @@ func File(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	var jsonData KML
+	var jsonData models.KML
 	err = xml.Unmarshal(newFileContent, &jsonData)
 	if err != nil {
 		libHTTP.RespondWithError(w, 500, "Invalid XML content")

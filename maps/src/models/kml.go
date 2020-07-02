@@ -1,4 +1,4 @@
-package upload
+package models
 
 import (
 	"encoding/xml"

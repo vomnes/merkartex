@@ -10,6 +10,7 @@ import (
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
 
+	export "./routes/export"
 	rUpload "./routes/upload"
 )
 
@@ -19,6 +20,8 @@ func handleAPIRoutes() *mux.Router {
 	api := mux.NewRouter()
 
 	api.HandleFunc("/upload/file", rUpload.File)
+
+	api.HandleFunc("/export/kmz", export.KMZ)
 
 	api.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		libHTTP.RespondWithJSON(w, http.StatusOK, "OK")
