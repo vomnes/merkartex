@@ -8,6 +8,16 @@
     >
       <PlaceMarkerCluster>
         <template v-if="render">
+          <template
+            v-for="folder in getFolders">
+            <PlaceMarker
+            v-for="placemark in folder.placemarks"
+            :key="placemark.id" :index="placemark.id"
+            :position="{ lat: placemark.location.latitude, lng: placemark.location.longitude }"
+            :title="placemark.name"
+            :color="getColor(placemark.icon.style)"
+            :icon="placemark.icon.category ? placemark.icon.category.toLowerCase() : ''"/>
+          </template>
           <PlaceMarker
           v-for="placemark in getPlacemarks"
           :key="placemark.id" :index="placemark.id"
@@ -76,15 +86,22 @@ export default {
     this.$root.$on('flyToLocation', this.flyTo);
   },
   watch: {
-    getPlacemarks() {
+    getPlacemarks: {
+      handler: 'reRender',
+    },
+    getFolders: {
+      deep: true,
+      handler: 'reRender',
+    },
+  },
+  methods: {
+    reRender() {
       // Force rerender on placemarker change
       this.render = false;
       this.$nextTick(() => {
         this.render = true;
       });
     },
-  },
-  methods: {
     getColor(iconColor) {
       for (let i = 0; i < placemarksDesign.colors.length; i += 1) {
         if (placemarksDesign.colors[i].name === iconColor) {
@@ -102,6 +119,7 @@ export default {
   computed: {
     ...mapGetters('placemarks', [
       'getPlacemarks',
+      'getFolders',
     ]),
   },
 };

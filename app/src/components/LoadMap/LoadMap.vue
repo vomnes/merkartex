@@ -30,6 +30,8 @@
             </p>
           </button>
           <input class="load-map__upload-section--link text__body"
+          :class="{ 'input--warning': gmapsCheck }"
+          v-model="gmapsValue"
           type="text" placeholder="Google - My Maps - URL Link">
         </div>
       </div>
@@ -65,15 +67,26 @@ export default {
     return {
       error: null,
       linkActivated: false,
+      gmapsValue: '',
     };
   },
   methods: {
     gmapsPage() {
       if (!this.linkActivated) {
         this.linkActivated = true;
-        // return;
+        return;
       }
-      // console.log('Check link Google Maps validity');
+      if (this.gmapsValue === '') {
+        this.error = 'Google My Maps can\'t be empty';
+        return;
+      }
+      if (this.gmapsCheck) {
+        this.error = 'Google My Maps URL is invalid';
+        return;
+      }
+      this.error = null;
+      Api.uploadFromMyMaps(this.gmapsValue)
+        .then((res) => this.manageHTTPResponse(res));
     },
     receiveEvent(type, data) {
       switch (type) {
@@ -91,26 +104,27 @@ export default {
         map: this.getSelectedFileContent,
         filename: this.stateSelectedFile.name,
       })
-        .then((res) => {
-          if (res.status >= 500) {
-            res.json()
-              .then((data) => {
-                this.error = data.error;
-              });
-          } else if (res.status >= 400) {
-            res.json()
-              .then((data) => {
-                this.error = data.error;
-              });
-          } else {
-            res.json()
-              .then((data) => {
-                this.error = null;
-                localStorage.setItem('map_data', JSON.stringify(data));
-                this.$router.push('/map');
-              });
-          }
-        });
+        .then((res) => this.manageHTTPResponse(res));
+    },
+    manageHTTPResponse(res) {
+      if (res.status >= 500) {
+        res.json()
+          .then((data) => {
+            this.error = data.error;
+          });
+      } else if (res.status >= 400) {
+        res.json()
+          .then((data) => {
+            this.error = data.error;
+          });
+      } else {
+        res.json()
+          .then((data) => {
+            this.error = null;
+            localStorage.setItem('map_data', JSON.stringify(data));
+            this.$router.push('/map');
+          });
+      }
     },
   },
   computed: {
@@ -118,10 +132,20 @@ export default {
       'stateSelectedFile',
       'getSelectedFileContent',
     ]),
+    gmapsCheck() {
+      if (this.gmapsValue === '') {
+        return false;
+      }
+      return this.gmapsValue.search(/google\.com\/maps\/d\/(edit|viewer)\?.*mid=/g) === -1;
+    },
   },
 };
 </script>
 
 <style lang="scss">
   @import "LoadMap";
+
+  .input--warning {
+    border: .1rem solid $color-warning;
+  }
 </style>

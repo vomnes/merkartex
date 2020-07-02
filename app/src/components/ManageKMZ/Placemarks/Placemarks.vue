@@ -24,10 +24,16 @@
          @manageOpen="manageOpenEditMultiple"/>
     </div>
     <div class="placemarks__list custom-scrollbar">
-      <!-- <PlacemarksFolder title="Shanghai - Old town"></PlacemarksFolder> -->
+      <PlacemarksFolder
+        v-for="(placemarksFolder, i) in getFolders"
+        :title="placemarksFolder.name" :key="i">
+        <Placemark
+          v-for="placemark in placemarksFolder.placemarks"
+          :key="placemark.id" :index="placemark.id" :data="placemark"/>
+      </PlacemarksFolder>
       <Placemark
-        v-for="(placemarkContent, index) in getPlacemarks"
-        :key="index" :index="index" :data="placemarkContent"/>
+        v-for="placemarkContent in getPlacemarks"
+        :key="placemarkContent.id" :index="placemarkContent.id" :data="placemarkContent"/>
     </div>
     <PlacemarkEdit
       :data="emptyPlacemark"
@@ -45,12 +51,13 @@ import emptyPlacemark from 'assets/data/empty-placemark.json';
 import Placemark from './Placemark/Placemark.vue';
 import ModaleEditMultiple from './ModaleEditMultiple.vue';
 import PlacemarkEdit from './Placemark/PlacemarkEdit.vue';
-// import PlacemarksFolder from './PlacemarksFolder.vue';
+import PlacemarksFolder from './PlacemarksFolder.vue';
 
 export default {
   name: 'Placemarks',
   components: {
     Placemark,
+    PlacemarksFolder,
     ModaleEditMultiple,
     PlacemarkEdit,
   },
@@ -67,6 +74,7 @@ export default {
     ...mapGetters('placemarks', [
       'hasPlacemarksSelection',
       'getPlacemarks',
+      'getFolders',
     ]),
   },
   methods: {

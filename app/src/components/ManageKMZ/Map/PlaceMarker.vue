@@ -67,24 +67,33 @@ export default {
   },
   methods: {
     scrollToPlacemark() {
-      document
-        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
-        .scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+      const elem = document
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`);
+      if (elem) {
+        elem
+          .scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      }
     },
     hoveredEnter() {
-      document
-        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
-        .classList
-        .add('placemark--hovered');
+      const elem = document
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`);
+      if (elem) {
+        elem
+          .classList
+          .add('placemark--hovered');
+      }
     },
     hoveredLeave() {
-      document
-        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`)
-        .classList
-        .remove('placemark--hovered');
+      const elem = document
+        .getElementById(`placemark-${this.position.lat}-${this.position.lng}`);
+      if (elem) {
+        elem
+          .classList
+          .remove('placemark--hovered');
+      }
     },
   },
 };

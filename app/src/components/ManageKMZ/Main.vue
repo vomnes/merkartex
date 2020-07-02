@@ -73,7 +73,9 @@ export default {
     this.title = kmzContent.name;
     this.geoCenter = kmzContent.geoCenter;
     this.setPlacemarks(kmzContent.placemarks);
+    this.setPlacemarksFolders(kmzContent.folders);
     this.setTitle(kmzContent.name);
+    this.setLength(kmzContent.length);
   },
   methods: {
     toggleEditTitle(value) {
@@ -84,7 +86,9 @@ export default {
     },
     ...mapActions('placemarks', [
       'setPlacemarks',
+      'setPlacemarksFolders',
       'setTitle',
+      'setLength',
       'toggleHasChanges',
     ]),
     saveTitle() {
@@ -97,6 +101,7 @@ export default {
       const newLocalStorageMap = JSON.parse(localStorage.getItem('map_data'));
       newLocalStorageMap.name = this.getTitle;
       newLocalStorageMap.placemarks = this.getPlacemarks;
+      newLocalStorageMap.folders = this.getFolders;
       localStorage.setItem('map_data', JSON.stringify(newLocalStorageMap));
       this.toggleHasChanges(false);
       this.$notify({
@@ -108,6 +113,7 @@ export default {
   computed: {
     ...mapGetters('placemarks', [
       'getPlacemarks',
+      'getFolders',
       'getTitle',
       'getHasChanges',
     ]),
