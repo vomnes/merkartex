@@ -12,8 +12,8 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 
+	"github.com/kylelemons/godebug/pretty"
 	lib "github.com/vomnes/go-library"
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
@@ -21,40 +21,7 @@ import (
 	models "../../models"
 )
 
-type coord struct {
-	Latitude  float64 `json:"latitude,omitempty"`
-	Longitude float64 `json:"longitude,omitempty"`
-}
-
-type icon struct {
-	Style    string `json:"style,omitempty"`
-	Category string `json:"category,omitempty"`
-}
-
-type placemark struct {
-	Name        string    `json:"name,omitempty"`
-	UpdatedAt   time.Time `json:"updatedAt,omitempty"`
-	Icon        icon      `json:"icon,omitempty"`
-	Location    coord     `json:"location,omitempty"`
-	Description string    `json:"description,omitempty"`
-	FeatureType string    `json:"featureType,omitempty"`
-	ID          int       `json:"id"`
-}
-
-type folder struct {
-	Name       string      `json:"name,omitempty"`
-	Placemarks []placemark `json:"placemarks,omitempty"`
-}
-
-type placemarkList struct {
-	Name       string      `json:"name,omitempty"`
-	GeoCenter  coord       `json:"geoCenter,omitempty"`
-	Length     int         `json:"length,omitempty"`
-	Placemarks []placemark `json:"placemarks,omitempty"`
-	Folders    []folder    `json:"folders,omitempty"`
-}
-
-func getCentralGeoCordinate(coordinates []coord) coord {
+func getCentralGeoCordinate(coordinates []models.Coord) models.Coord {
 	if len(coordinates) == 1 {
 		return coordinates[0]
 	}
@@ -80,7 +47,7 @@ func getCentralGeoCordinate(coordinates []coord) coord {
 	centralSquareRoot := math.Sqrt(x*x + y*y)
 	centralLatitude := math.Atan2(z, centralSquareRoot)
 
-	return coord{
+	return models.Coord{
 		Latitude:  centralLatitude * 180 / math.Pi,
 		Longitude: centralLongitude * 180 / math.Pi,
 	}
@@ -150,8 +117,8 @@ func getKMLFile(zipReader zip.Reader) (*zip.File, int, string) {
 	return zipReader.File[fileIndex], 0, ""
 }
 
-func formatPlacemark(rawPlacemark models.Placemark, index int) (placemark, int, string) {
-	var newPlacemark placemark
+func formatPlacemark(rawPlacemark models.Placemark, index int) (models.PlacemarkJSON, int, string) {
+	var newPlacemark models.PlacemarkJSON
 	newPlacemark.Name = extractName(rawPlacemark)
 	newPlacemark.UpdatedAt = rawPlacemark.TimeStamp.When
 	newPlacemark.ID = index
@@ -160,25 +127,6 @@ func formatPlacemark(rawPlacemark models.Placemark, index int) (placemark, int, 
 		newPlacemark.FeatureType = rawPlacemark.ExtendedData.FeatureTypes.Value[0]
 	}
 	return newPlacemark, 0, ""
-}
-
-var placemarkColors = []string{
-	"red",
-	"pink",
-	"purple",
-	"deeppurple",
-	"blue",
-	"lightblue",
-	"cyan",
-	"teal",
-	"green",
-	"lime",
-	"yellow",
-	"orange",
-	"deeporange",
-	"brown",
-	"gray",
-	"bluegray",
 }
 
 func extractName(rawPlacemark models.Placemark) string {
@@ -194,8 +142,8 @@ func extractName(rawPlacemark models.Placemark) string {
 	return name
 }
 
-func extractIcon(rawPlacemark models.Placemark, flag int) icon {
-	var newIcon icon
+func extractIcon(rawPlacemark models.Placemark, flag int) models.Icon {
+	var newIcon models.Icon
 	if strings.Contains(rawPlacemark.StyleURL, "#placemark-") {
 		newIcon.Style = strings.ReplaceAll(rawPlacemark.StyleURL, "#placemark-", "")
 		newIcon.Category = rawPlacemark.ExtendedData.Icon
@@ -203,43 +151,43 @@ func extractIcon(rawPlacemark models.Placemark, flag int) icon {
 		if flag == -1 {
 			newIcon.Style = "red"
 		} else {
-			newIcon.Style = placemarkColors[flag%16]
+			newIcon.Style = models.PlacemarkColors[flag%16]
 		}
 	}
 	return newIcon
 }
 
-func extractLocation(rawPlacemark models.Placemark) (coord, int, string) {
-	var extractedLoc coord
+func extractLocation(rawPlacemark models.Placemark) (models.Coord, int, string) {
+	var extractedLoc models.Coord
 	var err error
 	rawCoordinate := strings.TrimSpace(rawPlacemark.Point.Coordinates)
 	tmpCoord := strings.Split(rawCoordinate, ",")
 	if len(tmpCoord) < 2 {
-		return coord{}, 400, "Coordinates invalid"
+		return models.Coord{}, 400, "Coordinates invalid"
 	}
 	extractedLoc.Longitude, err = strconv.ParseFloat(tmpCoord[0], 64)
 	if err != nil {
-		return coord{}, 400, "Coordinates invalids Longitude"
+		return models.Coord{}, 400, "Coordinates invalids Longitude"
 	}
 	extractedLoc.Latitude, err = strconv.ParseFloat(tmpCoord[1], 64)
 	if err != nil {
-		return coord{}, 400, "Coordinates invalids Latitude"
+		return models.Coord{}, 400, "Coordinates invalids Latitude"
 	}
 	return extractedLoc, 0, ""
 }
 
-func formatOutputJSON(jsonKML models.KML) (placemarkList, int, string) {
-	var listLocations []coord
-	var output placemarkList
+func formatOutputJSON(jsonKML models.KML) (models.PlacemarkList, int, string) {
+	var listLocations []models.Coord
+	var output models.PlacemarkList
 	output.Name = jsonKML.Document.Name
 	var index int
 	for i, placemarkFolder := range jsonKML.Document.Folders {
-		var newFolder folder
+		var newFolder models.FolderJSON
 		newFolder.Name = placemarkFolder.Name
 		for _, placemarkFolderItem := range placemarkFolder.Placemarks {
 			placemark, errCode, errStatus := formatPlacemark(placemarkFolderItem, index)
 			if errCode != 0 {
-				return placemarkList{}, errCode, errStatus
+				return models.PlacemarkList{}, errCode, errStatus
 			}
 			placemark.Location, errCode, errStatus = extractLocation(placemarkFolderItem)
 			if errCode != 0 {
@@ -256,7 +204,7 @@ func formatOutputJSON(jsonKML models.KML) (placemarkList, int, string) {
 	for _, rawPlacemark := range jsonKML.Document.Placemarks {
 		placemark, errCode, errStatus := formatPlacemark(rawPlacemark, index)
 		if errCode != 0 {
-			return placemarkList{}, errCode, errStatus
+			return models.PlacemarkList{}, errCode, errStatus
 		}
 		placemark.Location, errCode, errStatus = extractLocation(rawPlacemark)
 		if errCode != 0 {
@@ -310,6 +258,7 @@ func File(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(libPretty.Error(err.Error()))
 		return
 	}
+	pretty.Print(jsonData)
 	output, errCode, errStatus := formatOutputJSON(jsonData)
 	if errCode != 0 {
 		libHTTP.RespondWithError(w, errCode, errStatus)
