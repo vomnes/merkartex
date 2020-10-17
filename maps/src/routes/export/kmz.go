@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"bytes"
 	"encoding/xml"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -61,7 +60,7 @@ func KMZ(w http.ResponseWriter, r *http.Request) {
 	newKML.Document.ExtendedData.XMLNS = "https://maps.me"
 	for _, color := range models.PlacemarkColors {
 		newColor := models.Style{
-			ID:            "#placemark-" + color,
+			ID:            "placemark-" + color,
 			IconStyleHref: "http://maps.me/placemarks/placemark-" + color + ".png",
 		}
 		newKML.Document.Styles = append(newKML.Document.Styles, newColor)
@@ -79,6 +78,12 @@ func KMZ(w http.ResponseWriter, r *http.Request) {
 	for _, placemark := range placemarksJSON.Placemarks {
 		newPlacemark := formatPlacemarkKML(placemark)
 		newKML.Document.Placemarks = append(newKML.Document.Placemarks, newPlacemark)
+	}
+	for _, folder := range placemarksJSON.Folders {
+		for _, placemark := range folder.Placemarks {
+			newPlacemark := formatPlacemarkKML(placemark)
+			newKML.Document.Placemarks = append(newKML.Document.Placemarks, newPlacemark)
+		}
 	}
 	data, err := xml.MarshalIndent(newKML, "", "  ")
 	if err != nil {
@@ -101,7 +106,6 @@ func KMZ(w http.ResponseWriter, r *http.Request) {
 		libHTTP.RespondWithError(w, 500, err.Error())
 		return
 	}
-	fmt.Println(placemarksJSON.Name, "=> OK")
 	w.Header().Set("X-XSS-Protection", "1; mode=block")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.Header().Set("X-Frame-Options", "DENY")
