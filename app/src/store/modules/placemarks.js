@@ -62,10 +62,18 @@ const actions = {
     commit('SET_LAST_INDEX_SELECTED', selectedIndex);
   },
   setPlacemarks({ commit }, placemarks) {
-    commit('SET_PLACEMARKS', placemarks);
+    if (placemarks) {
+      commit('SET_PLACEMARKS', placemarks);
+    } else {
+      commit('SET_PLACEMARKS', []);
+    }
   },
   setPlacemarksFolders({ commit }, folders) {
-    commit('SET_FOLDERS', folders);
+    if (folders) {
+      commit('SET_FOLDERS', folders);
+    } else {
+      commit('SET_FOLDERS', []);
+    }
   },
   setTitle({ commit }, title) {
     commit('SET_TITLE', title);
@@ -83,13 +91,10 @@ const actions = {
   },
   pushPlacemark({ commit }, data) {
     const newData = data;
-    if (state.list.length === 0) {
-      newData.id = 0;
-    } else {
-      newData.id = state.list[state.list.length - 1].id + 1;
-    }
+    newData.id = state.length + 1;
     commit('PUSH_NEW_PLACEMARK', newData);
     commit('SET_HAS_CHANGES', true);
+    commit('SET_LENGTH', state.length + 1);
   },
   editMultiplePlacemarks({ commit }, { title, icon }) {
     for (let i = 0; state.folders && i < state.folders.length; i += 1) {

@@ -78,6 +78,10 @@ export default {
   watch: {
     open(value) {
       if (value) {
+        this.title = {
+          before: null,
+          after: null,
+        };
         this.placemarkStyle = {
           color: null,
           category: null,

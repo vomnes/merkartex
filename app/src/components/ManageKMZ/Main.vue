@@ -29,7 +29,9 @@
             class="primary-button--blue text__details box-round-corner"
             @click="persistData">Save</button>
         </transition>
-        <button class="primary-button--blue text__details box-round-corner">Export</button>
+        <button
+        class="primary-button--blue text__details box-round-corner"
+        @click="exportData">Export</button>
       </div>
     </div>
     <Map :geoCenter="geoCenter" ref="mapComponent"/>
@@ -41,9 +43,25 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import Api from 'assets/library/api/index';
+
 import Map from './Map/Map.vue';
 import Placemarks from './Placemarks/Placemarks.vue';
 import Keypress from './Keypress.vue';
+
+const download = (filename, content, type) => {
+  const element = document.createElement('a');
+  const file = new Blob([content], { type });
+  element.href = window.URL.createObjectURL(file);
+  element.download = filename;
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+};
 
 export default {
   name: 'ManageKMZ',
@@ -108,6 +126,25 @@ export default {
         title: 'Data saved locally',
         type: 'success',
       });
+    },
+    exportData() {
+      this.persistData();
+      Api.exportData(localStorage.getItem('map_data'))
+        .then((res) => {
+          const fileData = [];
+          const reader = res.body.getReader();
+          reader.read()
+            .then(({ value }) => {
+              fileData.push(value);
+            }, fileData)
+            .then(() => {
+              download(
+                `${this.title}_${new Date().toISOString()}_map.kmz`,
+                fileData[0],
+                'application/octet-binary',
+              );
+            }, fileData);
+        });
     },
   },
   computed: {

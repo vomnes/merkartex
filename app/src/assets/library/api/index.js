@@ -2,6 +2,7 @@
 import importData from './importData';
 import uploadFile from './uploadFile';
 import uploadFromMyMaps from './uploadFromMyMaps';
+import exportData from './exportData';
 
 import config from './config';
 
@@ -13,4 +14,5 @@ export default {
   importData: () => importData(),
   uploadFile: (data) => uploadFile(apiConf, data),
   uploadFromMyMaps: (myMapsURL) => uploadFromMyMaps(apiConf, myMapsURL),
+  exportData: (data) => exportData(apiConf, data),
 };
