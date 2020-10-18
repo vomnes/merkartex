@@ -25,7 +25,7 @@ func formatPlacemarkKML(placemark models.PlacemarkJSON) models.PlacemarkMVM {
 		Name:        placemark.Name,
 		Description: placemark.Description,
 		TimeStamp:   placemark.UpdatedAt,
-		Coordinates: strconv.FormatFloat(placemark.Location.Latitude, 'f', 6, 64) + "," + strconv.FormatFloat(placemark.Location.Longitude, 'f', 6, 64),
+		Coordinates: strconv.FormatFloat(placemark.Location.Longitude, 'f', 6, 64) + "," + strconv.FormatFloat(placemark.Location.Latitude, 'f', 6, 64),
 		StyleURL:    "#placemark-" + placemark.Icon.Style,
 		ExtendedData: models.ExtendedDataMVM{
 			XMLNS:      "https://maps.me",
@@ -96,7 +96,7 @@ func KMZ(w http.ResponseWriter, r *http.Request) {
 		libHTTP.RespondWithError(w, 500, err.Error())
 		return
 	}
-	_, err = zippedF.Write([]byte(" " + xml.Header + string(data)))
+	_, err = zippedF.Write([]byte(xml.Header + string(data)))
 	if err != nil {
 		libHTTP.RespondWithError(w, 500, err.Error())
 		return
