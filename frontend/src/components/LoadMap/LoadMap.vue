@@ -139,7 +139,6 @@ export default {
       }
     },
     loadTestFile() {
-      console.log('loadTestFile');
       this.error = null;
       localStorage.setItem('map_data', JSON.stringify(DemoMap));
       this.$router.push('/map');

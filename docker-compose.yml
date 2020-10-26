@@ -1,0 +1,25 @@
+version: '3.2'
+services:
+  merkartex_frontend:
+    image: vomnes/merkartex_frontend
+    container_name: merkartex_frontend
+    build:
+      context: ./frontend
+    tty: true
+    expose:
+      - 5001
+    networks:
+      - apache_net
+  merkartex_backend:
+    image: vomnes/merkartex_backend
+    container_name: merkartex_backend
+    build:
+      context: ./backend
+    tty: true
+    expose:
+      - 8081
+    networks:
+      - apache_net
+networks:
+  apache_net:
+#    external: true
