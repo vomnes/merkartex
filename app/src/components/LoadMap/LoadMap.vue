@@ -35,6 +35,17 @@
           type="text" placeholder="Google - My Maps - URL Link">
         </div>
       </div>
+      <div class="load-map__upload-section" v-if="!stateSelectedFile.valid">
+        <h3 class="text__body">3. Load demo map</h3>
+        <button
+          class="primary-button--blue-white box-round-corner"
+          @click="loadTestFile">
+          <svg v-svg symbol="arrow"></svg>
+          <p class="text__details text--uppercase">
+            Upload default demo map
+          </p>
+        </button>
+      </div>
       <div class="load-map__submit" v-if="stateSelectedFile.valid">
         <button
           class="primary-button--green box-round-corner"
@@ -53,6 +64,7 @@
 import { mapGetters } from 'vuex';
 
 import Api from 'assets/library/api/index';
+import DemoMap from 'assets/data/china-test-data.json';
 
 import UploadedFile from './UploadedFile.vue';
 import UploadFile from './UploadFile.vue';
@@ -67,7 +79,7 @@ export default {
     return {
       error: null,
       linkActivated: false,
-      gmapsValue: '',
+      gmapsValue: 'https://www.google.com/maps/d/viewer?mid=19flGSF3J1UrV7w7kAR8lqCMjgQp9e3Zo',
     };
   },
   methods: {
@@ -125,6 +137,12 @@ export default {
             this.$router.push('/map');
           });
       }
+    },
+    loadTestFile() {
+      console.log('loadTestFile');
+      this.error = null;
+      localStorage.setItem('map_data', JSON.stringify(DemoMap));
+      this.$router.push('/map');
     },
   },
   computed: {

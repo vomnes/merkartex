@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/kylelemons/godebug/pretty"
 	lib "github.com/vomnes/go-library"
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
@@ -258,7 +257,6 @@ func File(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(libPretty.Error(err.Error()))
 		return
 	}
-	pretty.Print(jsonData)
 	output, errCode, errStatus := formatOutputJSON(jsonData)
 	if errCode != 0 {
 		libHTTP.RespondWithError(w, errCode, errStatus)
