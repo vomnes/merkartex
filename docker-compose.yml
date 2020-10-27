@@ -8,6 +8,8 @@ services:
     tty: true
     expose:
       - 5001
+    ports:
+      - "5001:5001"
     networks:
       - apache_net
   merkartex_backend:
@@ -18,8 +20,10 @@ services:
     tty: true
     expose:
       - 8081
+    ports:
+      - "8081:8081"
     networks:
       - apache_net
 networks:
   apache_net:
-#    external: true
+    external: true
