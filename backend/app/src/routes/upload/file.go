@@ -17,7 +17,7 @@ import (
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
 
-	models "../../models"
+	"merkartex/shared/models"
 )
 
 func getCentralGeoCordinate(coordinates []models.Coord) models.Coord {
@@ -58,7 +58,7 @@ func getKMZFromGoogle(link string) (string, io.ReaderAt, int64, int, string) {
 		return "", *new(io.ReaderAt), 0, 400, "Google My Maps URL not well formated"
 	}
 	q := u.Query()
-	if len(q["mid"]) < 0 {
+	if len(q["mid"]) <= 0 {
 		return "", *new(io.ReaderAt), 0, 400, "Google My Maps URL doesn't contains the required informations"
 	}
 	mid := q["mid"][0]

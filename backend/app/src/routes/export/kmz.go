@@ -11,7 +11,7 @@ import (
 	lib "github.com/vomnes/go-library"
 	libHTTP "github.com/vomnes/go-library/http"
 
-	models "../../models"
+	"merkartex/shared/models"
 )
 
 // KML ...

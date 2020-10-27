@@ -10,8 +10,8 @@ import (
 	libHTTP "github.com/vomnes/go-library/http"
 	libPretty "github.com/vomnes/go-library/pretty"
 
-	export "./routes/export"
-	rUpload "./routes/upload"
+	export "merkartex/src/routes/export"
+	rUpload "merkartex/src/routes/upload"
 )
 
 // HandleAPIRoutes instantiates and populates the router
