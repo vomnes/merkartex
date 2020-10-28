@@ -1,6 +1,10 @@
 # Merkartex - Edit MapsMe maps
 For my needs, I have designed and created a web application to quickly edit KMZ maps for MapsMe from Google Maps and MapsMe maps. You can edit multi placemarks at the same time, edit parameters such as icon categories (impossible to do in MapsMe), properly import Google Maps map in MapsMe, handle HTML descriptions...
 
+## Interface upload map
+<img alt="Interface upload map - 1" src="./screenshots/4-w1200-min.jpg" title="Interface upload map - 1">
+<img alt="Interface upload map - 2" src="./screenshots/4-w1200-min.jpg" title="Interface upload map - 2">
+
 ## Interface Merkartex Application
 <img alt="Interface Merkartex app - 1" src="./screenshots/1-w1200-min.jpg" title="Interface Merkartex app - 1">
 <img alt="Interface Merkartex app - 2" src="./screenshots/2-w1200-min.jpg" title="Interface Merkartex app - 2">
